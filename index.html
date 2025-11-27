@@ -7,40 +7,133 @@
     <meta name="description" content="A simulation of the daily grind balancing code, combat, and commerce">
     <title>Coder Trainer Entrepreneur - Life Simulation v1.0</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { box-sizing: border-box; }
+        html,body { height:100%; }
         body {
+            margin:0; padding:10px; min-height:100vh;
             font-family: 'Courier New', monospace;
             background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
-            color: #00ff00;
-            padding: 10px;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            color: #00ff00; display:flex; align-items:center; justify-content:center;
         }
-
         .terminal {
-            background: #0a0a0a;
-            border: 2px solid #00ff00;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-            max-width: 900px;
-            width: 100%;
-            padding: 20px;
-            margin: 10px;
+            background: #0a0a0a; border: 2px solid #00ff00; border-radius:8px;
+            box-shadow: 0 0 20px rgba(0,255,0,0.2); max-width:900px; width:100%; padding:20px;
         }
+        .header { border-bottom: 2px solid #00ff00; padding-bottom:12px; margin-bottom:16px; }
+        .header h1 { color:#00ff00; font-size:clamp(16px, 3.2vw, 28px); }
+        .content { min-height:200px; padding:10px 0; }
+        .fallback { color:#b8ffb8; line-height:1.5; }
+        .repo-links { margin-top:12px; }
+        .repo-links a { color:#00ff7f; display:block; word-break:break-all; }
+        .note { margin-top:14px; font-size:0.9rem; color:#8cff9f; }
+        .hidden { display:none; }
+        .spinner { display:inline-block; width:18px; height:18px; border:2px solid rgba(0,255,0,0.2); border-top-color:#00ff00; border-radius:50%; animation:spin 1s linear infinite; vertical-align:middle; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        footer { margin-top:12px; color:#66ff99; font-size:0.85rem; }
+    </style>
+</head>
+<body>
+<div class="terminal" role="main">
+    <div class="header" role="banner">
+        <h1>Coder Trainer Entrepreneur - Life Simulation v1.0</h1>
+    </div>
 
-        .header {
-            border-bottom: 2px solid #00ff00;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+    <div id="root" class="content" aria-live="polite">
+        <p class="fallback">Attempting to load the application... <span class="spinner" aria-hidden="true"></span></p>
+    </div>
+
+    <div id="fallback" class="fallback hidden" aria-hidden="true">
+        <p>The application bundles were not found or failed to load. A static fallback is shown below.</p>
+        <p>If this repository contains a source app (React/TSX), build it and publish the generated files to the branch/folder configured for GitHub Pages (commonly the <code>build/</code> or <code>docs/</code> folder, or the <code>gh-pages</code> branch).</p>
+        <div class="repo-links">
+            <strong>Repository files (quick links):</strong>
+            <a href="https://github.com/MartialArtsCode/panamerican-tkd-academy/blob/main/index.html">index.html</a>
+            <a href="https://github.com/MartialArtsCode/panamerican-tkd-academy/blob/main/App%20Do.tsx">App Do.tsx</a>
+            <a href="https://github.com/MartialArtsCode/panamerican-tkd-academy/blob/main/AdminDashboard.jsx">AdminDashboard.jsx</a>
+            <a href="https://github.com/MartialArtsCode/panamerican-tkd-academy/blob/main/FaceIDLogin.jsx">FaceIDLogin.jsx</a>
+            <a href="https://github.com/MartialArtsCode/panamerican-tkd-academy/blob/main/package-lock.json">package-lock.json</a>
+            <a href="https://github.com/MartialArtsCode/panamerican-tkd-academy/blob/main/README.md">README.md</a>
+        </div>
+        <p class="note">Recommended: add a GitHub Action to build and deploy the app automatically. I can add one for you if you'd like.</p>
+    </div>
+
+    <footer>
+        <small>GitHub Pages fallback — Served from repository root</small>
+    </footer>
+</div>
+
+<script>
+(function(){
+    // Candidate bundle locations to try (common CRA/Vite/parcel outputs)
+    var candidates = [
+        '/static/js/main.js',
+        '/build/static/js/main.js',
+        '/main.js',
+        '/static/js/bundle.js',
+        '/app.js'
+    ];
+
+    var root = document.getElementById('root');
+    var fallbackEl = document.getElementById('fallback');
+    var loaded = false;
+    var tried = 0;
+
+    function showFallback(reason){
+        if(loaded) return;
+        loaded = true;
+        root.classList.add('hidden');
+        fallbackEl.classList.remove('hidden');
+        fallbackEl.setAttribute('aria-hidden','false');
+        console.warn('Fallback shown:', reason);
+    }
+
+    function tryNext(){
+        if(loaded) return;
+        if(tried >= candidates.length){
+            showFallback('no candidate bundles found');
+            return;
         }
+        var src = candidates[tried++];
+        var s = document.createElement('script');
+        s.src = src;
+        s.defer = true;
+        s.onload = function(){
+            // If the app mounts itself (React) it will replace #root. Give it a bit of time.
+            setTimeout(function(){
+                // Heuristic: if #root has child nodes that look like app content, do nothing.
+                if(root && root.children && root.children.length>0){
+                    loaded = true;
+                    console.log('Loaded app bundle:', src);
+                } else {
+                    // If the app didn't mount, try next candidate
+                    console.log('Bundle loaded but app did not mount:', src);
+                    tryNext();
+                }
+            }, 600);
+        };
+        s.onerror = function(){
+            console.warn('Failed to load', src);
+            tryNext();
+        };
+        document.head.appendChild(s);
+    }
 
-        .header h1 {
-            color: #00ff00;
-            font-size: clamp(16​​​​​​​​​​​​​​​​
+    // Start trying to load bundles
+    tryNext();
+
+    // After a short timeout, if nothing mounted, show fallback
+    setTimeout(function(){
+        if(!loaded) showFallback('timeout waiting for bundles');
+    }, 3000);
+
+    // If there is a runtime error from a missing asset, show fallback and log error
+    window.addEventListener('error', function(ev){
+        console.error('Runtime error detected:', ev.error || ev.message || ev);
+        // show fallback for most errors (but allow immediate script loads to continue)
+        setTimeout(function(){ showFallback('runtime error: '+(ev.message||'unknown')); }, 200);
+    });
+
+})();
+</script>
+</body>
+</html>
