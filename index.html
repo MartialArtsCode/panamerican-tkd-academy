@@ -9,6 +9,127 @@
     <title>App-Do</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Responsive Schedule Table */
+        .schedule-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 20px 0;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .schedule-table th {
+            background: #1a472a;
+            color: white;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .schedule-table .time-col {
+            background: #f8f9fa;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* Mobile Responsive - Stack Schedule Vertically */
+        @media screen and (max-width: 768px) {
+            .schedule-table {
+                min-width: 100%;
+                font-size: 14px;
+            }
+
+            .schedule-table th,
+            .schedule-table td {
+                padding: 8px 4px;
+                font-size: 12px;
+            }
+
+            .schedule-wrapper {
+                margin: 10px -15px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .schedule-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .schedule-table thead {
+                display: block;
+            }
+
+            .schedule-table tbody {
+                display: block;
+            }
+
+            .schedule-table tr {
+                display: flex;
+                flex-wrap: wrap;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                background: white;
+            }
+
+            .schedule-table th,
+            .schedule-table td {
+                flex: 1 1 45%;
+                min-width: 45%;
+                padding: 10px;
+                border: 1px solid #eee;
+                text-align: left;
+            }
+
+            .schedule-table th:first-child {
+                flex: 1 1 100%;
+                background: #1a472a;
+                color: white;
+            }
+
+            .schedule-table .time-col {
+                flex: 1 1 100%;
+                background: #2d5f3d;
+                color: white;
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+            .schedule-table td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                margin-bottom: 5px;
+                color: #1a472a;
+            }
+        }
+
+        /* Class color coding */
+        .class-power-up { background: #ffe5b4; }
+        .class-little-ninjas { background: #d4edda; }
+        .class-dragons-advanced { background: #cce5ff; }
+        .class-adult { background: #f8d7da; }
+        .class-blackbelt { background: #d1ecf1; }
+        .class-adult-advanced { background: #e2d4f5; }
+        .class-family { background: #fff3cd; }
+        .class-competition { background: #ffd6d6; }
+        .class-open { background: #e7f3ff; }
+    </style>
 </head>
 <body>
     <header>
@@ -157,65 +278,65 @@
 <section id="schedule" class="schedule-section">
     <div class="container">
     <h2>Class Schedule</h2>
-                <div class="schedule-wrapper">
-                    <table class="schedule-table">
-                        <thead>
-                            <tr>
-                                <th>Time</th>
-                                <th>Monday</th>
-                                <th>Tuesday</th>
-                                <th>Wednesday</th>
-                                <th>Thursday</th>
-                                <th>Friday</th>
-                                <th>Saturday</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="time-col">4:00 PM</td>
-                                <td class="class-power-up">Power Up</td>
-                                <td>-</td>
-                                <td class="class-power-up">Power Up</td>
-                                <td>-</td>
-                                <td class="class-power-up">Power Up</td>
-                                <td class="class-family">Family Class</td>
-                            </tr>
-                            <tr>
-                                <td class="time-col">5:00 PM</td>
-                                <td class="class-little-ninjas">Little Ninjas</td>
-                                <td class="class-dragons-advanced">Dragons Advanced</td>
-                                <td class="class-little-ninjas">Little Ninjas</td>
-                                <td class="class-dragons-advanced">Dragons Advanced</td>
-                                <td class="class-little-ninjas">Little Ninjas</td>
-                                <td class="class-competition">Competition Team</td>
-                            </tr>
-                            <tr>
-                                <td class="time-col">6:00 PM</td>
-                                <td class="class-adult">Dragons</td>
-                                <td class="class-blackbelt">Dragons Black Belts</td>
-                                <td class="class-adult">Dragons</td>
-                                <td class="class-blackbelt">Dragons Black Belts</td>
-                                <td class="class-adult">Dragons</td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td class="time-col">7:00 PM</td>
-                                <td class="class-adult-advanced">Core</td>
-                                <td class="class-adult">Dragons</td>
-                                <td class="class-adult-advanced">Core</td>
-                                <td class="class-adult">Dragons</td>
-                                <td class="class-open">Core</td>
-                                <td>-</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-        <!-- Blue Belt Divider -->
-        <div class="belt-divider-blue"></div>
+        <div class="schedule-wrapper">
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="time-col">4:00 PM</td>
+                        <td class="class-power-up" data-label="Monday">Power Up</td>
+                        <td data-label="Tuesday">-</td>
+                        <td class="class-power-up" data-label="Wednesday">Power Up</td>
+                        <td data-label="Thursday">-</td>
+                        <td class="class-power-up" data-label="Friday">Power Up</td>
+                        <td class="class-family" data-label="Saturday">Family Class</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">5:00 PM</td>
+                        <td class="class-little-ninjas" data-label="Monday">Little Ninjas</td>
+                        <td class="class-dragons-advanced" data-label="Tuesday">Dragons Advanced</td>
+                        <td class="class-little-ninjas" data-label="Wednesday">Little Ninjas</td>
+                        <td class="class-dragons-advanced" data-label="Thursday">Dragons Advanced</td>
+                        <td class="class-little-ninjas" data-label="Friday">Little Ninjas</td>
+                        <td class="class-competition" data-label="Saturday">Competition Team</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">6:00 PM</td>
+                        <td class="class-adult" data-label="Monday">Dragons</td>
+                        <td class="class-blackbelt" data-label="Tuesday">Dragons Black Belts</td>
+                        <td class="class-adult" data-label="Wednesday">Dragons</td>
+                        <td class="class-blackbelt" data-label="Thursday">Dragons Black Belts</td>
+                        <td class="class-adult" data-label="Friday">Dragons</td>
+                        <td data-label="Saturday">-</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">7:00 PM</td>
+                        <td class="class-adult-advanced" data-label="Monday">Core</td>
+                        <td class="class-adult" data-label="Tuesday">Dragons</td>
+                        <td class="class-adult-advanced" data-label="Wednesday">Core</td>
+                        <td class="class-adult" data-label="Thursday">Dragons</td>
+                        <td class="class-open" data-label="Friday">Core</td>
+                        <td data-label="Saturday">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!-- Blue Belt Divider -->
+<div class="belt-divider-blue"></div>
 
-        <!-- Testimonials / Reviews Section -->
+<!-- Testimonials / Reviews Section -->
 <section id="testimonials" class="testimonials-section">
     <div class="container">
     <h2>What Our Students Say</h2>
@@ -231,89 +352,94 @@
         <div class="belt-divider-bluestripe"></div>
 
         <!-- Contact Section -->
-        <section id="contact" class="contact-section">
-            <div class="container">
-                <h2>Contact Us</h2>
-                <div class="contact-grid">
-                    <div class="contact-info">
-                        <h3>Get in Touch</h3>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <p><strong>Location</strong></p>
-                                <a href="https://maps.app.goo.gl/aimU1GrjD8yztVMG9" target="_blank" rel="noopener">
-                                <p>3712 Reynolda Rd, Winston-Salem, NC</p>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <p><strong>Phone</strong></p>
-                                <p><a href="tel:+13366248499">(336) 624-8499</a></p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <p><strong>Hours</strong></p>
-                                <p>Mon-Fri: 4:00 PM - 8:00 PM</p>
-                                <p>Saturday: 8:30 AM - 10:30 AM</p>
-                            </div>
-                        </div>
-                        <div class="social-links">
-                            <a href="https://www.facebook.com/Panamericantaekwondoacademy1/" target="_blank" rel="noopener" aria-label="Facebook">
-                                <i class="fab fa-facebook"></i>
-                            </a>
-                            </a>
-                            <!--<a href="sms:+13366248499" aria-label="SMS">
-                                <i class="fas fa-sms"></i>
-                            </a>-->
-                        </div>
-                    </div>
-         <!-- Red Belt Divider -->
-        <div class="belt-divider-red"></div>
-                    <div class="contact-form">
-                        <h3>Schedule Your Free Trial</h3>
-                        <form 
-                            action="https://formsubmit.co/panamericantkd22@gmail.com" 
-                            method="POST">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" placeholder="Enter your name" required>
-                    
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" placeholder="your@email.com" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" placeholder="(336) 123-4567" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="age-group">Age Group</label>
-                                <select id="age-group" name="age-group" required>
-                                    <option value="">Select Age Group</option>
-                                    <option value="power-up">Power Up(All ages)</option>
-                                    <option value="little ninjas">Little Ninjas(5-9)</option>
-                                    <option value="dragons">Dragons (10-17)</option>
-                                    <option value="core">Core 18+</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Tell Us About Your Goals</label>
-                                <textarea id="message" name="message" placeholder="Any previous martial arts experience or specific goals?" rows="4"></textarea>
-                            </div>
-                            <button type="submit" class="fas fa-paper-plane">Schedule Trial Class</button>
-                        </form>
+<section id="contact" class="contact-section">
+    <div class="container">
+        <h2>Contact Us</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <p><strong>Location</strong></p>
+                        <a href="https://maps.app.goo.gl/aimU1GrjD8yztVMG9" target="_blank" rel="noopener">
+                        <p>3712 Reynolda Rd, Winston-Salem, NC</p>
+                        </a>
                     </div>
                 </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <p><strong>Phone</strong></p>
+                        <p><a href="tel:+13366248499">(336) 624-8499</a></p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <p><strong>Hours</strong></p>
+                        <p>Mon-Fri: 4:00 PM - 8:00 PM</p>
+                        <p>Saturday: 8:30 AM - 10:30 AM</p>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/Panamericantaekwondoacademy1/" target="_blank" rel="noopener" aria-label="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    </a>
+                    <!--<a href="sms:+13366248499" aria-label="SMS">
+                        <i class="fas fa-sms"></i>
+                    </a>-->
+                </div>
             </div>
+</section>
+    <!-- Red Belt Divider -->
+
+<div class="belt-divider-red"></div>
+<section>
+    <div class="contact-form">
+        <h3>Schedule Your Free Trial</h3>
+        <form id="trial-form" action="https://formsubmit.co/panamericantkd22@gmail.com" method="POST">
+            <!--<div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>-->
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="(336) 123-4567" required>
+            </div>
+            <div class="form-group">
+            <label for="age-group">Age Group</label>
+                <select id="age-group" name="age-group" required>
+                    <option value="">Select Age Group</option>
+                    <option value="power-up">Power Up (All ages)</option>
+                    <option value="little ninjas">Little Ninjas (5-9)</option>
+                    <option value="dragons">Dragons (10-17)</option>
+                    <option value="core">Core 18+</option>
+                </select>
+            </div>
+            <div class="form-group">
+            <label for="message">Tell Us About Your Goals</label>
+            <textarea id="message" name="message" placeholder="Any previous martial arts experience or specific goals?" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane"></i> Schedule Trial Class
+            </button>
+                </form>
+    </div>
+
+
+</section>
     <!-- Red Belt with Black Stripe Divider -->
     <div class="belt-divider-redstripe"></div>
-        </section>
+<section></section>
     <!-- Red-Black Belt Divider -->
     <div class="belt-divider-redblack"></div>
-    </main>
+
 
     <footer>
         <div class="container">
@@ -325,7 +451,7 @@
     <div class="belt-divider-black"></div>
 
     <!-- Floating Chat Widget -->
-    <div class="chat-widget" id="chatWidget">
+<div class="chat-widget" id="chatWidget">
         <div class="chat-widget-button" id="chatButton">
             <img src="icon.png" alt="Chat with us" class="chat-icon">
             <span class="chat-pulse"></span>
@@ -338,7 +464,7 @@
                     <h4>Panamerican TKD</h4>
                     <p class="chat-status"><span class="status-dot"></span> Online</p>
                 </div>
-                <button class="chat-close" id="chatClose">
+                <button class="chat-close" id="chatClose" aria-label="Close chat">
                         <i class="fas fa-times"></i>
                     </button>
             </div>
@@ -364,25 +490,25 @@
             </div>
             <div class="chat-footer">
                 <div class="quick-replies">
-                    <button class="quick-reply-btn" data-message="I want to schedule a free trial">
+                    <button class="quick-reply-btn" data-message="I want to schedule a free trial" aria-label="Schedule a free trial">
                         <i class="fas fa-calendar-check"></i> Free Trial
                     </button>
-                    <button class="quick-reply-btn" data-message="Tell me about your programs">
+                    <button class="quick-reply-btn" data-message="Tell me about your programs" aria-label="Learn about programs">
                         <i class="fas fa-info-circle"></i> Programs
                     </button>
-                    <button class="quick-reply-btn" data-message="What are your class schedules?">
+                    <button class="quick-reply-btn" data-message="What are your class schedules?" aria-label="View class schedules">
                         <i class="fas fa-clock"></i> Schedule
                     </button>
-                    <button class="quick-reply-btn" data-message="I have a question">
+                    <button class="quick-reply-btn" data-message="I have a question" aria-label="Ask a question">
                         <i class="fas fa-question-circle"></i> Ask Question
                     </button>
                 </div>
                 <div class="chat-input-wrapper">
-                    <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput">
+                    <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message">
                 </div>
             </div>
         </div>
-    </div>
+</div>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="script.js"></script>
         <!-- End of scripts -->
