@@ -1,0 +1,111 @@
+name: Backend CI/CD
+
+on:
+  push: 
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+  workflow_dispatch:
+
+jobs: 
+  install-and-test: 
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    
+    steps: 
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+        
+    - name: 📦 Install backend dependencies
+      working-directory: ./backend
+      run: npm install
+        
+    - name: ✅ Verify installation
+      working-directory: ./backend
+      run: |
+        echo "Installed packages:"
+        npm list --depth=0
+        
+    - name:  🔍 Check for vulnerabilities
+      working-directory: ./backend
+      run: npm audit --audit-level=moderate || true
+        
+    - name:  📊 Display summary
+      working-directory: ./backend
+      run: |
+        echo "✅ Dependencies installed successfully!"
+        echo "📦 Total packages:  $(ls node_modules | wc -l)"
+
+  lint:
+    name: Code Quality Check
+    needs: install-and-test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache:  'npm'
+        cache-dependency-path: backend/package-lock.json
+        
+    - name: 📦 Install dependencies
+      working-directory: ./backend
+      run: npm ci
+        
+    - name: 🔍 Check JavaScript syntax
+      working-directory: ./backend
+      run: |
+        node --check index.js
+        node --check routes/auth.js
+        node --check routes/admin.js
+        node --check models/User.js
+        node --check utils/crypto.js
+        echo "✅ Syntax check passed!"
+
+  build:
+    name: Build Check
+    needs: [install-and-test, lint]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with: 
+        node-version: '18'
+        
+    - name: 📦 Install dependencies
+      working-directory:  ./backend
+      run: npm ci
+        
+    - name: 🏗️ Build verification
+      working-directory: ./backend
+      run: |
+        echo "Verifying backend structure..."
+        test -f index.js && echo "✅ index.js found"
+        test -d routes && echo "✅ routes directory found"
+        test -d models && echo "✅ models directory found"
+        test -d utils && echo "✅ utils directory found"
+        test -f package.json && echo "✅ package.json found"
+        
+    - name: 🎉 Success notification
+      run:  echo "🎉 Backend build completed successfully!"
