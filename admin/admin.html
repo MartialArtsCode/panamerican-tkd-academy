@@ -1,1 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Panamerican TKD Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- Login Container -->
+    <div id="loginContainer" class="login-container">
+        <div class="login-card">
+            <img src="../icon.png" alt="Panamerican TKD" class="login-logo">
+            <h1>Admin Login</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" name="email" required placeholder="admin@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter password">
+                </div>
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <div id="loginError" class="error-message"></div>
+            </form>
+        </div>
+    </div>
 
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-left">
+                <img src="../icon.png" alt="Logo" class="header-logo">
+                <h1>Admin Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <span class="admin-email" id="adminEmail"></span>
+                <button id="logoutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="admin-nav">
+            <button class="nav-tab active" data-tab="chat">
+                <i class="fas fa-comments"></i> Live Chat
+                <span class="notification-badge" id="chatBadge">0</span>
+            </button>
+            <button class="nav-tab" data-tab="users">
+                <i class="fas fa-users"></i> User Management
+            </button>
+            <button class="nav-tab" data-tab="messages">
+                <i class="fas fa-envelope"></i> Messages
+            </button>
+        </nav>
+
+        <!-- Chat Tab -->
+        <div id="chatTab" class="tab-content active">
+            <div class="chat-layout">
+                <div class="sessions-sidebar">
+                    <div class="sidebar-header">
+                        <h3><i class="fas fa-users"></i> Active Sessions</h3>
+                        <span class="session-count" id="sessionCount">0</span>
+                    </div>
+                    <div class="sessions-list" id="sessionsList">
+                        <p class="no-sessions">No active sessions</p>
+                    </div>
+                </div>
+                <div class="chat-main">
+                    <div class="chat-header">
+                        <h3 id="activeChatTitle">Select a session to view messages</h3>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="no-chat-selected">
+                            <i class="fas fa-comments"></i>
+                            <p>Select a visitor session from the left to start chatting</p>
+                        </div>
+                    </div>
+                    <div class="chat-input-area" id="chatInputArea" style="display: none;">
+                        <input type="text" id="adminMessageInput" placeholder="Type your response..." />
+                        <button id="sendMessageBtn" class="btn-send">
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="usersTab" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> User Management</h2>
+                <button id="addUserBtn" class="btn-primary">
+                    <i class="fas fa-plus"></i> Add User
+                </button>
+            </div>
+            <div class="users-container">
+                <table class="data-table" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="4" class="no-data">No users found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Messages Tab -->
+        <div id="messagesTab" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-envelope"></i> Form Submissions</h2>
+                <button id="refreshMessagesBtn" class="btn-secondary">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+            </div>
+            <div class="messages-container">
+                <div class="message-list" id="messagesList">
+                    <p class="no-data">Form submissions will appear here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-user-plus"></i> Add New User</h2>
+            <form id="addUserForm">
+                <div class="form-group">
+                    <label for="newUserEmail">Email</label>
+                    <input type="email" id="newUserEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="newUserPassword">Password</label>
+                    <input type="password" id="newUserPassword" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Create User</button>
+                    <button type="button" class="btn-secondary" id="cancelAddUser">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
