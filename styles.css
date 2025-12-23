@@ -2000,6 +2000,7 @@ footer p {
 }
 
 .chat-widget-popup {
+    display: none;
     position: absolute;
     bottom: 90px;
     right: 0;
@@ -2015,6 +2016,8 @@ footer p {
 }
 
 .chat-widget-popup.active {
+    display: flex;
+    flex-direction: column;
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1);
@@ -2131,7 +2134,25 @@ footer p {
 }
 
 .user-message {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10 px 0;
     flex-direction: row-reverse;
+}
+
+.user-message .message-content {
+    background: #1a472a;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 18px 18px 0 18px;
+    max-width: 70%;
+}
+
+.user-message .message-time {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+    display: block;
+    margin-top: 5px;
 }
 
 .user-content {
