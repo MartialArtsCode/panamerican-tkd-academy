@@ -61,10 +61,17 @@ function initSocketIO() {
     });
     
     socket.on('restore-chat', (session) => {
-        console.log('📋 Restoring previous chat');
+        console.log('📋 Restoringfunction initChatWidget() {
+    const chatButton = document.getElementById('chatButton');
+    const chatPopup = document.getElementById('chatPopup');
+    const chatClose = document.getElementById('chatClose');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+    const quickReplyBtns = document.querySelectorAll('.quick-reply-btn'); previous chat');
         restoreChatHistory(session);
     });
 }
+
 
 /**
  * Restore chat history from server
