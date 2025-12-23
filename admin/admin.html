@@ -1,1 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PTA Admin Dashboard</title>
+
+    <!-- Socket.IO -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <style>
+        :root {
+            --primary: #cc1f2b;
+            --dark: #0f0f14;
+            --panel: #171720;
+            --border: rgba(255,255,255,0.08);
+            --text: #ffffff;
+            --muted: #9aa0a6;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background: var(--panel);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-header img { width: 36px; }
+
+        .session-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .session {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .session.active { background: rgba(204,31,43,0.15); }
+
+        .session small { color: var(--muted); }
+
+        /* Chat Panel */
+        .chat-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            background: var(--panel);
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .msg {
+            margin-bottom: 14px;
+            max-width: 70%;
+        }
+
+        .msg.visitor {
+            background: #222;
+            padding: 12px;
+            border-radius: 12px 12px 12px 0;
+        }
+
+        .msg.admin {
+            background: var(--primary);
+            margin-left: auto;
+            padding: 12px;
+            border-radius: 12px 12px 0 12px;
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid var(--border);
+            background: var(--panel);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 14px;
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 0 22px;
+            cursor: pointer;
+        }
+
+        .empty {
+            color: var(--muted);
+            text-align: center;
+            margin-top: 20%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="/icon.png" alt="PTA" />
+            <strong>PTA Admin</strong>
+        </div>
+        <div class="session-list" id="sessionList"></div>
+    </aside>
+
+    <!-- CHAT -->
+    <main class="chat-panel">
+        <div class="chat-header" id="chatHeader">Select a conversation</div>
+        <div class="chat-body" id="chatBody">
+            <div class="empty">No conversation selected</div>
+        </div>
+        <div class="chat-input">
+            <input id="replyInput" placeholder="Type a reply…" />
+            <button id="sendReply">Send</button>
+        </div>
+    </main>
+
+    <script>
+        const socket = io();
+        const sessionList = document.getElementById('sessionList');
+        const chatBody = document.getElementById('chatBody');
+        const chatHeader = document.getElementById('chatHeader');
+        const replyInput = document.getElementById('replyInput');
+        const sendReply = document.getElementById('sendReply');
+
+        let activeSessionId = null;
+        let sessions = {};
+
+        socket.emit('identify', { type: 'admin' });
+
+        socket.on('visitor-message', data => {
+            if (!sessions[data.sessionId]) {
+                sessions[data.sessionId] = [];
+                addSession(data.sessionId);
+            }
+            sessions[data.sessionId].push({ from: 'visitor', text: data.message });
+            if (data.sessionId === activeSessionId) renderMessages();
+        });
+
+        function addSession(sessionId) {
+            const div = document.createElement('div');
+            div.className = 'session';
+            div.textContent = sessionId;
+            div.onclick = () => selectSession(sessionId, div);
+            sessionList.prepend(div);
+        }
+
+        function selectSession(id, el) {
+            activeSessionId = id;
+            document.querySelectorAll('.session').forEach(s => s.classList.remove('active'));
+            el.classList.add('active');
+            chatHeader.textContent = `Session: ${id}`;
+            renderMessages();
+        }
+
+        function renderMessages() {
+            chatBody.innerHTML = '';
+            sessions[activeSessionId].forEach(m => {
+                const div = document.createElement('div');
+                div.className = `msg ${m.from}`;
+                div.textContent = m.text;
+                chatBody.appendChild(div);
+            });
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        sendReply.onclick = () => {
+            const text = replyInput.value.trim();
+            if (!text || !activeSessionId) return;
+
+            socket.emit('admin-response', {
+                sessionId: activeSessionId,
+                message: text,
+                timestamp: new Date().toISOString()
+            });
+
+            sessions[activeSessionId].push({ from: 'admin', text });
+            replyInput.value = '';
+            renderMessages();
+        };
+    </script>
+</body>
+</html>
 
