@@ -1,1 +1,1 @@
-
+# Message schema (optional split)
