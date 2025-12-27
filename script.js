@@ -74,6 +74,289 @@ function initSocketIO() {
 
     socket.on('restore-chat', session => restoreChatHistory(session));
 }
+/*LOGIN*/
+    /* Inline script for login & simple user-admin interface (client-side mock) */
+        (function () {
+            // Elements
+            const loginButton = document.getElementById('loginButton');
+            const logoutButton = document.getElementById('logoutButton');
+            const loginModal = document.getElementById('loginModal');
+            const loginForm = document.getElementById('loginForm');
+            const loginCancel = document.getElementById('loginCancel');
+            const currentUserLabel = document.getElementById('currentUserLabel');
+            const currentUserName = document.getElementById('currentUserName');
+
+            const userDashboard = document.getElementById('userDashboard');
+            const adminDashboard = document.getElementById('adminDashboard');
+            const userNameDisplay = document.getElementById('userNameDisplay');
+            const userInfoBox = document.getElementById('userInfoBox');
+
+            const createUserForm = document.getElementById('createUserForm');
+            const usersContainer = document.getElementById('usersContainer');
+            const adminRefreshUsers = document.getElementById('adminRefreshUsers');
+
+            // Local storage keys
+            const USERS_KEY = 'pta_users_v1';
+            const CURRENT_USER_KEY = 'pta_current_user_v1';
+
+            // Utility functions
+            function openModal() {
+                loginModal.style.display = 'flex';
+                loginModal.setAttribute('aria-hidden', 'false');
+                document.getElementById('loginUsername').focus();
+            }
+            function closeModal() {
+                loginModal.style.display = 'none';
+                loginModal.setAttribute('aria-hidden', 'true');
+                loginForm.reset();
+            }
+
+            function saveUsers(users) {
+                localStorage.setItem(USERS_KEY, JSON.stringify(users || []));
+            }
+            function loadUsers() {
+                try {
+                    const raw = localStorage.getItem(USERS_KEY);
+                    return raw ? JSON.parse(raw) : [];
+                } catch(e) {
+                    return [];
+                }
+            }
+            function setCurrentUser(user) {
+                localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+            }
+            function getCurrentUser() {
+                try {
+                    const raw = localStorage.getItem(CURRENT_USER_KEY);
+                    return raw ? JSON.parse(raw) : null;
+                } catch(e) {
+                    return null;
+                }
+            }
+            function clearCurrentUser() {
+                localStorage.removeItem(CURRENT_USER_KEY);
+            }
+
+            // Pre-seed an admin user if none exists (for first-time use)
+            (function seedAdmin() {
+                const users = loadUsers();
+                const hasAdmin = users.some(u => u.role === 'admin');
+                if (!hasAdmin) {
+                    users.push({
+                        id: Date.now(),
+                        username: 'admin',
+                        email: 'admin@pta.local',
+                        password: 'admin123', // NOTE: client-side mock only. Change in production.
+                        role: 'admin'
+                    });
+                    saveUsers(users);
+                }
+            })();
+
+            // UI state management
+            function updateUIForLoggedOut() {
+                logoutButton.style.display = 'none';
+                logoutButton.setAttribute('aria-hidden', 'true');
+                loginButton.style.display = 'inline-flex';
+                currentUserLabel.style.display = 'none';
+                userDashboard.style.display = 'none';
+                adminDashboard.style.display = 'none';
+                userDashboard.setAttribute('aria-hidden', 'true');
+                adminDashboard.setAttribute('aria-hidden', 'true');
+            }
+
+            function updateUIForUser(user) {
+                loginButton.style.display = 'none';
+                logoutButton.style.display = 'inline-flex';
+                logoutButton.setAttribute('aria-hidden', 'false');
+                currentUserLabel.style.display = 'inline-block';
+                currentUserName.textContent = user.username;
+                userNameDisplay.textContent = user.username;
+                userInfoBox.innerHTML = '<p><strong>Username:</strong> ' + user.username + '</p>'
+                    + '<p><strong>Email:</strong> ' + (user.email || '-') + '</p>'
+                    + '<p><strong>Role:</strong> ' + user.role + '</p>';
+
+                if (user.role === 'admin') {
+                    adminDashboard.style.display = 'block';
+                    adminDashboard.setAttribute('aria-hidden', 'false');
+                    userDashboard.style.display = 'none';
+                    userDashboard.setAttribute('aria-hidden', 'true');
+                    renderUserList();
+                } else {
+                    userDashboard.style.display = 'block';
+                    userDashboard.setAttribute('aria-hidden', 'false');
+                    adminDashboard.style.display = 'none';
+                    adminDashboard.setAttribute('aria-hidden', 'true');
+                }
+            }
+
+            // Authentication (mock)
+            loginButton.addEventListener('click', () => openModal());
+            loginCancel.addEventListener('click', () => closeModal());
+            loginModal.addEventListener('click', (e) => {
+                if (e.target === loginModal) closeModal();
+            });
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('loginUsername').value.trim();
+                const password = document.getElementById('loginPassword').value;
+                const role = document.getElementById('loginRole').value;
+
+                // Check against stored users
+                const users = loadUsers();
+                const matched = users.find(u => u.username === username && u.role === role);
+
+                if (matched) {
+                    // If a user exists in storage, verify password (client-side)
+                    if (matched.password && matched.password !== password) {
+                        alert('Invalid credentials.');
+                        return;
+                    }
+                    const user = { username: matched.username, email: matched.email, role: matched.role };
+                    setCurrentUser(user);
+                    updateUIForUser(user);
+                    closeModal();
+                    return;
+                }
+
+                // If no stored user, allow "user" role to sign in as a guest
+                if (role === 'user') {
+                    const guest = { username: username || 'guest', email: '', role: 'user' };
+                    setCurrentUser(guest);
+                    updateUIForUser(guest);
+                    closeModal();
+                    return;
+                }
+
+                // For admin role, restrict arbitrary sign-in: require admin password or existing admin user
+                if (role === 'admin') {
+                    // If an admin exists in storage but username didn't match, deny
+                    const existingAdmin = users.find(u => u.role === 'admin');
+                    if (existingAdmin) {
+                        alert('Admin username not found. Use the existing admin account or create one.');
+                        return;
+                    } else {
+                        // If no admin exists (should be pre-seeded), allow one-time admin creation if password matches default
+                        if (password === 'admin123') {
+                            const admin = { username: username || 'admin', email: '', role: 'admin' };
+                            // save admin to users for persistence
+                            users.push({ id: Date.now(), username: admin.username, email: admin.email, password: password, role: 'admin' });
+                            saveUsers(users);
+                            setCurrentUser(admin);
+                            updateUIForUser(admin);
+                            closeModal();
+                            return;
+                        } else {
+                            alert('Invalid admin password.');
+                            return;
+                        }
+                    }
+                }
+            });
+
+            logoutButton.addEventListener('click', () => {
+                clearCurrentUser();
+                updateUIForLoggedOut();
+            });
+
+            // Admin: create user
+            createUserForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('newUsername').value.trim();
+                const email = document.getElementById('newEmail').value.trim();
+                const password = document.getElementById('newPassword').value;
+                const role = document.getElementById('newRole').value;
+
+                if (!username || !email || !password) {
+                    alert('Please fill all fields.');
+                    return;
+                }
+
+                const users = loadUsers();
+                if (users.some(u => u.username === username)) {
+                    alert('Username already exists.');
+                    return;
+                }
+
+                users.push({
+                    id: Date.now(),
+                    username,
+                    email,
+                    password, // store client-side only for demo
+                    role
+                });
+                saveUsers(users);
+                renderUserList();
+                createUserForm.reset();
+                alert('User created.');
+            });
+
+            function renderUserList() {
+                const users = loadUsers();
+                if (!usersContainer) return;
+                if (users.length === 0) {
+                    usersContainer.innerHTML = '<p class="small">No users found.</p>';
+                    return;
+                }
+                usersContainer.innerHTML = '';
+                users.forEach(u => {
+                    const div = document.createElement('div');
+                    div.className = 'user-item';
+                    div.innerHTML = '<div><strong>' + escapeHtml(u.username) + '</strong> <span class="small">(' + u.role + ')</span><div class="small">' + (u.email || '') + '</div></div>';
+                    const actions = document.createElement('div');
+                    actions.style.display = 'flex';
+                    actions.style.gap = '8px';
+                    const delBtn = document.createElement('button');
+                    delBtn.className = 'btn-secondary';
+                    delBtn.textContent = 'Delete';
+                    delBtn.addEventListener('click', () => {
+                        if (!confirm('Delete user ' + u.username + '?')) return;
+                        const remaining = loadUsers().filter(x => x.id !== u.id);
+                        saveUsers(remaining);
+                        renderUserList();
+                    });
+                    actions.appendChild(delBtn);
+                    div.appendChild(actions);
+                    usersContainer.appendChild(div);
+                });
+            }
+
+            adminRefreshUsers.addEventListener('click', renderUserList);
+
+            // small helper
+            function escapeHtml(s) {
+                return String(s).replace(/[&<>"']/g, function (m) {
+                    return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[m];
+                });
+            }
+
+            // On load, check if a user is logged in
+            (function init() {
+                const current = getCurrentUser();
+                if (current) {
+                    updateUIForUser(current);
+                } else {
+                    updateUIForLoggedOut();
+                }
+            })();
+
+            // Support keyboard interaction for modal (Escape to close)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (loginModal.style.display === 'flex') closeModal();
+                }
+            });
+
+            // Example: user "View Schedule" button just scrolls to schedule section
+            const userGoToSchedule = document.getElementById('userGoToSchedule');
+            if (userGoToSchedule) {
+                userGoToSchedule.addEventListener('click', () => {
+                    const scheduleSection = document.getElementById('schedule');
+                    if (scheduleSection) scheduleSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+        })();
 
 /* ======================
    CHAT WIDGET
