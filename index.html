@@ -129,11 +129,123 @@
         .class-family { background: #96750973; }
         .class-competition { background: #8503036b; }
         .class-open { background: #06509b5d; }
+
+        /* --- Login & Dashboard Styles --- */
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: 16px;
+        }
+
+        .login-btn, .logout-btn {
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .login-btn:hover, .logout-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal {
+            background: #fff;
+            width: 360px;
+            max-width: calc(100% - 32px);
+            border-radius: 8px;
+            padding: 18px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        .modal h3 {
+            margin-top: 0;
+        }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display:block; font-weight:600; margin-bottom:6px; }
+        .form-group input, .form-group select {
+            width:100%;
+            padding:8px 10px;
+            border-radius:6px;
+            border:1px solid #ccc;
+        }
+
+        .btn-primary {
+            background:#1a472a;
+            color:#fff;
+            padding:8px 12px;
+            border-radius:6px;
+            border:none;
+            cursor:pointer;
+            font-weight:700;
+        }
+
+        .btn-secondary {
+            background:#ddd;
+            color:#222;
+            padding:8px 12px;
+            border-radius:6px;
+            border:none;
+            cursor:pointer;
+            margin-left:8px;
+        }
+
+        /* Dashboard containers */
+        .dashboard {
+            display: none;
+            margin: 20px auto;
+            max-width: 1000px;
+            background: rgba(255,255,255,0.92);
+            padding: 18px;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+
+        .dashboard h3 { margin-top: 0; }
+
+        .user-welcome { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+
+        .user-list { margin-top: 12px; }
+        .user-item { display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #eee; align-items:center; }
+
+        .small { font-size: 0.9rem; color:#555; }
+
+        @media (max-width:600px) {
+            .header-actions { margin-left: 8px; }
+            .modal { width: 92%; }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <img src="full.png" alt="Panamerican Taekwondo Academy Logo" class="header-logo">
+    <header style="display:flex; align-items:center; gap:12px; padding:12px;">
+        <img src="full.png" alt="Panamerican Taekwondo Academy Logo" class="header-logo" style="max-height:56px;">
+        <div class="header-actions" role="navigation" aria-label="Header actions">
+            <button id="loginButton" class="login-btn" aria-haspopup="dialog" aria-controls="loginModal">
+                <i class="fas fa-user"></i> Login
+            </button>
+            <button id="logoutButton" class="logout-btn" style="display:none;" aria-hidden="true">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+            <span id="currentUserLabel" class="small" style="display:none;">Signed in as <strong id="currentUserName"></strong></span>
+        </div>
     </header>
     <!-- White Belt Divider -->
         <div class="belt-divider"></div>
@@ -180,8 +292,8 @@
                     <h2>About Panamerican Taekwondo Academy</h2>
                     <div class="about-content">
                     <div class="about-text">
-                        <p>Welcome to the Panamerican Taekwondo Academy, where tradition meets excellence. Our academy has been dedicated to teaching authentic Taekwondo for over 20 years, fostering discipline, respect, and physical fitness in students of all ages.</p>
-                        <p>We follow the World Taekwondo Federation (WT) and Global Traditional Taekwondo Federation (GTTF) curriculums and emphasize both the physical and mental aspects of martial arts training. Our programs are designed to build character, confidence, and self-defense skills.</p>
+                        <p>Welcome to the Panamerican Taekwondo Academy, where tradition meets excellence. Our academy has been dedicated to teaching authentic Taekwondo for over 20 years, fostering d[...]
+                        <p>We follow the World Taekwondo Federation (WT) and Global Traditional Taekwondo Federation (GTTF) curriculums and emphasize both the physical and mental aspects of martial ar[...]
                     </div>
                     <div class="achievements">
                         <div class="achievement-card">
@@ -217,7 +329,7 @@
                         </div>
                         <h3>Power Up</h3>
                         <p class="age-range">All Ages</p>
-                        <p class="program-description">Created for neurodivergent students including those with ASD, ADHD, anxiety or sensory processing differences. This program helps each child develop confidence, coordination, focus, and emotional regulation through Taekwondo.</p>
+                        <p class="program-description">Created for neurodivergent students including those with ASD, ADHD, anxiety or sensory processing differences. This program helps each child deve[...]
                         <ul class="program-features">
                             <li><i class="fas fa-check"></i> Basic kicks and punches</li>
                             <li><i class="fas fa-check"></i> Balance and coordination</li>
@@ -509,8 +621,391 @@
             </div>
         </div>
 </div>
+
+<!-- === Login Modal === -->
+<div id="loginModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document" aria-labelledby="loginTitle">
+        <h3 id="loginTitle">Sign in</h3>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginUsername">Username</label>
+                <input id="loginUsername" name="username" type="text" required placeholder="e.g., jdoe">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input id="loginPassword" name="password" type="password" required placeholder="your password">
+            </div>
+            <div class="form-group">
+                <label for="loginRole">Role</label>
+                <select id="loginRole" name="role" required>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:8px;">
+                <button type="button" class="btn-secondary" id="loginCancel">Cancel</button>
+                <button type="submit" class="btn-primary"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+            </div>
+            <p class="small" style="margin-top:10px;">(This is a client-side mock login. For production integrate with your backend auth.)</p>
+        </form>
+    </div>
+</div>
+
+<!-- === User Dashboard (visible to role=user) === -->
+<section id="userDashboard" class="dashboard" aria-hidden="true">
+    <div class="user-welcome">
+        <div>
+            <h3>Welcome, <span id="userNameDisplay"></span></h3>
+            <p class="small">Access your bookings, profile and trial scheduling here.</p>
+        </div>
+        <div>
+            <button id="userGoToSchedule" class="btn-primary"><i class="fas fa-clock"></i> View Schedule</button>
+        </div>
+    </div>
+
+    <div style="margin-top:16px;">
+        <h4>Your Info</h4>
+        <div class="user-info small" id="userInfoBox">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</section>
+
+<!-- === Admin Dashboard (visible to role=admin) === -->
+<section id="adminDashboard" class="dashboard" aria-hidden="true">
+    <div class="user-welcome">
+        <div>
+            <h3>Admin Console</h3>
+            <p class="small">Create and manage users below.</p>
+        </div>
+        <div>
+            <button id="adminRefreshUsers" class="btn-secondary"><i class="fas fa-sync"></i> Refresh</button>
+        </div>
+    </div>
+
+    <div style="margin-top:12px;">
+        <h4>Create New User</h4>
+        <form id="createUserForm" style="max-width:560px;">
+            <div class="form-group">
+                <label for="newUsername">Username</label>
+                <input id="newUsername" required>
+            </div>
+            <div class="form-group">
+                <label for="newEmail">Email</label>
+                <input id="newEmail" type="email" required>
+            </div>
+            <div class="form-group">
+                <label for="newPassword">Password</label>
+                <input id="newPassword" type="password" required>
+            </div>
+            <div class="form-group">
+                <label for="newRole">Role</label>
+                <select id="newRole">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div style="display:flex; gap:8px; justify-content:flex-end;">
+                <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Create User</button>
+            </div>
+        </form>
+
+        <div class="user-list" style="margin-top:16px;">
+            <h4>Existing Users</h4>
+            <div id="usersContainer" class="small">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+</section>
+
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="script.js"></script>
+
+    <!-- Inline script for login & simple user-admin interface (client-side mock) -->
+    <script>
+        (function () {
+            // Elements
+            const loginButton = document.getElementById('loginButton');
+            const logoutButton = document.getElementById('logoutButton');
+            const loginModal = document.getElementById('loginModal');
+            const loginForm = document.getElementById('loginForm');
+            const loginCancel = document.getElementById('loginCancel');
+            const currentUserLabel = document.getElementById('currentUserLabel');
+            const currentUserName = document.getElementById('currentUserName');
+
+            const userDashboard = document.getElementById('userDashboard');
+            const adminDashboard = document.getElementById('adminDashboard');
+            const userNameDisplay = document.getElementById('userNameDisplay');
+            const userInfoBox = document.getElementById('userInfoBox');
+
+            const createUserForm = document.getElementById('createUserForm');
+            const usersContainer = document.getElementById('usersContainer');
+            const adminRefreshUsers = document.getElementById('adminRefreshUsers');
+
+            // Local storage keys
+            const USERS_KEY = 'pta_users_v1';
+            const CURRENT_USER_KEY = 'pta_current_user_v1';
+
+            // Utility functions
+            function openModal() {
+                loginModal.style.display = 'flex';
+                loginModal.setAttribute('aria-hidden', 'false');
+                document.getElementById('loginUsername').focus();
+            }
+            function closeModal() {
+                loginModal.style.display = 'none';
+                loginModal.setAttribute('aria-hidden', 'true');
+                loginForm.reset();
+            }
+
+            function saveUsers(users) {
+                localStorage.setItem(USERS_KEY, JSON.stringify(users || []));
+            }
+            function loadUsers() {
+                try {
+                    const raw = localStorage.getItem(USERS_KEY);
+                    return raw ? JSON.parse(raw) : [];
+                } catch(e) {
+                    return [];
+                }
+            }
+            function setCurrentUser(user) {
+                localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+            }
+            function getCurrentUser() {
+                try {
+                    const raw = localStorage.getItem(CURRENT_USER_KEY);
+                    return raw ? JSON.parse(raw) : null;
+                } catch(e) {
+                    return null;
+                }
+            }
+            function clearCurrentUser() {
+                localStorage.removeItem(CURRENT_USER_KEY);
+            }
+
+            // Pre-seed an admin user if none exists (for first-time use)
+            (function seedAdmin() {
+                const users = loadUsers();
+                const hasAdmin = users.some(u => u.role === 'admin');
+                if (!hasAdmin) {
+                    users.push({
+                        id: Date.now(),
+                        username: 'admin',
+                        email: 'admin@pta.local',
+                        password: 'admin123', // NOTE: client-side mock only. Change in production.
+                        role: 'admin'
+                    });
+                    saveUsers(users);
+                }
+            })();
+
+            // UI state management
+            function updateUIForLoggedOut() {
+                logoutButton.style.display = 'none';
+                logoutButton.setAttribute('aria-hidden', 'true');
+                loginButton.style.display = 'inline-flex';
+                currentUserLabel.style.display = 'none';
+                userDashboard.style.display = 'none';
+                adminDashboard.style.display = 'none';
+                userDashboard.setAttribute('aria-hidden', 'true');
+                adminDashboard.setAttribute('aria-hidden', 'true');
+            }
+
+            function updateUIForUser(user) {
+                loginButton.style.display = 'none';
+                logoutButton.style.display = 'inline-flex';
+                logoutButton.setAttribute('aria-hidden', 'false');
+                currentUserLabel.style.display = 'inline-block';
+                currentUserName.textContent = user.username;
+                userNameDisplay.textContent = user.username;
+                userInfoBox.innerHTML = '<p><strong>Username:</strong> ' + user.username + '</p>'
+                    + '<p><strong>Email:</strong> ' + (user.email || '-') + '</p>'
+                    + '<p><strong>Role:</strong> ' + user.role + '</p>';
+
+                if (user.role === 'admin') {
+                    adminDashboard.style.display = 'block';
+                    adminDashboard.setAttribute('aria-hidden', 'false');
+                    userDashboard.style.display = 'none';
+                    userDashboard.setAttribute('aria-hidden', 'true');
+                    renderUserList();
+                } else {
+                    userDashboard.style.display = 'block';
+                    userDashboard.setAttribute('aria-hidden', 'false');
+                    adminDashboard.style.display = 'none';
+                    adminDashboard.setAttribute('aria-hidden', 'true');
+                }
+            }
+
+            // Authentication (mock)
+            loginButton.addEventListener('click', () => openModal());
+            loginCancel.addEventListener('click', () => closeModal());
+            loginModal.addEventListener('click', (e) => {
+                if (e.target === loginModal) closeModal();
+            });
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('loginUsername').value.trim();
+                const password = document.getElementById('loginPassword').value;
+                const role = document.getElementById('loginRole').value;
+
+                // Check against stored users
+                const users = loadUsers();
+                const matched = users.find(u => u.username === username && u.role === role);
+
+                if (matched) {
+                    // If a user exists in storage, verify password (client-side)
+                    if (matched.password && matched.password !== password) {
+                        alert('Invalid credentials.');
+                        return;
+                    }
+                    const user = { username: matched.username, email: matched.email, role: matched.role };
+                    setCurrentUser(user);
+                    updateUIForUser(user);
+                    closeModal();
+                    return;
+                }
+
+                // If no stored user, allow "user" role to sign in as a guest
+                if (role === 'user') {
+                    const guest = { username: username || 'guest', email: '', role: 'user' };
+                    setCurrentUser(guest);
+                    updateUIForUser(guest);
+                    closeModal();
+                    return;
+                }
+
+                // For admin role, restrict arbitrary sign-in: require admin password or existing admin user
+                if (role === 'admin') {
+                    // If an admin exists in storage but username didn't match, deny
+                    const existingAdmin = users.find(u => u.role === 'admin');
+                    if (existingAdmin) {
+                        alert('Admin username not found. Use the existing admin account or create one.');
+                        return;
+                    } else {
+                        // If no admin exists (should be pre-seeded), allow one-time admin creation if password matches default
+                        if (password === 'admin123') {
+                            const admin = { username: username || 'admin', email: '', role: 'admin' };
+                            // save admin to users for persistence
+                            users.push({ id: Date.now(), username: admin.username, email: admin.email, password: password, role: 'admin' });
+                            saveUsers(users);
+                            setCurrentUser(admin);
+                            updateUIForUser(admin);
+                            closeModal();
+                            return;
+                        } else {
+                            alert('Invalid admin password.');
+                            return;
+                        }
+                    }
+                }
+            });
+
+            logoutButton.addEventListener('click', () => {
+                clearCurrentUser();
+                updateUIForLoggedOut();
+            });
+
+            // Admin: create user
+            createUserForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('newUsername').value.trim();
+                const email = document.getElementById('newEmail').value.trim();
+                const password = document.getElementById('newPassword').value;
+                const role = document.getElementById('newRole').value;
+
+                if (!username || !email || !password) {
+                    alert('Please fill all fields.');
+                    return;
+                }
+
+                const users = loadUsers();
+                if (users.some(u => u.username === username)) {
+                    alert('Username already exists.');
+                    return;
+                }
+
+                users.push({
+                    id: Date.now(),
+                    username,
+                    email,
+                    password, // store client-side only for demo
+                    role
+                });
+                saveUsers(users);
+                renderUserList();
+                createUserForm.reset();
+                alert('User created.');
+            });
+
+            function renderUserList() {
+                const users = loadUsers();
+                if (!usersContainer) return;
+                if (users.length === 0) {
+                    usersContainer.innerHTML = '<p class="small">No users found.</p>';
+                    return;
+                }
+                usersContainer.innerHTML = '';
+                users.forEach(u => {
+                    const div = document.createElement('div');
+                    div.className = 'user-item';
+                    div.innerHTML = '<div><strong>' + escapeHtml(u.username) + '</strong> <span class="small">(' + u.role + ')</span><div class="small">' + (u.email || '') + '</div></div>';
+                    const actions = document.createElement('div');
+                    actions.style.display = 'flex';
+                    actions.style.gap = '8px';
+                    const delBtn = document.createElement('button');
+                    delBtn.className = 'btn-secondary';
+                    delBtn.textContent = 'Delete';
+                    delBtn.addEventListener('click', () => {
+                        if (!confirm('Delete user ' + u.username + '?')) return;
+                        const remaining = loadUsers().filter(x => x.id !== u.id);
+                        saveUsers(remaining);
+                        renderUserList();
+                    });
+                    actions.appendChild(delBtn);
+                    div.appendChild(actions);
+                    usersContainer.appendChild(div);
+                });
+            }
+
+            adminRefreshUsers.addEventListener('click', renderUserList);
+
+            // small helper
+            function escapeHtml(s) {
+                return String(s).replace(/[&<>"']/g, function (m) {
+                    return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[m];
+                });
+            }
+
+            // On load, check if a user is logged in
+            (function init() {
+                const current = getCurrentUser();
+                if (current) {
+                    updateUIForUser(current);
+                } else {
+                    updateUIForLoggedOut();
+                }
+            })();
+
+            // Support keyboard interaction for modal (Escape to close)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (loginModal.style.display === 'flex') closeModal();
+                }
+            });
+
+            // Example: user "View Schedule" button just scrolls to schedule section
+            const userGoToSchedule = document.getElementById('userGoToSchedule');
+            if (userGoToSchedule) {
+                userGoToSchedule.addEventListener('click', () => {
+                    const scheduleSection = document.getElementById('schedule');
+                    if (scheduleSection) scheduleSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+        })();
+    </script>
         <!-- End of scripts -->
  </body>
 </html>   
