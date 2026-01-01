@@ -390,14 +390,16 @@
     <div class="header-actions" role="navigation" aria-label="Header actions">
             <button id="loginButton" class="login-btn" aria-haspopup="dialog" aria-controls="loginModal">
                 <i class="fas fa-user"></i> Login
+                <span id="currentUserLabel" class="small" style="display:none;">Signed in as <strong id="currentUserName"></strong></span>
+                            <button id="logoutButton" class="logout-btn" style="display:none;" aria-hidden="true">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
             </button>
     </div>
 </div>
         
-            <button id="logoutButton" class="logout-btn" style="display:none;" aria-hidden="true">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-            <span id="currentUserLabel" class="small" style="display:none;">Signed in as <strong id="currentUserName"></strong></span>
+
+            
         </div>
                 </header>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
