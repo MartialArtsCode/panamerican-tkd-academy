@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initSocketIO();
     initChatWidget();
+    initLoginModal();
     initSmoothScrolling();
     initScrollAnimations();
     initButtonTracking();
@@ -358,40 +359,235 @@ function initSocketIO() {
             }
         })();
 
+<<<<<<< HEAD
+/**
+ * Initialize chat widget functionality
+ */
+
+// Chat Widget Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const chatButton = document.getElementById('chatButton');
+    const chatPopup = document.getElementById('chatPopup');
+    const chatClose = document.getElementById('chatClose');
+    const chatInput = document.getElementById('chatInput');
+    const chatBody = document.querySelector('.chat-body');
+    const quickReplyBtns = document.querySelectorAll('.quick-reply-btn');
+
+    // Toggle chat popup
+    chatButton.addEventListener('click', function() {
+        chatPopup.classList.toggle('active');
+        // Remove badge when opened
+        document.querySelector('.chat-badge').style.display = 'none';
+    });
+
+    // Close chat popup
+    chatClose.addEventListener('click', function() {
+        chatPopup.classList.remove('active');
+    });
+
+    // Handle quick reply buttons
+    quickReplyBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const message = this.getAttribute('data-message');
+            sendMessage(message);
+        });
+    });
+
+    // Handle chat input
+    chatInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && this.value. trim() !== '') {
+            sendMessage(this.value);
+            this.value = '';
+        }
+    });
+
+    // Function to send message
+    function sendMessage(message) {
+        // Add user message to chat
+        const userMessageDiv = document.createElement('div');
+        userMessageDiv.className = 'chat-message user-message';
+        userMessageDiv.innerHTML = `
+            <div class="message-content">
+                <p>${message}</p>
+                <span class="message-time">Just now</span>
+            </div>
+        `;
+        chatBody.appendChild(userMessageDiv);
+        chatBody.scrollTop = chatBody. scrollHeight;
+
+        // Simulate bot response (you can replace this with actual backend logic)
+        setTimeout(() => {
+            addBotResponse(message);
+        }, 1000);
+    }
+
+    // Function to add bot response
+    function addBotResponse(userMessage) {
+        let response = '';
+        
+        // Simple response logic based on keywords
+        if (userMessage.toLowerCase().includes('trial')) {
+            response = 'Great! You can schedule a free trial by filling out the form below or calling us at (336) 624-8499. When would you like to come in?';
+        } else if (userMessage.toLowerCase().includes('program')) {
+            response = 'We offer programs for all ages:  Power Up (all ages), Little Ninjas (5-9), Dragons (10-17), and Core (18+). Which age group are you interested in?';
+        } else if (userMessage.toLowerCase().includes('schedule')) {
+            response = 'We have classes Monday-Friday from 4:00 PM - 8:00 PM and Saturday 8:30 AM - 10:30 AM. Check our schedule section above for specific class times! ';
+        } else {
+            response = 'Thanks for your message! For immediate assistance, please call us at (336) 624-8499 or text us.  One of our instructors will be happy to help! ';
+        }
+
+        const botMessageDiv = document.createElement('div');
+        botMessageDiv. className = 'chat-message bot-message';
+        botMessageDiv.innerHTML = `
+            <div class="message-avatar">
+                <img src="icon.png" alt="Bot">
+            </div>
+            <div class="message-content">
+                <p>${response}</p>
+                <span class="message-time">Just now</span>
+            </div>
+        `;
+        chatBody.appendChild(botMessageDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+});
+=======
 /* ======================
    CHAT WIDGET
 ====================== */
+>>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
 function initChatWidget() {
     const chatButton = document.getElementById('chatButton');
     const chatPopup = document.getElementById('chatPopup');
     const chatClose = document.getElementById('chatClose');
     const chatInput = document.getElementById('chatInput');
     const chatSend = document.getElementById('chatSend');
+<<<<<<< HEAD
+    const quickReplyBtns = document.querySelectorAll('.quick-reply-btn');
+    
+    // Debug: Check if elements exist
+    console.log('Chat Widget Elements:', {
+        chatButton: !!chatButton,
+        chatPopup: !!chatPopup,
+        chatClose: !!chatClose,
+        chatInput: !!chatInput,
+        chatSend: !!chatSend,
+        quickReplyBtns: quickReplyBtns.length
+    });
+    
+    if (!chatButton || !chatPopup) {
+        console.error('❌ Chat widget elements not found!');
+        return;
+    }
+    
+    // Toggle chat popup
+    chatButton.addEventListener('click', function() {
+        console.log('💬 Chat button clicked!');
+=======
 
     if (!chatButton || !chatPopup) return;
 
     chatButton.addEventListener('click', () => {
+>>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
         chatPopup.classList.toggle('active');
+<<<<<<< HEAD
+        if (chatPopup.classList.contains('active')) {
+            if (chatInput) chatInput.focus();
+            // Hide badge when opened
+            const badge = document.querySelector('.chat-badge');
+            if (badge) {
+                badge.style.display = 'none';
+            }
+        }
+=======
         chatInput?.focus();
         document.querySelector('.chat-badge')?.style.setProperty('display', 'none');
+>>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
     });
+<<<<<<< HEAD
+    
+    // Close chat popup
+    chatClose.addEventListener('click', function(e) {
+        console.log('❌ Close button clicked!');
+=======
 
     chatClose?.addEventListener('click', e => {
+>>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
         e.stopPropagation();
         chatPopup.classList.remove('active');
     });
+<<<<<<< HEAD
+    
+    // Handle quick reply buttons
+    quickReplyBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            console.log('⚡ Quick reply clicked!');
+            const message = this.getAttribute('data-message');
+            sendMessageToWidget(message);
+        });
+=======
 
     chatSend?.addEventListener('click', sendFromInput);
 
     chatInput?.addEventListener('keypress', e => {
         if (e.key === 'Enter') sendFromInput();
+>>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
     });
+<<<<<<< HEAD
+    
+    // Handle send button
+    if (chatSend) {
+        chatSend.addEventListener('click', function() {
+            console.log('📤 Send button clicked!');
+            const message = chatInput.value.trim();
+            if (message) {
+                sendMessageToWidget(message);
+                chatInput.value = '';
+            }
+        });
+    }
+    
+    // Handle Enter key in input
+    if (chatInput) {
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                console.log('⏎ Enter key pressed!');
+                const message = chatInput.value.trim();
+                if (message) {
+                    sendMessageToWidget(message);
+                    chatInput.value = '';
+                }
+            }
+        });
+    }
+    
+    // Close popup when clicking outside
+    document.addEventListener('click', function(e) {
+=======
 
     document.addEventListener('click', e => {
+>>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
         if (!chatPopup.contains(e.target) && !chatButton.contains(e.target)) {
             chatPopup.classList.remove('active');
         }
     });
+<<<<<<< HEAD
+    
+    // Add typing animation
+    if (chatInput && chatSend) {
+        chatInput.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                chatSend.style.transform = 'scale(1.1)';
+            } else {
+                chatSend.style.transform = 'scale(1)';
+            }
+        });
+    }
+    
+    console.log('✅ Chat widget initialized successfully!');
+}
+=======
+>>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
 
     function sendFromInput() {
         const message = chatInput.value.trim();
@@ -429,7 +625,65 @@ function sendMessageToWidget(message) {
     }
 }
 
+<<<<<<< HEAD
+/**
+ * Check for admin response (deprecated - using Socket.IO now)
+ */
+function checkForAdminResponse() {
+    // This function is no longer needed with Socket.IO
+    // Responses come through the 'admin-response' socket event
+}
+    
+    // Stop checking after 5 seconds
+    setTimeout(() => {
+        clearInterval(checkInterval);
+    }, 5000);
+
+
+/**
+ * Listen for admin responses (continuously)
+ */
+setInterval(() => {
+    const response = localStorage.getItem('pta_admin_response');
+    if (response) {
+        try {
+            const responseData = JSON.parse(response);
+            if (responseData.sessionId === getSessionId()) {
+                // Clear the response
+                localStorage.removeItem('pta_admin_response');
+                
+                // Hide typing indicator
+                hideTypingIndicator();
+                
+                // Add admin response
+                const chatBody = document.querySelector('.chat-body');
+                const adminMessage = document.createElement('div');
+                adminMessage.className = 'chat-message bot-message';
+                adminMessage.innerHTML = `
+                    <div class="message-avatar">
+                        <img src="icon.png" alt="Admin">
+                    </div>
+                    <div class="message-content">
+                        <p>${escapeHtml(responseData.message)}</p>
+                        <span class="message-time">${getCurrentTime()}</span>
+                    </div>
+                `;
+                chatBody.appendChild(adminMessage);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        } catch (e) {
+            console.error('Error parsing admin response:', e);
+        }
+    }
+}, 1000);
+
+/**
+ * Show typing indicator
+ */
+function showTypingIndicator() {
+=======
 function addAdminMessage(data) {
+>>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
     const chatBody = document.querySelector('.chat-body');
     if (!chatBody) return;
 
@@ -572,4 +826,83 @@ function hideTypingIndicator() {
     document.getElementById('typingIndicator')?.remove();
 }
 
+/* ======================
+   LOGIN MODAL
+====================== */
+function initLoginModal() {
+    const loginBtn = document.getElementById('loginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeModal = document.getElementById('closeModal');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+
+    if (!loginBtn || !loginModal) {
+        console.warn('⚠️ Login elements not found');
+        return;
+    }
+
+    // Open modal
+    loginBtn.addEventListener('click', () => {
+        loginModal.style.display = 'flex';
+        document.getElementById('login-email').focus();
+    });
+
+    // Close modal
+    closeModal?.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+        loginForm.reset();
+        loginError.textContent = '';
+    });
+
+    // Close on outside click
+    loginModal.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+            loginModal.style.display = 'none';
+            loginForm.reset();
+            loginError.textContent = '';
+        }
+    });
+
+    // Handle login form submission
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        loginError.textContent = '';
+        
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
+
+        try {
+            // Determine the API URL based on environment
+            const apiUrl = window.location.hostname === 'localhost'
+                ? 'http://localhost:3000/auth/login'
+                : '/auth/login';
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.token) {
+                // Store token
+                localStorage.setItem('auth_token', data.token);
+                localStorage.setItem('user_email', email);
+                
+                // Redirect to admin interface
+                window.location.href = '/admin/admin.html';
+            } else {
+                loginError.textContent = data.message || 'Invalid credentials';
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            loginError.textContent = 'Connection error. Please try again.';
+        }
+    });
+}
+
 console.log('✨ PTA Production Script Initialized');
+
