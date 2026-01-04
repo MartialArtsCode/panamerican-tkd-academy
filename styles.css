@@ -136,7 +136,8 @@
         .class-competition { background: #8503036b; }
         .class-open { background: #06509b5d; }
         /* Login */
-         .login-btn, .logout-btn {
+        /* Existing Button Styles */
+        .login-btn, .logout-btn {
             background: rgba(0,0,0,0.6);
             color: #fff;
             border: none;
@@ -152,6 +153,16 @@
         .login-btn:hover, .logout-btn:hover {
             opacity: 0.9;
         }
+
+/* Footer Styling */
+footer {
+    background-color: #f1f1f1; /* Light grey */
+    text-align: center; 
+    padding: 20px; 
+    position: relative; 
+    bottom: 0; 
+    width: 100%;
+}
 
         /* Modal */
         .modal-backdrop {
