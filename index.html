@@ -13,9 +13,6 @@
 <body>
     <header>
         <img src="full.png" alt="Panamerican Taekwondo Academy Logo" class="header-logo">
-        <button class="login-btn" id="loginBtn" aria-label="Login to Admin">
-            <i class="fas fa-user-shield"></i>Login
-        </button>
     </header>
     <!-- White Belt Divider -->
         <div class="belt-divider"></div>
@@ -364,17 +361,17 @@
                 <div class="message-avatar">
                     <img src="icon.png" alt="Bot">
                 </div>
-<<<<<<< HEAD
+
                 <div class="chat-input-wrapper">
                     <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message">
                     <button class="chat-send-btn" id="chatSend" aria-label="Send message">
                         <i class="fas fa-paper-plane"></i>
                     </button>
-=======
+
                 <div class="message-content">
                     <p>How can we help you today?</p>
                     <span class="message-time">Just now</span>
->>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
+
                 </div>
             </div>
         </div>
@@ -399,36 +396,39 @@
         </div>
     </div>
 </div>
-
-    <!-- Login Modal -->
-    <div class="login-modal" id="loginModal" style="display: none;">
-        <div class="modal-content">
-            <button class="modal-close" id="closeModal" aria-label="Close">
-                <i class="fas fa-times"></i>
-            </button>
-            <h2><i class="fas fa-shield-alt"></i> Admin Login</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="login-email">
-                        <i class="fas fa-envelope"></i> Email
-                    </label>
-                    <input type="email" id="login-email" name="email" placeholder="admin@panamericantkd.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="login-password">
-                        <i class="fas fa-lock"></i> Password
-                    </label>
-                    <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
-                </div>
-                <div class="error-message" id="loginError"></div>
-                <button type="submit" class="btn-submit">
-                    <i class="fas fa-sign-in-alt"></i> Sign In
+            <div>
+        <button class="login-btn" id="loginBtn" aria-label="Login to Admin">
+            <span><i class="fas fa-shield-alt"></i> Login</span>
+        </button>
+        <div class="login-modal" id="loginModal" style="display: none;">
+            <div class="modal-content">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="login-email">
+                            <i class="fas fa-envelope"></i> Email
+                        </label>
+                        <input type="email" id="login-email" name="email" placeholder="admin@panamericantkd.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="error-message" id="loginError"></div>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </form>
+                <button class="modal-close" id="closeModal" aria-label="Close">
+                    <i class="fas fa-times"></i>
                 </button>
-            </form>
+            </div>
         </div>
     </div>
 
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="script.js"></script>
+
 </body>
 </html>
