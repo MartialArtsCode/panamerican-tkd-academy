@@ -359,7 +359,9 @@ function initSocketIO() {
             }
         })();
 
-<<<<<<< HEAD
+/* ======================
+   CHAT WIDGET
+====================== */
 /**
  * Initialize chat widget functionality
  */
@@ -451,143 +453,51 @@ document.addEventListener('DOMContentLoaded', function() {
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 });
-=======
 /* ======================
    CHAT WIDGET
 ====================== */
->>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
 function initChatWidget() {
     const chatButton = document.getElementById('chatButton');
     const chatPopup = document.getElementById('chatPopup');
     const chatClose = document.getElementById('chatClose');
     const chatInput = document.getElementById('chatInput');
     const chatSend = document.getElementById('chatSend');
-<<<<<<< HEAD
     const quickReplyBtns = document.querySelectorAll('.quick-reply-btn');
     
-    // Debug: Check if elements exist
-    console.log('Chat Widget Elements:', {
-        chatButton: !!chatButton,
-        chatPopup: !!chatPopup,
-        chatClose: !!chatClose,
-        chatInput: !!chatInput,
-        chatSend: !!chatSend,
-        quickReplyBtns: quickReplyBtns.length
-    });
-    
-    if (!chatButton || !chatPopup) {
-        console.error('❌ Chat widget elements not found!');
-        return;
-    }
-    
-    // Toggle chat popup
-    chatButton.addEventListener('click', function() {
-        console.log('💬 Chat button clicked!');
-=======
-
     if (!chatButton || !chatPopup) return;
 
     chatButton.addEventListener('click', () => {
->>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
         chatPopup.classList.toggle('active');
-<<<<<<< HEAD
         if (chatPopup.classList.contains('active')) {
             if (chatInput) chatInput.focus();
-            // Hide badge when opened
             const badge = document.querySelector('.chat-badge');
-            if (badge) {
-                badge.style.display = 'none';
-            }
+            if (badge) badge.style.display = 'none';
         }
-=======
-        chatInput?.focus();
-        document.querySelector('.chat-badge')?.style.setProperty('display', 'none');
->>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
     });
-<<<<<<< HEAD
-    
-    // Close chat popup
-    chatClose.addEventListener('click', function(e) {
-        console.log('❌ Close button clicked!');
-=======
 
     chatClose?.addEventListener('click', e => {
->>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
         e.stopPropagation();
         chatPopup.classList.remove('active');
     });
-<<<<<<< HEAD
-    
-    // Handle quick reply buttons
+
     quickReplyBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            console.log('⚡ Quick reply clicked!');
             const message = this.getAttribute('data-message');
             sendMessageToWidget(message);
         });
-=======
+    });
 
     chatSend?.addEventListener('click', sendFromInput);
 
     chatInput?.addEventListener('keypress', e => {
         if (e.key === 'Enter') sendFromInput();
->>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
     });
-<<<<<<< HEAD
-    
-    // Handle send button
-    if (chatSend) {
-        chatSend.addEventListener('click', function() {
-            console.log('📤 Send button clicked!');
-            const message = chatInput.value.trim();
-            if (message) {
-                sendMessageToWidget(message);
-                chatInput.value = '';
-            }
-        });
-    }
-    
-    // Handle Enter key in input
-    if (chatInput) {
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                console.log('⏎ Enter key pressed!');
-                const message = chatInput.value.trim();
-                if (message) {
-                    sendMessageToWidget(message);
-                    chatInput.value = '';
-                }
-            }
-        });
-    }
-    
-    // Close popup when clicking outside
-    document.addEventListener('click', function(e) {
-=======
 
     document.addEventListener('click', e => {
->>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
         if (!chatPopup.contains(e.target) && !chatButton.contains(e.target)) {
             chatPopup.classList.remove('active');
         }
     });
-<<<<<<< HEAD
-    
-    // Add typing animation
-    if (chatInput && chatSend) {
-        chatInput.addEventListener('input', function() {
-            if (this.value.length > 0) {
-                chatSend.style.transform = 'scale(1.1)';
-            } else {
-                chatSend.style.transform = 'scale(1)';
-            }
-        });
-    }
-    
-    console.log('✅ Chat widget initialized successfully!');
-}
-=======
->>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
 
     function sendFromInput() {
         const message = chatInput.value.trim();
@@ -597,6 +507,9 @@ function initChatWidget() {
     }
 }
 
+/* ======================
+   SEND MESSAGE
+====================== */
 function sendMessageToWidget(message) {
     const chatBody = document.querySelector('.chat-body');
     if (!chatBody) return;
@@ -625,65 +538,7 @@ function sendMessageToWidget(message) {
     }
 }
 
-<<<<<<< HEAD
-/**
- * Check for admin response (deprecated - using Socket.IO now)
- */
-function checkForAdminResponse() {
-    // This function is no longer needed with Socket.IO
-    // Responses come through the 'admin-response' socket event
-}
-    
-    // Stop checking after 5 seconds
-    setTimeout(() => {
-        clearInterval(checkInterval);
-    }, 5000);
-
-
-/**
- * Listen for admin responses (continuously)
- */
-setInterval(() => {
-    const response = localStorage.getItem('pta_admin_response');
-    if (response) {
-        try {
-            const responseData = JSON.parse(response);
-            if (responseData.sessionId === getSessionId()) {
-                // Clear the response
-                localStorage.removeItem('pta_admin_response');
-                
-                // Hide typing indicator
-                hideTypingIndicator();
-                
-                // Add admin response
-                const chatBody = document.querySelector('.chat-body');
-                const adminMessage = document.createElement('div');
-                adminMessage.className = 'chat-message bot-message';
-                adminMessage.innerHTML = `
-                    <div class="message-avatar">
-                        <img src="icon.png" alt="Admin">
-                    </div>
-                    <div class="message-content">
-                        <p>${escapeHtml(responseData.message)}</p>
-                        <span class="message-time">${getCurrentTime()}</span>
-                    </div>
-                `;
-                chatBody.appendChild(adminMessage);
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }
-        } catch (e) {
-            console.error('Error parsing admin response:', e);
-        }
-    }
-}, 1000);
-
-/**
- * Show typing indicator
- */
-function showTypingIndicator() {
-=======
 function addAdminMessage(data) {
->>>>>>> 15c411dc98aa4a27c8a6e0e5250a5ec39dde1395
     const chatBody = document.querySelector('.chat-body');
     if (!chatBody) return;
 
@@ -905,4 +760,3 @@ function initLoginModal() {
 }
 
 console.log('✨ PTA Production Script Initialized');
-
