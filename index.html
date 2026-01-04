@@ -331,79 +331,75 @@
 
     <!-- Floating Chat Widget -->
 <div class="chat-widget" id="chatWidget">
-        <div class="chat-widget-button" id="chatButton">
-            <img src="icon.png" alt="Chat with us" class="chat-icon">
-            <span class="chat-pulse">1</span>
-            <span class="chat-badge">1</span>
-        </div>
-        <div class="chat-widget-popup" id="chatPopup">
-            <div class="chat-header">
-                <img src="icon.png" alt="Panamerican TKD" class="chat-header-icon">
-                <div class="chat-header-text">
-                    <h4>Panamerican TKD</h4>
-                    <p class="chat-status"><span class="status-dot"></span> Online</p>
+    <div class="chat-widget-button" id="chatButton">
+        <img src="icon.png" alt="Chat with us" class="chat-icon">
+        <span class="chat-pulse"></span>
+        <span class="chat-badge">1</span>
+    </div>
+    <div class="chat-widget-popup" id="chatPopup">
+        <div class="chat-header">
+            <img src="icon.png" alt="Panamerican TKD" class="chat-header-icon">
+            <div class="chat-header-text">
+                <h4>Panamerican TKD</h4>
+                <p class="chat-status"><span class="status-dot"></span>Online</p>
                 </div>
                 <button class="chat-close" id="chatClose" aria-label="Close chat">
-                        <i class="fas fa-times"></i>
-                    </button>
-            </div>
-            <div class="chat-body">
-                <div class="chat-message bot-message">
-                    <div class="message-avatar">
-                        <img src="icon.png" alt="Bot">
-                    </div>
-                    <div class="message-content">
-                        <p>👋 Hello! Welcome to Panamerican Taekwondo Academy!</p>
-                        <span class="message-time">Just now</span>
-                    </div>
+                    <i class="fas fa-times"></i>
+                </button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-message bot-message">
+                <div class="message-avatar">
+                    <img src="icon.png" alt="Bot">
                 </div>
-                <div class="chat-message bot-message">
-                    <div class="message-avatar">
-                        <img src="icon.png" alt="Bot">
-                    </div>
-                    <div class="message-content">
-                        <p>How can we help you today?</p>
-                        <span class="message-time">Just now</span>
-                    </div>
+                <div class="message-content">
+                    <p>👋 Hello! Welcome to Panamerican Taekwondo Academy!</p>
+                    <span class="message-time">Just now</span>
                 </div>
             </div>
-            <div class="chat-footer">
-                <div class="quick-replies">
-                    <button class="quick-reply-btn" data-message="I want to schedule a free trial" aria-label="Schedule a free trial">
-                        <i class="fas fa-calendar-check"></i> Free Trial
-                    </button>
-                    <button class="quick-reply-btn" data-message="Tell me about your programs" aria-label="Learn about programs">
-                        <i class="fas fa-info-circle"></i> Programs
-                    </button>
-                    <button class="quick-reply-btn" data-message="What are your class schedules?" aria-label="View class schedules">
-                        <i class="fas fa-clock"></i> Schedule
-                    </button>
-                    <button class="quick-reply-btn" data-message="I have a question" aria-label="Ask a question">
-                        <i class="fas fa-question-circle"></i> Ask Question
-                    </button>
+            <div class="chat-message bot-message">
+                <div class="message-avatar">
+                    <img src="icon.png" alt="Bot">
                 </div>
-                <div class="chat-input-wrapper">
-                    <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message">
+                <div class="message-content">
+                    <p>How can we help you today?</p>
+                    <span class="message-time">Just now</span>
                 </div>
             </div>
         </div>
+        <div class="chat-footer">
+            <div class="quick-replies">
+                <button class="quick-reply-btn" data-message="I want to schedule a free trial" aria-label="Schedule a free trial">
+                    <i class="fas fa-calendar-check"></i> Free Trial
+                </button>
+                <button class="quick-reply-btn" data-message="Tell me about your programs" aria-label="Learn about programs">
+                    <i class="fas fa-info-circle"></i> Programs
+                </button>
+                <button class="quick-reply-btn" data-message="What are your class schedules?" aria-label="View class schedules">
+                    <i class="fas fa-clock"></i> Schedule
+                </button>
+                <button class="quick-reply-btn" data-message="I have a question" aria-label="Ask a question">
+                    <i class="fas fa-question-circle"></i> Ask Question
+                </button>
+            </div>
+            <div class="chat-input-wrapper">
+                <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message">
+            </div>
+        </div>
+    </div>
     <div class="header-actions" role="navigation" aria-label="Header actions">
-            <button id="loginButton" class="login-btn" aria-haspopup="dialog" aria-controls="loginModal">
-                <i class="fas fa-user"></i> Login
-                <span id="currentUserLabel" class="small" style="display:none;">Signed in as <strong id="currentUserName"></strong></span>
-                            <button id="logoutButton" class="logout-btn" style="display:none;" aria-hidden="true">
+        <button id="loginButton" class="login-btn" aria-haspopup="dialog" aria-controls="loginModal">
+            <i class="fas fa-user"></i> Login
+            <span id="currentUserLabel" class="small" style="display:none;">Signed in as <strong id="currentUserName"></strong></span>
+            <button id="logoutButton" class="logout-btn" style="display:none;" aria-hidden="true">
                 <i class="fas fa-sign-out-alt"></i> Logout
-            <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-            <script src="script.js"></script>
+                <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+                <script src="script.js"></script>
             </button>
-            </button>
+        </button>
     </div>
 </div>
-        
-
-            
         </div>
-                </header>
-        <!-- End of scripts -->
- </body>
+    </header>
+    </body>
 </html>
