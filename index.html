@@ -3,317 +3,413 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Panamerican Taekwondo Academy - Premier martial arts training in Brazilian Jiu-Jitsu, Taekwondo, Muay Thai, and MMA">
-    <title>Panamerican Taekwondo Academy</title>
+    <title>Pan American Taekwondo Academy - Martial Arts Training</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="images/logo.png" alt="Panamerican Taekwondo Academy Logo">
-                <span>Panamerican TKD Academy</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#programs" class="nav-link">Programs</a></li>
-                <li><a href="#schedule" class="nav-link">Schedule</a></li>
-                <li><a href="#instructors" class="nav-link">Instructors</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="#" id="loginBtn" class="nav-link login-btn">
-                    <i class="fas fa-user"></i> Login
-                </a></li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="images/full.png" alt="Pan American Taekwondo Academy">
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#schedule">Schedule</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1>Welcome to Panamerican Taekwondo Academy</h1>
-            <p>Transform Your Life Through Martial Arts</p>
-            <a href="#programs" class="cta-button">Explore Our Programs</a>
+            <h1 class="hero-title">Test Your Might!</h1>
+            <p class="hero-subtitle">Transform Your Life Through Martial Arts</p>
+            <a href="#contact" class="cta-button">Start Your Journey</a>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Our Academy</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Panamerican Taekwondo Academy is dedicated to providing world-class martial arts training in a safe, supportive, and disciplined environment. Our experienced instructors are committed to helping students of all ages and skill levels achieve their goals.</p>
-                    <p>We offer comprehensive training in multiple disciplines including Brazilian Jiu-Jitsu, Taekwondo, Muay Thai, and MMA. Our programs focus not only on physical fitness and self-defense skills but also on character development, discipline, and respect.</p>
-                </div>
-                <div class="about-image">
-                    <img src="images/academy.jpg" alt="Academy Training Floor">
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Belt Divider -->
+    <div class="belt-divider">
+        <div class="belt-stripe yellow"></div>
+        <div class="belt-stripe green"></div>
+        <div class="belt-stripe blue"></div>
+        <div class="belt-stripe red"></div>
+        <div class="belt-stripe black"></div>
+    </div>
 
     <!-- Programs Section -->
     <section id="programs" class="programs">
         <div class="container">
-            <h2>Our Programs</h2>
+            <h2 class="section-title">Our Programs</h2>
             <div class="programs-grid">
+                <!-- Power Up Program -->
                 <div class="program-card">
-                    <i class="fas fa-fist-raised"></i>
-                    <h3>Brazilian Jiu-Jitsu</h3>
-                    <p>Learn the art of ground fighting and submission grappling. Perfect for self-defense and competition.</p>
+                    <div class="program-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Power Up</h3>
+                    <p class="program-age">Ages 13+</p>
+                    <p class="program-description">
+                        Advanced training for teens and adults. Build strength, discipline, and self-defense skills 
+                        through traditional Taekwondo techniques combined with modern fitness approaches.
+                    </p>
                     <ul class="program-features">
-                        <li>Beginner to Advanced Classes</li>
-                        <li>Competition Training</li>
-                        <li>Self-Defense Techniques</li>
+                        <li><i class="fas fa-check"></i> Self-Defense Mastery</li>
+                        <li><i class="fas fa-check"></i> Physical Fitness</li>
+                        <li><i class="fas fa-check"></i> Mental Discipline</li>
+                        <li><i class="fas fa-check"></i> Competition Training</li>
                     </ul>
                 </div>
+
+                <!-- Little Ninjas Program -->
                 <div class="program-card">
-                    <i class="fas fa-hand-rock"></i>
-                    <h3>Taekwondo</h3>
-                    <p>Master dynamic kicks, strikes, and forms while developing discipline and mental focus.</p>
+                    <div class="program-icon">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3>Little Ninjas</h3>
+                    <p class="program-age">Ages 4-6</p>
+                    <p class="program-description">
+                        Our youngest warriors learn the basics of martial arts through fun, engaging activities 
+                        that develop coordination, focus, and confidence in a safe environment.
+                    </p>
                     <ul class="program-features">
-                        <li>Traditional Forms & Techniques</li>
-                        <li>Olympic-Style Sparring</li>
-                        <li>Belt Progression System</li>
+                        <li><i class="fas fa-check"></i> Motor Skills Development</li>
+                        <li><i class="fas fa-check"></i> Following Instructions</li>
+                        <li><i class="fas fa-check"></i> Social Skills</li>
+                        <li><i class="fas fa-check"></i> Basic Techniques</li>
                     </ul>
                 </div>
+
+                <!-- Dragons Program -->
                 <div class="program-card">
-                    <i class="fas fa-fire"></i>
-                    <h3>Muay Thai</h3>
-                    <p>Experience the "Art of Eight Limbs" with striking techniques using fists, elbows, knees, and shins.</p>
+                    <div class="program-icon">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <h3>Dragons</h3>
+                    <p class="program-age">Ages 7-9</p>
+                    <p class="program-description">
+                        Building on fundamentals, Dragons develop advanced techniques, leadership skills, 
+                        and prepare for competitive Taekwondo while fostering respect and perseverance.
+                    </p>
                     <ul class="program-features">
-                        <li>Traditional Thai Boxing</li>
-                        <li>Pad Work & Bag Training</li>
-                        <li>Clinch Techniques</li>
+                        <li><i class="fas fa-check"></i> Advanced Techniques</li>
+                        <li><i class="fas fa-check"></i> Leadership Training</li>
+                        <li><i class="fas fa-check"></i> Character Development</li>
+                        <li><i class="fas fa-check"></i> Tournament Preparation</li>
                     </ul>
                 </div>
+
+                <!-- Core Program -->
                 <div class="program-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>MMA</h3>
-                    <p>Comprehensive mixed martial arts training combining striking, grappling, and ground fighting.</p>
+                    <div class="program-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Core</h3>
+                    <p class="program-age">Ages 10-12</p>
+                    <p class="program-description">
+                        The bridge to advanced training, Core students master traditional forms, sparring techniques, 
+                        and begin their journey toward black belt excellence.
+                    </p>
                     <ul class="program-features">
-                        <li>Stand-Up & Ground Game</li>
-                        <li>Competition Preparation</li>
-                        <li>Strength & Conditioning</li>
+                        <li><i class="fas fa-check"></i> Form Mastery</li>
+                        <li><i class="fas fa-check"></i> Sparring Skills</li>
+                        <li><i class="fas fa-check"></i> Self-Confidence</li>
+                        <li><i class="fas fa-check"></i> Black Belt Preparation</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Belt Divider -->
+    <div class="belt-divider">
+        <div class="belt-stripe yellow"></div>
+        <div class="belt-stripe green"></div>
+        <div class="belt-stripe blue"></div>
+        <div class="belt-stripe red"></div>
+        <div class="belt-stripe black"></div>
+    </div>
 
     <!-- Schedule Section -->
     <section id="schedule" class="schedule">
         <div class="container">
-            <h2>Class Schedule</h2>
+            <h2 class="section-title">Class Schedule</h2>
             <div class="schedule-container">
-                <div class="schedule-day">
-                    <h3>Monday</h3>
-                    <div class="class-slot">
-                        <span class="time">6:00 AM - 7:00 AM</span>
-                        <span class="class-name">BJJ Fundamentals</span>
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="time-cell">9:00 AM</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="class-cell little-ninjas">Little Ninjas</td>
+                        </tr>
+                        <tr>
+                            <td class="time-cell">10:00 AM</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="class-cell dragons">Dragons</td>
+                        </tr>
+                        <tr>
+                            <td class="time-cell">11:00 AM</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="class-cell core">Core</td>
+                        </tr>
+                        <tr>
+                            <td class="time-cell">4:30 PM</td>
+                            <td class="class-cell little-ninjas">Little Ninjas</td>
+                            <td class="class-cell little-ninjas">Little Ninjas</td>
+                            <td class="class-cell little-ninjas">Little Ninjas</td>
+                            <td class="class-cell little-ninjas">Little Ninjas</td>
+                            <td class="class-cell little-ninjas">Little Ninjas</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="time-cell">5:30 PM</td>
+                            <td class="class-cell dragons">Dragons</td>
+                            <td class="class-cell dragons">Dragons</td>
+                            <td class="class-cell dragons">Dragons</td>
+                            <td class="class-cell dragons">Dragons</td>
+                            <td class="class-cell dragons">Dragons</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="time-cell">6:30 PM</td>
+                            <td class="class-cell core">Core</td>
+                            <td class="class-cell core">Core</td>
+                            <td class="class-cell core">Core</td>
+                            <td class="class-cell core">Core</td>
+                            <td class="class-cell core">Core</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="time-cell">7:30 PM</td>
+                            <td class="class-cell power-up">Power Up</td>
+                            <td class="class-cell power-up">Power Up</td>
+                            <td class="class-cell power-up">Power Up</td>
+                            <td class="class-cell power-up">Power Up</td>
+                            <td class="class-cell power-up">Power Up</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="schedule-note">
+                <i class="fas fa-info-circle"></i> 
+                Schedule subject to change. Please contact us for the most up-to-date information.
+            </p>
+        </div>
+    </section>
+
+    <!-- Belt Divider -->
+    <div class="belt-divider">
+        <div class="belt-stripe yellow"></div>
+        <div class="belt-stripe green"></div>
+        <div class="belt-stripe blue"></div>
+        <div class="belt-stripe red"></div>
+        <div class="belt-stripe black"></div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Students Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </div>
-                    <div class="class-slot">
-                        <span class="time">5:00 PM - 6:00 PM</span>
-                        <span class="class-name">Kids Taekwondo</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">6:30 PM - 7:30 PM</span>
-                        <span class="class-name">Muay Thai</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">7:30 PM - 9:00 PM</span>
-                        <span class="class-name">MMA Advanced</span>
+                    <p class="testimonial-text">
+                        "Pan American Taekwondo Academy has been life-changing for my daughter. She's gained 
+                        confidence, discipline, and made wonderful friends. The instructors are passionate and 
+                        truly care about each student's growth."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Martinez</h4>
+                            <p>Parent of Dragon Student</p>
+                        </div>
                     </div>
                 </div>
-                <div class="schedule-day">
-                    <h3>Tuesday</h3>
-                    <div class="class-slot">
-                        <span class="time">6:00 AM - 7:00 AM</span>
-                        <span class="class-name">Conditioning</span>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </div>
-                    <div class="class-slot">
-                        <span class="time">5:00 PM - 6:00 PM</span>
-                        <span class="class-name">Kids BJJ</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">6:30 PM - 7:30 PM</span>
-                        <span class="class-name">Taekwondo All Levels</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">7:30 PM - 9:00 PM</span>
-                        <span class="class-name">BJJ Advanced</span>
-                    </div>
-                </div>
-                <div class="schedule-day">
-                    <h3>Wednesday</h3>
-                    <div class="class-slot">
-                        <span class="time">6:00 AM - 7:00 AM</span>
-                        <span class="class-name">BJJ Fundamentals</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">5:00 PM - 6:00 PM</span>
-                        <span class="class-name">Kids Taekwondo</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">6:30 PM - 7:30 PM</span>
-                        <span class="class-name">Muay Thai</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">7:30 PM - 9:00 PM</span>
-                        <span class="class-name">MMA All Levels</span>
+                    <p class="testimonial-text">
+                        "I started as an adult beginner and was nervous, but the Power Up program welcomed me 
+                        with open arms. I've lost weight, gained strength, and learned invaluable self-defense 
+                        skills. This place is family!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>James Chen</h4>
+                            <p>Power Up Student</p>
+                        </div>
                     </div>
                 </div>
-                <div class="schedule-day">
-                    <h3>Thursday</h3>
-                    <div class="class-slot">
-                        <span class="time">6:00 AM - 7:00 AM</span>
-                        <span class="class-name">Conditioning</span>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </div>
-                    <div class="class-slot">
-                        <span class="time">5:00 PM - 6:00 PM</span>
-                        <span class="class-name">Kids BJJ</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">6:30 PM - 7:30 PM</span>
-                        <span class="class-name">Taekwondo All Levels</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">7:30 PM - 9:00 PM</span>
-                        <span class="class-name">BJJ Competition</span>
-                    </div>
-                </div>
-                <div class="schedule-day">
-                    <h3>Friday</h3>
-                    <div class="class-slot">
-                        <span class="time">6:00 AM - 7:00 AM</span>
-                        <span class="class-name">BJJ Open Mat</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">5:00 PM - 6:00 PM</span>
-                        <span class="class-name">Kids Mixed Class</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">6:30 PM - 8:00 PM</span>
-                        <span class="class-name">All Disciplines Open</span>
-                    </div>
-                </div>
-                <div class="schedule-day">
-                    <h3>Saturday</h3>
-                    <div class="class-slot">
-                        <span class="time">9:00 AM - 10:00 AM</span>
-                        <span class="class-name">Kids Fundamentals</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">10:00 AM - 11:30 AM</span>
-                        <span class="class-name">BJJ All Levels</span>
-                    </div>
-                    <div class="class-slot">
-                        <span class="time">11:30 AM - 1:00 PM</span>
-                        <span class="class-name">Open Training</span>
-                    </div>
-                </div>
-                <div class="schedule-day">
-                    <h3>Sunday</h3>
-                    <div class="class-slot closed">
-                        <span class="time">Closed</span>
-                        <span class="class-name">Rest & Recovery</span>
+                    <p class="testimonial-text">
+                        "My son was shy and struggled with focus. After joining the Little Ninjas program, 
+                        he's become more confident and his teachers have noticed improvement in school too. 
+                        Thank you Pan American TKD!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Emily Rodriguez</h4>
+                            <p>Parent of Little Ninja</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Instructors Section -->
-    <section id="instructors" class="instructors">
-        <div class="container">
-            <h2>Our Instructors</h2>
-            <div class="instructors-grid">
-                <div class="instructor-card">
-                    <img src="images/instructor1.jpg" alt="Master Carlos Silva">
-                    <h3>Master Carlos Silva</h3>
-                    <p class="instructor-title">Head Instructor - Brazilian Jiu-Jitsu</p>
-                    <p class="instructor-bio">4th Degree Black Belt with over 20 years of experience. Multiple-time Pan American Champion.</p>
-                </div>
-                <div class="instructor-card">
-                    <img src="images/instructor2.jpg" alt="Master Kim Park">
-                    <h3>Master Kim Park</h3>
-                    <p class="instructor-title">Head Instructor - Taekwondo</p>
-                    <p class="instructor-bio">5th Degree Black Belt. Former Olympic Team Coach with 15 years teaching experience.</p>
-                </div>
-                <div class="instructor-card">
-                    <img src="images/instructor3.jpg" alt="Coach Maria Rodriguez">
-                    <h3>Coach Maria Rodriguez</h3>
-                    <p class="instructor-title">Head Instructor - Muay Thai</p>
-                    <p class="instructor-bio">National Muay Thai Champion. Certified Kru with training in Thailand.</p>
-                </div>
-                <div class="instructor-card">
-                    <img src="images/instructor4.jpg" alt="Coach John Anderson">
-                    <h3>Coach John Anderson</h3>
-                    <p class="instructor-title">MMA Coach</p>
-                    <p class="instructor-bio">Professional MMA fighter with 10+ years experience. Specializes in competition preparation.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Belt Divider -->
+    <div class="belt-divider">
+        <div class="belt-stripe yellow"></div>
+        <div class="belt-stripe green"></div>
+        <div class="belt-stripe blue"></div>
+        <div class="belt-stripe red"></div>
+        <div class="belt-stripe black"></div>
+    </div>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2>Get In Touch</h2>
+            <h2 class="section-title">Get Started Today</h2>
             <div class="contact-content">
                 <div class="contact-info">
+                    <h3>Visit Us</h3>
                     <div class="info-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
-                            <h3>Location</h3>
-                            <p>123 Martial Arts Way<br>Houston, TX 77001</p>
+                            <h4>Location</h4>
+                            <p>123 Martial Arts Way<br>Your City, ST 12345</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-phone"></i>
                         <div>
-                            <h3>Phone</h3>
+                            <h4>Phone</h4>
                             <p>(555) 123-4567</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-envelope"></i>
                         <div>
-                            <h3>Email</h3>
+                            <h4>Email</h4>
                             <p>info@panamericantkd.com</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-clock"></i>
                         <div>
-                            <h3>Hours</h3>
-                            <p>Mon-Sat: 6:00 AM - 9:00 PM<br>Sunday: Closed</p>
+                            <h4>Hours</h4>
+                            <p>Monday - Friday: 4:00 PM - 9:00 PM<br>Saturday: 9:00 AM - 12:00 PM</p>
                         </div>
                     </div>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
-                <form class="contact-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <input type="tel" placeholder="Your Phone">
-                    <select required>
-                        <option value="">Select Program Interest</option>
-                        <option value="bjj">Brazilian Jiu-Jitsu</option>
-                        <option value="tkd">Taekwondo</option>
-                        <option value="muaythai">Muay Thai</option>
-                        <option value="mma">MMA</option>
-                        <option value="kids">Kids Programs</option>
-                    </select>
-                    <textarea placeholder="Your Message" rows="5" required></textarea>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
+                <div class="contact-form-container">
+                    <h3>Request Information</h3>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" required>
+                            <label for="name">Your Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" required>
+                            <label for="email">Email Address</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" required>
+                            <label for="phone">Phone Number</label>
+                        </div>
+                        <div class="form-group">
+                            <select id="program" name="program" required>
+                                <option value="">Select a Program</option>
+                                <option value="little-ninjas">Little Ninjas (Ages 4-6)</option>
+                                <option value="dragons">Dragons (Ages 7-9)</option>
+                                <option value="core">Core (Ages 10-12)</option>
+                                <option value="power-up">Power Up (Ages 13+)</option>
+                            </select>
+                            <label for="program">Program Interest</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                            <label for="message">Message</label>
+                        </div>
+                        <button type="submit" class="submit-button">
+                            Send Message
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -322,200 +418,117 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>About Us</h3>
-                    <p>Panamerican Taekwondo Academy is committed to excellence in martial arts education and character development.</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                    </div>
+                <div class="footer-logo">
+                    <img src="images/full.png" alt="Pan American Taekwondo Academy">
                 </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#programs">Programs</a></li>
-                        <li><a href="#schedule">Schedule</a></li>
-                    </ul>
+                <div class="footer-text">
+                    <p>&copy; 2024 Pan American Taekwondo Academy. All rights reserved.</p>
+                    <p>Empowering lives through martial arts excellence.</p>
                 </div>
-                <div class="footer-section">
-                    <h3>Programs</h3>
-                    <ul>
-                        <li><a href="#programs">Brazilian Jiu-Jitsu</a></li>
-                        <li><a href="#programs">Taekwondo</a></li>
-                        <li><a href="#programs">Muay Thai</a></li>
-                        <li><a href="#programs">MMA</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact Info</h3>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> (555) 123-4567</li>
-                        <li><i class="fas fa-envelope"></i> info@panamericantkd.com</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Houston, TX 77001</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Panamerican Taekwondo Academy. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Login Modal -->
-<div id="loginModal" class="modal" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true" style="display: none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 id="loginModalTitle">Sign In</h2>
-        </div>
-        <form id="loginForm" class="login-form">
-            <div class="form-group">
-                <label for="loginUsername">Username</label>
-                <input 
-                    type="text" 
-                    id="loginUsername" 
-                    name="username" 
-                    placeholder="Enter username" 
-                    required 
-                    autocomplete="username"
-                    aria-required="true">
-            </div>
-            
-            <div class="form-group">
-                <label for="loginPassword">Password</label>
-                <input 
-                    type="password" 
-                    id="loginPassword" 
-                    name="password" 
-                    placeholder="Enter password" 
-                    required 
-                    autocomplete="current-password"
-                    aria-required="true">
-            </div>
-            
-            <div class="form-group">
-                <label for="loginRole">Sign in as</label>
-                <select id="loginRole" name="role" required aria-required="true">
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
-            
-            <div class="modal-actions">
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-sign-in-alt"></i> Sign In
-                </button>
-                <button type="button" id="loginCancel" class="btn-secondary">
-                    <i class="fas fa-times"></i> Cancel
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <button class="chat-button" id="chatButton" aria-label="Open chat">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h3>Chat with us!</h3>
+                <button class="chat-close" id="chatClose" aria-label="Close chat">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
-        </form>
-    </div>
-</div>
-
-<!-- User Dashboard -->
-<div id="userDashboard" class="dashboard-panel" style="display:none;" aria-hidden="true">
-    <div class="dashboard-container">
-        <div class="dashboard-header">
-            <h2>Welcome, <span id="userNameDisplay">User</span>!</h2>
-        </div>
-        
-        <div class="dashboard-content">
-            <div class="info-card">
-                <h3><i class="fas fa-user-circle"></i> Your Information</h3>
-                <div id="userInfoBox" class="user-info">
-                    <!-- Populated by JavaScript -->
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    <p>Hello! How can we help you today?</p>
                 </div>
             </div>
-            
-            <div class="actions-card">
-                <h3><i class="fas fa-tasks"></i> Quick Actions</h3>
-                <button id="userGoToSchedule" class="action-btn">
-                    <i class="fas fa-calendar-alt"></i> View Class Schedule
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Type your message..." aria-label="Chat message">
+                <button id="chatSend" aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Admin Dashboard -->
-<div id="adminDashboard" class="dashboard-panel admin-panel" style="display:none;" aria-hidden="true">
-    <div class="dashboard-container">
-        <div class="dashboard-header">
-            <h2>Admin Dashboard</h2>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginRole">Role</label>
+                    <select id="loginRole" name="role" required>
+                        <option value="">Select Role</option>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-button">Login</button>
+            </form>
         </div>
-        
+    </div>
+
+    <!-- User Dashboard -->
+    <div id="userDashboard" class="dashboard" style="display: none;">
         <div class="dashboard-content">
-            <!-- Create User Section -->
+            <h2>User Dashboard</h2>
+            <div id="userInfo" class="user-info">
+                <p><strong>Welcome, <span id="userName"></span>!</strong></p>
+                <p>Role: <span id="userRole"></span></p>
+            </div>
+            <button id="viewScheduleBtn" class="dashboard-button">View My Schedule</button>
+            <button id="logoutBtn" class="dashboard-button">Logout</button>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="dashboard" style="display: none;">
+        <div class="dashboard-content">
+            <h2>Admin Dashboard</h2>
             <div class="admin-section">
-                <h3><i class="fas fa-user-plus"></i> Create New User</h3>
-                <form id="createUserForm" class="admin-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="newUsername">Username</label>
-                            <input 
-                                type="text" 
-                                id="newUsername" 
-                                name="username" 
-                                placeholder="Username" 
-                                required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="newEmail">Email</label>
-                            <input 
-                                type="email" 
-                                id="newEmail" 
-                                name="email" 
-                                placeholder="user@example.com" 
-                                required>
-                        </div>
+                <h3>Create New User</h3>
+                <form id="createUserForm">
+                    <div class="form-group">
+                        <label for="newUsername">Username</label>
+                        <input type="text" id="newUsername" name="username" required>
                     </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="newPassword">Password</label>
-                            <input 
-                                type="password" 
-                                id="newPassword" 
-                                name="password" 
-                                placeholder="Password" 
-                                required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="newRole">Role</label>
-                            <select id="newRole" name="role" required>
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label for="newPassword">Password</label>
+                        <input type="password" id="newPassword" name="password" required>
                     </div>
-                    
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-user-plus"></i> Create User
-                    </button>
+                    <div class="form-group">
+                        <label for="newUserRole">Role</label>
+                        <select id="newUserRole" name="role" required>
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-button">Create User</button>
                 </form>
             </div>
-            
-            <!-- User Management Section -->
             <div class="admin-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-users"></i> User Management</h3>
-                    <button id="adminRefreshUsers" class="btn-icon" aria-label="Refresh user list">
-                        <i class="fas fa-sync-alt"></i>
-                    </button>
-                </div>
-                <div id="usersContainer" class="users-list">
-                    <!-- Populated by JavaScript -->
+                <h3>Users List</h3>
+                <div id="usersList" class="users-list">
+                    <!-- Users will be populated here -->
                 </div>
             </div>
+            <button id="adminLogoutBtn" class="dashboard-button">Logout</button>
         </div>
     </div>
-</div>
 
     <script src="script.js"></script>
 </body>
