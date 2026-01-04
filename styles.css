@@ -2186,6 +2186,7 @@ footer p {
     object-fit: contain;
     color: rgb(255, 183, 2);
     filter: brightness(0) invert(1);
+    pointer-events: none;
 }
 
 .chat-pulse {
@@ -2195,6 +2196,7 @@ footer p {
     border-radius: 50%;
     background: rgba(37, 211, 102, 0.4);
     animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    pointer-events: none;
 }
 
 .chat-badge {
@@ -2213,6 +2215,7 @@ footer p {
     font-weight: 700;
     border: 3px solid rgba(255, 255, 255, 0.3);
     animation: badgePop 0.5s ease-forward;
+    pointer-events: none;
 }
 
 .chat-widget-popup {
