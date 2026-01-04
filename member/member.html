@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Portal - Panamerican Taekwondo Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="member.css">
+</head>
+<body>
+    <header class="member-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="../full.png" alt="Panamerican TKD" class="logo">
+                <h1>Member Portal</h1>
+            </div>
+            <div class="user-section">
+                <span class="user-email" id="userEmail"></span>
+                <button class="logout-btn" id="changePasswordBtn" style="margin-right: 8px;">
+                    <i class="fas fa-key"></i> Change Password
+                </button>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="member-main">
+        <div class="container">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-card">
+                    <h2>Welcome back, <span id="userName">Member</span>! 🥋</h2>
+                    <p>Your journey to martial arts mastery continues here.</p>
+                </div>
+            </section>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Profile Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fas fa-user-circle"></i>
+                        <h3>My Profile</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="profile-info">
+                            <div class="info-row">
+                                <span class="label">Email:</span>
+                                <span class="value" id="profileEmail">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">Member Since:</span>
+                                <span class="value" id="memberSince">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">Status:</span>
+                                <span class="value status-active">
+                                    <i class="fas fa-check-circle"></i> Active
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class Schedule Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>Class Schedule</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="schedule-list">
+                            <div class="schedule-item">
+                                <div class="day">Monday</div>
+                                <div class="time">6:00 PM - 7:30 PM</div>
+                                <div class="class-type">All Ages</div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="day">Wednesday</div>
+                                <div class="time">6:00 PM - 7:30 PM</div>
+                                <div class="class-type">Advanced Training</div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="day">Friday</div>
+                                <div class="time">6:00 PM - 7:30 PM</div>
+                                <div class="class-type">Sparring & Forms</div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="day">Saturday</div>
+                                <div class="time">10:00 AM - 11:30 AM</div>
+                                <div class="class-type">Family Class</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fas fa-trophy"></i>
+                        <h3>My Progress</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="progress-stats">
+                            <div class="stat-item">
+                                <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                                <div class="stat-info">
+                                    <div class="stat-value">--</div>
+                                    <div class="stat-label">Classes Attended</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon"><i class="fas fa-belt"></i></div>
+                                <div class="stat-info">
+                                    <div class="stat-value">--</div>
+                                    <div class="stat-label">Current Belt</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon"><i class="fas fa-medal"></i></div>
+                                <div class="stat-info">
+                                    <div class="stat-value">--</div>
+                                    <div class="stat-label">Achievements</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Announcements Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fas fa-bullhorn"></i>
+                        <h3>Announcements</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="announcements-list">
+                            <div class="announcement-item">
+                                <div class="announcement-date">Jan 10, 2026</div>
+                                <div class="announcement-text">
+                                    <strong>Belt Testing</strong> - Next belt promotion test scheduled. Prepare your forms!
+                                </div>
+                            </div>
+                            <div class="announcement-item">
+                                <div class="announcement-date">Jan 15, 2026</div>
+                                <div class="announcement-text">
+                                    <strong>Tournament</strong> - Regional championship registration now open.
+                                </div>
+                            </div>
+                            <div class="announcement-item">
+                                <div class="announcement-date">Jan 20, 2026</div>
+                                <div class="announcement-text">
+                                    <strong>Special Workshop</strong> - Advanced sparring techniques with Master Instructor.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="quick-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-phone"></i>
+                                <span>Contact Academy</span>
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-calendar-plus"></i>
+                                <span>Book Private Lesson</span>
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-book"></i>
+                                <span>Training Resources</span>
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-comments"></i>
+                                <span>Contact Instructor</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Academy Info</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>(336) 624-8499</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>info@panamericantkd.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Winston-Salem, NC</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Mon-Sat: 6:00 PM - 9:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="member-footer">
+        <p>&copy; 2026 Panamerican Taekwondo Academy. All rights reserved.</p>
+    </footer>
+
+    <!-- Password Change Modal -->
+    <div id="passwordModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Change Password</h2>
+                <button id="closePasswordModal" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Current Password</label>
+                    <input type="password" id="currentPassword" class="form-control" placeholder="Enter current password">
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" id="newPassword" class="form-control" placeholder="At least 6 characters">
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="Re-enter new password">
+                </div>
+                <div id="passwordError" class="alert alert-error" style="display: none;"></div>
+                <div id="passwordSuccess" class="alert alert-success" style="display: none;"></div>
+                <button id="savePasswordBtn" class="btn-primary">Change Password</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="member.js"></script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTA Instructor Tools</title>
+    <link rel="stylesheet" href="instructor.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <img src="../icon.png" alt="PTA" class="logo">
+                <h1>Instructor Tools</h1>
+            </div>
+            <div class="header-right">
+                <span id="instructorName">Instructor</span>
+                <button id="changePasswordBtn" class="btn-secondary" style="margin-right: 8px;">Change Password</button>
+                <button id="logoutBtn" class="btn-secondary">Logout</button>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="tabs">
+            <button class="tab active" data-view="dashboard">Dashboard</button>
+            <button class="tab" data-view="attendance">Attendance</button>
+            <button class="tab" data-view="students">Students</button>
+            <button class="tab" data-view="schedule">Schedule</button>
+            <button class="tab" data-view="testing">Belt Testing</button>
+            <button class="tab" data-view="forms">Forms Reference</button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content">
+            <!-- Dashboard View -->
+            <div id="dashboardView" class="view active">
+                <h2>Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3>Total Students</h3>
+                            <p class="stat-number" id="totalStudents">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-info">
+                            <h3>Classes This Week</h3>
+                            <p class="stat-number" id="classesThisWeek">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🥋</div>
+                        <div class="stat-info">
+                            <h3>Upcoming Tests</h3>
+                            <p class="stat-number" id="upcomingTests">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-info">
+                            <h3>Attendance Rate</h3>
+                            <p class="stat-number" id="attendanceRate">0%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="btn-primary" onclick="switchView('attendance')">Take Attendance</button>
+                        <button class="btn-primary" onclick="switchView('students')">View Students</button>
+                        <button class="btn-primary" onclick="switchView('testing')">Schedule Test</button>
+                        <button class="btn-secondary" onclick="printRoster()">Print Roster</button>
+                    </div>
+                </div>
+
+                <div class="today-schedule">
+                    <h3>Today's Schedule</h3>
+                    <div id="todayClasses" class="schedule-list">
+                        <p class="empty-state">No classes scheduled for today</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attendance View -->
+            <div id="attendanceView" class="view">
+                <h2>Class Attendance</h2>
+                <div class="attendance-controls">
+                    <div class="form-group">
+                        <label>Select Class:</label>
+                        <select id="classSelect">
+                            <option value="">Choose a class...</option>
+                            <option value="kids-beginner">Kids Beginner</option>
+                            <option value="kids-intermediate">Kids Intermediate</option>
+                            <option value="kids-advanced">Kids Advanced</option>
+                            <option value="adult-beginner">Adult Beginner</option>
+                            <option value="adult-intermediate">Adult Intermediate</option>
+                            <option value="adult-advanced">Adult Advanced</option>
+                            <option value="competition">Competition Team</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date:</label>
+                        <input type="date" id="attendanceDate">
+                    </div>
+                    <button class="btn-primary" onclick="loadAttendance()">Load Class</button>
+                </div>
+
+                <div id="attendanceList" class="attendance-list">
+                    <p class="empty-state">Select a class to take attendance</p>
+                </div>
+
+                <div class="action-buttons" id="attendanceActions" style="display: none;">
+                    <button class="btn-primary" onclick="saveAttendance()">Save Attendance</button>
+                    <button class="btn-secondary" onclick="clearAttendance()">Clear All</button>
+                </div>
+            </div>
+
+            <!-- Students View -->
+            <div id="studentsView" class="view">
+                <h2>Student Roster</h2>
+                <div class="students-controls">
+                    <input type="text" id="studentSearch" placeholder="Search students...">
+                    <select id="beltFilter">
+                        <option value="">All Belts</option>
+                        <option value="white">White Belt</option>
+                        <option value="yellow">Yellow Belt</option>
+                        <option value="green">Green Belt</option>
+                        <option value="blue">Blue Belt</option>
+                        <option value="red">Red Belt</option>
+                        <option value="black">Black Belt</option>
+                    </select>
+                    <button class="btn-primary" onclick="showAddStudent()">+ Add Student</button>
+                </div>
+
+                <div class="students-grid" id="studentsList">
+                    <!-- Students will be populated here -->
+                </div>
+            </div>
+
+            <!-- Schedule View -->
+            <div id="scheduleView" class="view">
+                <h2>Class Schedule</h2>
+                <div class="schedule-header">
+                    <button class="btn-secondary" onclick="previousWeek()">← Previous</button>
+                    <h3 id="scheduleWeek">Week of January 4, 2026</h3>
+                    <button class="btn-secondary" onclick="nextWeek()">Next →</button>
+                </div>
+                <div class="schedule-grid">
+                    <div class="day-column">
+                        <h4>Monday</h4>
+                        <div class="time-slot">4:00 PM - Kids Beginner</div>
+                        <div class="time-slot">5:00 PM - Kids Intermediate</div>
+                        <div class="time-slot">6:00 PM - Adult All Levels</div>
+                    </div>
+                    <div class="day-column">
+                        <h4>Tuesday</h4>
+                        <div class="time-slot">4:00 PM - Kids Advanced</div>
+                        <div class="time-slot">5:30 PM - Competition Team</div>
+                        <div class="time-slot">7:00 PM - Adult Advanced</div>
+                    </div>
+                    <div class="day-column">
+                        <h4>Wednesday</h4>
+                        <div class="time-slot">4:00 PM - Kids Beginner</div>
+                        <div class="time-slot">5:00 PM - Kids Intermediate</div>
+                        <div class="time-slot">6:00 PM - Adult All Levels</div>
+                    </div>
+                    <div class="day-column">
+                        <h4>Thursday</h4>
+                        <div class="time-slot">4:00 PM - Kids Advanced</div>
+                        <div class="time-slot">5:30 PM - Competition Team</div>
+                        <div class="time-slot">7:00 PM - Adult Advanced</div>
+                    </div>
+                    <div class="day-column">
+                        <h4>Friday</h4>
+                        <div class="time-slot">4:00 PM - Kids All Levels</div>
+                        <div class="time-slot">5:30 PM - Sparring Practice</div>
+                        <div class="time-slot">6:30 PM - Forms Practice</div>
+                    </div>
+                    <div class="day-column">
+                        <h4>Saturday</h4>
+                        <div class="time-slot">9:00 AM - Little Dragons</div>
+                        <div class="time-slot">10:00 AM - All Levels</div>
+                        <div class="time-slot">11:30 AM - Black Belt Club</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testing View -->
+            <div id="testingView" class="view">
+                <h2>Belt Testing</h2>
+                <div class="testing-tabs">
+                    <button class="test-tab active" onclick="showTestTab('eligible')">Eligible Students</button>
+                    <button class="test-tab" onclick="showTestTab('requirements')">Test Requirements</button>
+                    <button class="test-tab" onclick="showTestTab('schedule')">Test Schedule</button>
+                </div>
+
+                <div id="eligibleTab" class="test-content active">
+                    <h3>Students Eligible for Testing</h3>
+                    <div class="eligible-list" id="eligibleList">
+                        <!-- Eligible students will be populated here -->
+                    </div>
+                </div>
+
+                <div id="requirementsTab" class="test-content">
+                    <h3>Belt Testing Requirements</h3>
+                    <select id="requirementBelt" onchange="showRequirements()">
+                        <option value="yellow">Yellow Belt</option>
+                        <option value="green">Green Belt</option>
+                        <option value="blue">Blue Belt</option>
+                        <option value="red">Red Belt</option>
+                        <option value="black">Black Belt</option>
+                    </select>
+                    <div class="requirements" id="requirementsList">
+                        <!-- Requirements will be populated here -->
+                    </div>
+                </div>
+
+                <div id="scheduleTestTab" class="test-content">
+                    <h3>Schedule Belt Test</h3>
+                    <div class="form-group">
+                        <label>Test Date:</label>
+                        <input type="date" id="testDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Test Time:</label>
+                        <input type="time" id="testTime">
+                    </div>
+                    <div class="form-group">
+                        <label>Location:</label>
+                        <input type="text" id="testLocation" value="PTA Main Dojang">
+                    </div>
+                    <button class="btn-primary" onclick="scheduleTest()">Schedule Test</button>
+                </div>
+            </div>
+
+            <!-- Forms Reference View -->
+            <div id="formsView" class="view">
+                <h2>Taekwondo Forms Reference</h2>
+                <div class="forms-grid">
+                    <div class="form-card" onclick="showFormDetails('taegeuk1')">
+                        <div class="form-belt white-belt"></div>
+                        <h3>Taegeuk Il Jang</h3>
+                        <p>8th Gup (Yellow Stripe)</p>
+                        <p class="form-moves">18 Movements</p>
+                    </div>
+                    <div class="form-card" onclick="showFormDetails('taegeuk2')">
+                        <div class="form-belt yellow-belt"></div>
+                        <h3>Taegeuk Ee Jang</h3>
+                        <p>7th Gup (Yellow Belt)</p>
+                        <p class="form-moves">18 Movements</p>
+                    </div>
+                    <div class="form-card" onclick="showFormDetails('taegeuk3')">
+                        <div class="form-belt yellow-belt"></div>
+                        <h3>Taegeuk Sam Jang</h3>
+                        <p>6th Gup (Green Stripe)</p>
+                        <p class="form-moves">20 Movements</p>
+                    </div>
+                    <div class="form-card" onclick="showFormDetails('taegeuk4')">
+                        <div class="form-belt green-belt"></div>
+                        <h3>Taegeuk Sa Jang</h3>
+                        <p>5th Gup (Green Belt)</p>
+                        <p class="form-moves">20 Movements</p>
+                    </div>
+                    <div class="form-card" onclick="showFormDetails('taegeuk5')">
+                        <div class="form-belt blue-belt"></div>
+                        <h3>Taegeuk Oh Jang</h3>
+                        <p>4th Gup (Blue Stripe)</p>
+                        <p class="form-moves">20 Movements</p>
+                    </div>
+                    <div class="form-card" onclick="showFormDetails('taegeuk6')">
+                        <div class="form-belt blue-belt"></div>
+                        <h3>Taegeuk Yuk Jang</h3>
+                        <p>3rd Gup (Blue Belt)</p>
+                        <p class="form-moves">19 Movements</p>
+                    </div>
+                    <div class="form-card" onclick="showFormDetails('taegeuk7')">
+                        <div class="form-belt red-belt"></div>
+                        <h3>Taegeuk Chil Jang</h3>
+                        <p>2nd Gup (Red Stripe)</p>
+                        <p class="form-moves">25 Movements</p>
+                    </div>
+                    <div class="form-card" onclick="showFormDetails('taegeuk8')">
+                        <div class="form-belt red-belt"></div>
+                        <h3>Taegeuk Pal Jang</h3>
+                        <p>1st Gup (Red Belt)</p>
+                        <p class="form-moves">27 Movements</p>
+                    </div>
+                    <div class="form-card" onclick="showFormDetails('koryo')">
+                        <div class="form-belt black-belt"></div>
+                        <h3>Koryo</h3>
+                        <p>1st Dan (Black Belt)</p>
+                        <p class="form-moves">30 Movements</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('studentModal')">&times;</span>
+            <h2>Add New Student</h2>
+            <form id="addStudentForm">
+                <div class="form-group">
+                    <label>Student Name:</label>
+                    <input type="text" id="studentName" required>
+                </div>
+                <div class="form-group">
+                    <label>Age:</label>
+                    <input type="number" id="studentAge" required>
+                </div>
+                <div class="form-group">
+                    <label>Current Belt:</label>
+                    <select id="studentBelt">
+                        <option value="white">White Belt</option>
+                        <option value="yellow">Yellow Belt</option>
+                        <option value="green">Green Belt</option>
+                        <option value="blue">Blue Belt</option>
+                        <option value="red">Red Belt</option>
+                        <option value="black">Black Belt</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Class:</label>
+                    <select id="studentClass">
+                        <option value="kids-beginner">Kids Beginner</option>
+                        <option value="kids-intermediate">Kids Intermediate</option>
+                        <option value="kids-advanced">Kids Advanced</option>
+                        <option value="adult-beginner">Adult Beginner</option>
+                        <option value="adult-intermediate">Adult Intermediate</option>
+                        <option value="adult-advanced">Adult Advanced</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Add Student</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('formModal')">&times;</span>
+            <div id="formDetails"></div>
+        </div>
+    </div>
+
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('passwordModal')">&times;</span>
+            <h2>Change Password</h2>
+            <form id="changePasswordForm">
+                <div class="form-group">
+                    <label>Current Password:</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>New Password:</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password:</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <div id="passwordError" style="color: #f44336; margin-bottom: 16px; display: none;"></div>
+                <div id="passwordSuccess" style="color: #4caf50; margin-bottom: 16px; display: none;"></div>
+                <button type="submit" class="btn-primary">Change Password</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="instructor.js"></script>
+</body>
+</html>

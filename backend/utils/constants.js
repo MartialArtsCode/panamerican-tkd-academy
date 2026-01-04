@@ -1,0 +1,1 @@
+# Event names, roles, etc.

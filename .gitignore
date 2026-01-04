@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables (SENSITIVE - contains secrets)
+.env
+backend/.env
+*.env
+*.env.local
+
+# User data (SENSITIVE - contains passwords)
+backend/data/users.json
+backend/data/*.json
+
+# Logs
+*.log
+logs/
+backend/logs/
+
+# Build outputs
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Exports (may contain user data)
+backend/exports/*.csv
+backend/exports/*.pdf
