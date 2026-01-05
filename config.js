@@ -3,8 +3,8 @@
  * Automatically detects local vs production environment
  */
 
-// Backend API URL - update PRODUCTION_API_URL when you deploy your backend
-const PRODUCTION_API_URL = 'https://your-backend-url.com'; // TODO: Update this when backend is deployed
+// Backend API URL - configured for Render.com deployment
+const PRODUCTION_API_URL = 'https://pta-backend-6ncd.onrender.com';
 
 const isLocalhost = window.location.hostname === 'localhost' || 
                     window.location.hostname === '127.0.0.1' ||
