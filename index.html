@@ -394,7 +394,7 @@
                     <i class="fas fa-times"></i>
                 </button>
         </div>
-        <div class="chat-body">
+        <div class="chat-body" id="chatMessages">
             <div class="chat-message bot-message">
                 <div class="message-avatar">
                     <img src="icon.png" alt="Bot">
@@ -403,21 +403,14 @@
                     <p>👋 Hello! Welcome to Panamerican Taekwondo Academy!</p>
                     <span class="message-time">Just now</span>
                 </div>
-                 <div class="message-content">
-                     <p>How can we help you today?</p>
-                     <span class="message-time">Just now</span>
             </div>
             <div class="chat-message bot-message">
                 <div class="message-avatar">
                     <img src="icon.png" alt="Bot">
                 </div>
-
-                <div class="chat-input-wrapper">
-                    <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message">
-                <div>
-                    <button class="chat-send-btn" id="chatSend" aria-label="Send message">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
+                <div class="message-content">
+                    <p>How can we help you today?</p>
+                    <span class="message-time">Just now</span>
                 </div>
             </div>
         </div>
@@ -438,6 +431,9 @@
             </div>
             <div class="chat-input-wrapper">
                 <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message">
+                <button class="chat-send-btn" id="chatSend" aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
         </div>
     </div>
