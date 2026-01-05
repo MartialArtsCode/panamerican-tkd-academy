@@ -742,6 +742,14 @@
 
         console.log('🔘 Setting up button handlers...');
 
+        // My Profile Button
+        const myProfileBtn = document.getElementById('myProfileBtn');
+        if (myProfileBtn) {
+            myProfileBtn.onclick = () => {
+                window.location.href = `${BASE_PATH}/member/profile.html`;
+            };
+        }
+
         // Tier Management
         const tierModal = document.getElementById('tierModal');
         const manageTiersBtn = document.getElementById('manageTiersBtn');
@@ -1525,8 +1533,14 @@
 
             tiersList.innerHTML = users.map(user => `
                 <div class="tier-card">
-                    <div>
-                        <strong>${user.email}</strong>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+                            ${user.profilePicture ? `<img src="${user.profilePicture}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.innerHTML='${(user.name || user.email.split('@')[0]).substring(0, 2).toUpperCase()}'">` : `<span style="font-size: 14px; font-weight: 600;">${(user.name || user.email.split('@')[0]).substring(0, 2).toUpperCase()}</span>`}
+                        </div>
+                        <div style="flex: 1;">
+                            <div><strong>${user.name || user.email.split('@')[0]}</strong></div>
+                            <div style="font-size: 12px; color: var(--muted);">${user.email}</div>
+                        </div>
                         <span class="tier-badge tier-${user.tier || 'basic'}">${(user.tier || 'basic').toUpperCase()}</span>
                         ${user.isAdmin ? '<span style="color: var(--primary); margin-left: 8px;">👑 Admin</span>' : ''}
                     </div>

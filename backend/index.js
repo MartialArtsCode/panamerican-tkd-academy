@@ -283,8 +283,18 @@ app.get('/api/admin/users', (req, res) => {
     
     // Combine test users and registered users
     const allUsers = [
-        ...testUsers.map(u => ({ ...u, source: 'test' })),
-        ...Array.from(userAccounts.values()).map(u => ({ ...u, source: 'registered' }))
+        ...testUsers.map(u => ({ 
+            ...u, 
+            source: 'test',
+            name: u.name || u.email.split('@')[0],
+            profilePicture: u.profilePicture || null
+        })),
+        ...Array.from(userAccounts.values()).map(u => ({ 
+            ...u, 
+            source: 'registered',
+            name: u.name || u.email.split('@')[0],
+            profilePicture: u.profilePicture || null
+        }))
     ];
     
     res.json({ users: allUsers });
