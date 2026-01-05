@@ -343,6 +343,64 @@ app.put('/api/users/change-password', (req, res) => {
     res.status(404).json({ error: 'User not found' });
 });
 
+// Auto-response settings endpoints
+const autoResponseFilePath = path.join(__dirname, 'data', 'auto-response.json');
+
+// Load auto-response settings
+function loadAutoResponseSettings() {
+    try {
+        if (fs.existsSync(autoResponseFilePath)) {
+            const data = fs.readFileSync(autoResponseFilePath, 'utf8');
+            return JSON.parse(data);
+        }
+    } catch (err) {
+        console.log('No auto-response settings found, using defaults');
+    }
+    return { enabled: false, message: 'Thanks for reaching out! We\'ll respond shortly...', delay: 2 };
+}
+
+// Save auto-response settings
+function saveAutoResponseSettings(settings) {
+    try {
+        const dir = path.dirname(autoResponseFilePath);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        fs.writeFileSync(autoResponseFilePath, JSON.stringify(settings, null, 2), 'utf8');
+        return true;
+    } catch (err) {
+        console.error('Error saving auto-response settings:', err);
+        return false;
+    }
+}
+
+// Get auto-response settings
+app.get('/api/admin/auto-response', (req, res) => {
+    const settings = loadAutoResponseSettings();
+    res.json(settings);
+});
+
+// Update auto-response settings
+app.put('/api/admin/auto-response', (req, res) => {
+    const { enabled, message, delay } = req.body;
+    
+    if (enabled && !message) {
+        return res.status(400).json({ error: 'Message is required when auto-response is enabled' });
+    }
+    
+    const settings = {
+        enabled: !!enabled,
+        message: message || '',
+        delay: Math.max(0, Math.min(60, parseInt(delay) || 2))
+    };
+    
+    if (saveAutoResponseSettings(settings)) {
+        res.json({ message: 'Settings saved successfully', settings });
+    } else {
+        res.status(500).json({ error: 'Failed to save settings' });
+    }
+});
+
 function authenticateAdmin(token) {
     try {
         return jwt.verify(token, JWT_SECRET);
@@ -439,6 +497,34 @@ io.on('connection', socket => {
 
         console.log('📤 Emitting visitor-message to admins room');
         io.to('admins').emit('visitor-message', data);
+
+        // Check if we should send auto-response
+        const autoResponseSettings = loadAutoResponseSettings();
+        if (autoResponseSettings.enabled && onlineAdmins.size === 0) {
+            // Only send auto-response if no admins are online
+            const memSession = inMemorySessions.get(data.sessionId);
+            const isFirstMessage = memSession && memSession.messages.length === 1;
+            
+            if (isFirstMessage) {
+                setTimeout(() => {
+                    const autoResponse = {
+                        sessionId: data.sessionId,
+                        message: autoResponseSettings.message,
+                        from: 'admin',
+                        auto: true
+                    };
+                    
+                    // Save to session
+                    if (memSession) {
+                        memSession.messages.push({ from: 'admin', text: autoResponseSettings.message, timestamp: new Date(), auto: true });
+                    }
+                    
+                    // Send to visitor
+                    io.to(data.sessionId).emit('admin-response', autoResponse);
+                    console.log('🤖 Auto-response sent to:', data.sessionId);
+                }, autoResponseSettings.delay * 1000);
+            }
+        }
     });
 
     /* ---------- ADMIN RESPONSE ---------- */
