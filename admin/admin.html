@@ -599,20 +599,31 @@
         replyInput.disabled = true;
         replyInput.placeholder = 'Select a conversation to reply...';
 
+        console.log('🔘 Setting up button handlers...');
+
         // Tier Management
         const tierModal = document.getElementById('tierModal');
         const manageTiersBtn = document.getElementById('manageTiersBtn');
         const closeTierModal = document.getElementById('closeTierModal');
         const tiersList = document.getElementById('tiersList');
 
-        manageTiersBtn.onclick = () => {
-            tierModal.style.display = 'flex';
-            loadUsers();
-        };
+        console.log('Tier elements:', { tierModal: !!tierModal, manageTiersBtn: !!manageTiersBtn });
 
-        closeTierModal.onclick = () => {
-            tierModal.style.display = 'none';
-        };
+        if (manageTiersBtn) {
+            manageTiersBtn.onclick = () => {
+                console.log('🎯 Manage Tiers button clicked');
+                tierModal.style.display = 'flex';
+                loadUsers();
+            };
+        } else {
+            console.error('❌ manageTiersBtn not found');
+        }
+
+        if (closeTierModal) {
+            closeTierModal.onclick = () => {
+                tierModal.style.display = 'none';
+            };
+        }
 
         // Password Change
         const passwordModal = document.getElementById('passwordModal');
@@ -622,20 +633,30 @@
         const passwordError = document.getElementById('passwordError');
         const passwordSuccess = document.getElementById('passwordSuccess');
 
-        changePasswordBtn.onclick = () => {
-            passwordModal.style.display = 'flex';
-            document.getElementById('currentPassword').value = '';
-            document.getElementById('newPassword').value = '';
-            document.getElementById('confirmPassword').value = '';
-            passwordError.style.display = 'none';
-            passwordSuccess.style.display = 'none';
-        };
+        console.log('Password elements:', { passwordModal: !!passwordModal, changePasswordBtn: !!changePasswordBtn });
 
-        closePasswordModal.onclick = () => {
-            passwordModal.style.display = 'none';
-        };
+        if (changePasswordBtn) {
+            changePasswordBtn.onclick = () => {
+                console.log('🎯 Change Password button clicked');
+                passwordModal.style.display = 'flex';
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                passwordError.style.display = 'none';
+                passwordSuccess.style.display = 'none';
+            };
+        } else {
+            console.error('❌ changePasswordBtn not found');
+        }
 
-        savePasswordBtn.onclick = async () => {
+        if (closePasswordModal) {
+            closePasswordModal.onclick = () => {
+                passwordModal.style.display = 'none';
+            };
+        }
+
+        if (savePasswordBtn) {
+            savePasswordBtn.onclick = async () => {
             const currentPassword = document.getElementById('currentPassword').value;
             const newPassword = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
@@ -690,16 +711,26 @@
                 passwordError.textContent = 'Network error. Please try again.';
                 passwordError.style.display = 'block';
             }
-        };
+            };
+        } else {
+            console.error('❌ savePasswordBtn not found');
+        }
 
         // Logout
         const logoutBtn = document.getElementById('logoutBtn');
-        logoutBtn.onclick = () => {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.clear();
-                window.location.href = `${BASE_PATH}/index.html`;
-            }
-        };
+        console.log('Logout button element:', { logoutBtn: !!logoutBtn });
+
+        if (logoutBtn) {
+            logoutBtn.onclick = () => {
+                console.log('🎯 Logout button clicked');
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.clear();
+                    window.location.href = `${BASE_PATH}/index.html`;
+                }
+            };
+        } else {
+            console.error('❌ logoutBtn not found');
+        }
 
         // Quick Replies Management
         let quickReplies = [];
@@ -723,10 +754,17 @@
 
         const quickReplyDropdown = document.getElementById('quickReplyDropdown');
 
-        quickRepliesBtn.onclick = () => {
-            quickRepliesModal.style.display = 'flex';
-            loadQuickReplies();
-        };
+        console.log('Quick Replies elements:', { quickRepliesModal: !!quickRepliesModal, quickRepliesBtn: !!quickRepliesBtn });
+
+        if (quickRepliesBtn) {
+            quickRepliesBtn.onclick = () => {
+                console.log('🎯 Quick Replies button clicked');
+                quickRepliesModal.style.display = 'flex';
+                loadQuickReplies();
+            };
+        } else {
+            console.error('❌ quickRepliesBtn not found');
+        }
 
         closeQuickRepliesModal.onclick = () => {
             quickRepliesModal.style.display = 'none';
@@ -969,10 +1007,17 @@
         const autoResponseError = document.getElementById('autoResponseError');
         const autoResponseSuccess = document.getElementById('autoResponseSuccess');
 
-        autoResponseBtn.onclick = async () => {
-            autoResponseModal.style.display = 'flex';
-            await loadAutoResponseSettings();
-        };
+        console.log('Auto Response elements:', { autoResponseModal: !!autoResponseModal, autoResponseBtn: !!autoResponseBtn });
+
+        if (autoResponseBtn) {
+            autoResponseBtn.onclick = async () => {
+                console.log('🎯 Auto Response button clicked');
+                autoResponseModal.style.display = 'flex';
+                await loadAutoResponseSettings();
+            };
+        } else {
+            console.error('❌ autoResponseBtn not found');
+        }
 
         closeAutoResponseModal.onclick = () => {
             autoResponseModal.style.display = 'none';
