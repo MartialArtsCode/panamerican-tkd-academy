@@ -67,12 +67,17 @@ const io = new Server(server, {
 /* ======================
    DATABASE
 ====================== */
-// MongoDB connection (optional for testing)
-mongoose.connect(MONGO_URI)
-    .then(() => console.log('✅ MongoDB connected'))
-    .catch(err => {
-        console.warn('⚠️ MongoDB not available - using in-memory storage for testing');
-    });
+// MongoDB connection (optional - only connect if MONGO_URI is explicitly set)
+if (process.env.MONGO_URI && process.env.MONGO_URI !== 'mongodb://127.0.0.1:27017/pta_chat') {
+    mongoose.connect(process.env.MONGO_URI)
+        .then(() => console.log('✅ MongoDB connected'))
+        .catch(err => {
+            console.warn('⚠️ MongoDB connection failed:', err.message);
+            console.warn('📦 Using file-based storage instead');
+        });
+} else {
+    console.log('📦 Using file-based storage (MongoDB not configured)');
+}
 
 /* ======================
    IN-MEMORY TEST STORAGE
@@ -475,6 +480,9 @@ io.on('connection', socket => {
 /* ======================
    START SERVER
 ====================== */
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 PTA Chat Server running on port ${PORT}`);
+    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`💾 Storage: File-based (backend/data/users.json)`);
+    console.log(`✅ Server ready to accept connections`);
 });
