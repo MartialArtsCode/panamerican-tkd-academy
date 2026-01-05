@@ -404,16 +404,22 @@ io.on('connection', socket => {
 
         if (data.type === 'admin') {
             const decoded = authenticateAdmin(data.token);
-            if (!decoded) return socket.disconnect();
+            if (!decoded) {
+                console.log('❌ Admin authentication failed');
+                return socket.disconnect();
+            }
 
             onlineAdmins.add(socket.id);
             socket.join('admins');
+            console.log('✅ Admin authenticated and joined admins room:', socket.id);
+            console.log('👥 Online admins:', onlineAdmins.size);
             io.emit('admin-online', onlineAdmins.size);
         }
     });
 
     /* ---------- VISITOR MESSAGE ---------- */
     socket.on('visitor-message', async data => {
+        console.log('📨 Visitor message received:', data);
         try {
             const session = Session ? await Session.findOne({ sessionId: data.sessionId }).catch(() => null) : null;
             if (session) {
@@ -431,6 +437,7 @@ io.on('connection', socket => {
             }
         }
 
+        console.log('📤 Emitting visitor-message to admins room');
         io.to('admins').emit('visitor-message', data);
     });
 

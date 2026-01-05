@@ -274,6 +274,7 @@
         // Connect and authenticate as admin
         socket.on('connect', () => {
             console.log('✅ Admin connected to server');
+            console.log('🔑 Sending identify with token:', authToken ? 'Token present' : 'No token');
             socket.emit('identify', { type: 'admin', token: authToken });
         });
 
