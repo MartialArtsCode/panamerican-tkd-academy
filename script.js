@@ -821,7 +821,7 @@ function initLoginModal() {
                 }
                 
                 // Determine redirect location based on user role
-                const redirectUrl = data.isAdmin ? '/admin/admin.html' : '/member/member.html';
+                const redirectUrl = data.isAdmin ? 'admin/admin.html' : 'member/member.html';
                 
                 // Show success message for new accounts
                 if (data.message && data.message.includes('created')) {
