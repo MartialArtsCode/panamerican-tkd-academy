@@ -452,6 +452,9 @@
                 if (modal) modal.style.display = 'none';
             });
 
+            console.log('🌐 Connecting to:', API_BASE_URL);
+            console.log('🔑 Auth token:', authToken ? 'Present (length: ' + authToken.length + ')' : 'Missing');
+
             const socket = io(API_BASE_URL, {
                 reconnection: true,
                 reconnectionDelay: 1000
@@ -470,19 +473,25 @@
         // Connect and authenticate as admin
         socket.on('connect', () => {
             console.log('✅ Admin connected to server');
-            console.log('🔑 Sending identify with token:', authToken ? 'Token present' : 'No token');
+            console.log('📤 Sending identify: type=admin, has token=' + !!authToken);
             socket.emit('identify', { type: 'admin', token: authToken });
         });
 
         socket.on('disconnect', () => {
             console.warn('❌ Admin disconnected from server');
         });
+        
+        socket.on('connect_error', (error) => {
+            console.error('❌ Admin connection error:', error);
+        });
 
         // Receive visitor messages in real-time
         socket.on('visitor-message', data => {
-            console.log('📨 Visitor message received:', data);
+            console.log('📨 [ADMIN] Visitor message received:', data);
+            console.log('📊 Current sessions count:', Object.keys(sessions).length);
             
             if (!sessions[data.sessionId]) {
+                console.log('🆕 New session created:', data.sessionId);
                 sessions[data.sessionId] = [];
                 addSession(data.sessionId);
             }
@@ -493,6 +502,7 @@
                 timestamp: data.timestamp || new Date().toISOString()
             });
             
+            console.log('🔔 Playing notification sound');
             // Play notification sound and track unread
             playNotificationSound();
             incrementUnreadCount(data.sessionId);
@@ -501,6 +511,7 @@
             updateSessionPreview(data.sessionId, data.message);
             
             if (data.sessionId === activeSessionId) {
+                console.log('♻️ Rendering messages for active session');
                 renderMessages();
             }
         });

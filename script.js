@@ -46,8 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
    SOCKET.IO
 ====================== */
 function initSocketIO() {
+    console.log('🚀 Initializing Socket.IO...');
+    console.log('🌐 API_BASE_URL:', API_BASE_URL);
+    console.log('🆔 Session ID:', sessionId);
+    
     if (typeof io === 'undefined') {
-        console.warn('⚠️ Socket.IO not loaded');
+        console.error('❌ Socket.IO not loaded - io is undefined');
         return;
     }
 
@@ -61,17 +65,26 @@ function initSocketIO() {
 
     socket.on('connect', () => {
         console.log('✅ Connected to server');
+        console.log('📤 Sending identify: type=visitor, sessionId=' + sessionId);
         socket.emit('identify', { type: 'visitor', sessionId });
     });
 
     socket.on('disconnect', () => console.warn('❌ Disconnected from server'));
+    
+    socket.on('connect_error', (error) => {
+        console.error('❌ Connection error:', error);
+    });
 
     socket.on('admin-response', data => {
+        console.log('📩 Admin response received:', data);
         hideTypingIndicator();
         addAdminMessage(data);
     });
 
-    socket.on('restore-chat', session => restoreChatHistory(session));
+    socket.on('restore-chat', session => {
+        console.log('💾 Restoring chat history:', session);
+        restoreChatHistory(session);
+    });
 }
 /*LOGIN*/
     /* Inline script for login & simple user-admin interface (client-side mock) */
@@ -430,6 +443,11 @@ function sendMessageToWidget(message) {
     chatBody.scrollTop = chatBody.scrollHeight;
 
     if (socket && socket.connected) {
+        console.log('📤 Sending visitor message:', {
+            message,
+            sessionId,
+            timestamp: new Date().toISOString()
+        });
         socket.emit('visitor-message', {
             message,
             sessionId,
@@ -437,6 +455,7 @@ function sendMessageToWidget(message) {
         });
         setTimeout(showTypingIndicator, 400);
     } else {
+        console.error('❌ Socket not connected, cannot send message');
         hideTypingIndicator();
         addAutoReplyFallback();
     }
