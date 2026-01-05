@@ -64,6 +64,9 @@ const io = new Server(server, {
     }
 });
 
+// Make io available to routes
+app.set('io', io);
+
 /* ======================
    DATABASE
 ====================== */
@@ -202,30 +205,46 @@ app.post('/auth/login', (req, res) => {
         if (existingUser.password !== password) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        const token = jwt.sign({ email: existingUser.email, isAdmin: false }, JWT_SECRET, { expiresIn: '8h' });
+        
+        // Check if user is approved (admins are auto-approved)
+        if (!existingUser.approved && !existingUser.isAdmin) {
+            console.warn('❌ Login failed: User not approved yet:', email);
+            return res.status(403).json({ 
+                message: 'Your account is pending admin approval. Please wait for confirmation.',
+                pendingApproval: true
+            });
+        }
+        
+        const token = jwt.sign({ email: existingUser.email, isAdmin: existingUser.isAdmin || false }, JWT_SECRET, { expiresIn: '8h' });
         return res.json({ token, email: existingUser.email, isAdmin: existingUser.isAdmin || false, tier: existingUser.tier || 'basic' });
     }
 
-    // New user - create account automatically
-    userAccounts.set(email, { 
+    // New user - create pending account that requires admin approval
+    const newUser = {
         email, 
         password, 
         isAdmin: false,
+        approved: false,
         tier: 'basic',
-        createdAt: new Date() 
-    });
+        registeredAt: new Date()
+    };
     
-    // Save to file
+    userAccounts.set(email, newUser);
     saveUsers();
     
-    console.log(`✅ New user registered: ${email}`);
-    const token = jwt.sign({ email, isAdmin: false }, JWT_SECRET, { expiresIn: '8h' });
-    res.json({ 
-        token, 
-        email, 
-        isAdmin: false,
-        tier: 'basic',
-        message: 'Account created successfully' 
+    console.log(`📝 New user registered (pending approval): ${email}`);
+    
+    // Notify admins via Socket.IO
+    io.to('admins').emit('new-registration', {
+        email: email,
+        registeredAt: new Date().toISOString(),
+        message: `New registration: ${email} is waiting for approval`
+    });
+    console.log('📢 Notified admins of new registration');
+    
+    res.status(201).json({ 
+        message: 'Registration submitted. Please wait for admin approval.',
+        pendingApproval: true
     });
 });
 
@@ -305,6 +324,99 @@ app.put('/api/admin/users/:email/tier', authMiddleware, (req, res) => {
     
     console.log('❌ User not found:', email);
     res.status(404).json({ error: 'User not found' });
+});
+
+// Get pending user registrations
+app.get('/api/admin/pending-users', authMiddleware, (req, res) => {
+    console.log('📋 Fetching pending registrations');
+    
+    try {
+        // Filter users that are not approved
+        const pendingUsers = Array.from(userAccounts.values())
+            .filter(u => !u.approved && !u.isAdmin)
+            .map(u => ({
+                id: u.email, // Using email as ID since we don't have MongoDB _id
+                email: u.email,
+                tier: u.tier || 'basic',
+                registeredAt: u.registeredAt || new Date()
+            }));
+        
+        console.log('✅ Found pending users:', pendingUsers.length);
+        res.json(pendingUsers);
+    } catch (error) {
+        console.error('❌ Error fetching pending users:', error);
+        res.status(500).json({ error: 'Failed to fetch pending users' });
+    }
+});
+
+// Approve user registration
+app.post('/api/admin/approve-user/:userId', authMiddleware, (req, res) => {
+    const { userId } = req.params; // userId is email in our case
+    const { tier } = req.body;
+    
+    console.log('✅ User approval request:', userId);
+    
+    try {
+        const user = userAccounts.get(userId);
+        
+        if (!user) {
+            console.warn('❌ User not found:', userId);
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        user.approved = true;
+        user.approvedAt = new Date();
+        user.approvedBy = req.user.email || 'admin';
+        if (tier) user.tier = tier;
+        
+        userAccounts.set(userId, user);
+        saveUsers();
+        
+        console.log('✅ User approved:', userId);
+        
+        // Notify the user via Socket.IO
+        io.emit('account-approved', {
+            email: userId,
+            message: 'Your account has been approved! You can now log in.'
+        });
+        
+        res.json({ 
+            message: 'User approved successfully',
+            user: {
+                id: userId,
+                email: userId,
+                tier: user.tier,
+                approved: true
+            }
+        });
+    } catch (error) {
+        console.error('❌ Error approving user:', error);
+        res.status(500).json({ error: 'Failed to approve user' });
+    }
+});
+
+// Reject user registration
+app.delete('/api/admin/reject-user/:userId', authMiddleware, (req, res) => {
+    const { userId } = req.params; // userId is email
+    
+    console.log('❌ User rejection request:', userId);
+    
+    try {
+        if (!userAccounts.has(userId)) {
+            console.warn('❌ User not found:', userId);
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        userAccounts.delete(userId);
+        saveUsers();
+        
+        console.log('✅ User rejected and deleted:', userId);
+        
+        res.json({ message: 'User registration rejected and removed' });
+    } catch (error) {
+        console.error('❌ Error rejecting user:', error);
+        res.status(500).json({ error: 'Failed to reject user' });
+    }
 });
 
 // Password change endpoint

@@ -182,6 +182,10 @@
             <button id="manageTiersBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
                 👥 Manage Tiers
             </button>
+            <button id="pendingUsersBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px; position: relative;">
+                ✋ Pending Users
+                <span id="pendingBadge" style="display: none; position: absolute; top: 5px; right: 5px; background: #f44336; color: white; border-radius: 10px; padding: 2px 6px; font-size: 11px; font-weight: bold;">0</span>
+            </button>
             <button id="quickRepliesBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
                 ⚡ Quick Replies
             </button>
@@ -242,6 +246,19 @@
                 <div style="text-align: center; color: var(--muted); padding: 40px;">
                     Loading users...
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Users Modal -->
+    <div id="pendingUsersModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: var(--panel); padding: 24px; border-radius: 12px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0;">✋ Pending User Registrations</h2>
+                <button id="closePendingUsersModal" style="background: none; border: none; color: var(--muted); font-size: 28px; cursor: pointer;">&times;</button>
+            </div>
+            <div id="pendingUsersList" style="margin-bottom: 20px;">
+                <!-- Pending users will be loaded here -->
             </div>
         </div>
     </div>
@@ -446,11 +463,14 @@
 
             // Ensure all modals are hidden on load
             const modals = ['tierModal', 'passwordModal', 'autoResponseModal', 'quickRepliesModal', 
-                            'quickReplyEditorModal', 'dashboardModal', 'sessionNoteModal'];
+                            'quickReplyEditorModal', 'dashboardModal', 'sessionNoteModal', 'pendingUsersModal'];
             modals.forEach(id => {
                 const modal = document.getElementById(id);
                 if (modal) modal.style.display = 'none';
             });
+            
+            // Load pending users count on startup
+            loadPendingUsersCount();
 
             console.log('🌐 Connecting to:', API_BASE_URL);
             console.log('🔑 Auth token:', authToken ? 'Present (length: ' + authToken.length + ')' : 'Missing');
@@ -529,6 +549,14 @@
 
         socket.on('visitor-offline', data => {
             console.log('👤 Visitor offline:', data.sessionId);
+        });
+
+        // Handle new user registrations
+        socket.on('new-registration', data => {
+            console.log('📝 New registration notification:', data);
+            playNotificationSound();
+            loadPendingUsersCount();
+            alert(`New Registration: ${data.email} is waiting for approval!`);
         });
 
         function addSession(sessionId) {
@@ -735,6 +763,26 @@
         if (closeTierModal) {
             closeTierModal.onclick = () => {
                 tierModal.style.display = 'none';
+            };
+        }
+
+        // Pending Users Management
+        const pendingUsersModal = document.getElementById('pendingUsersModal');
+        const pendingUsersBtn = document.getElementById('pendingUsersBtn');
+        const closePendingUsersModal = document.getElementById('closePendingUsersModal');
+        const pendingUsersList = document.getElementById('pendingUsersList');
+
+        if (pendingUsersBtn) {
+            pendingUsersBtn.onclick = () => {
+                console.log('✋ Pending Users button clicked');
+                pendingUsersModal.style.display = 'flex';
+                loadPendingUsers();
+            };
+        }
+
+        if (closePendingUsersModal) {
+            closePendingUsersModal.onclick = () => {
+                pendingUsersModal.style.display = 'none';
             };
         }
 
@@ -1525,6 +1573,142 @@
 
         // Make updateTier available globally
         window.updateTier = updateTier;
+
+        // Pending Users Functions
+        async function loadPendingUsersCount() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/pending-users`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const users = await response.json();
+                    const badge = document.getElementById('pendingBadge');
+                    if (users.length > 0) {
+                        badge.textContent = users.length;
+                        badge.style.display = 'block';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading pending users count:', error);
+            }
+        }
+
+        async function loadPendingUsers() {
+            try {
+                pendingUsersList.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 20px;">Loading...</div>';
+                
+                const response = await fetch(`${API_BASE_URL}/api/admin/pending-users`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to fetch pending users');
+                
+                const users = await response.json();
+                
+                if (users.length === 0) {
+                    pendingUsersList.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 20px;">No pending registrations</div>';
+                    return;
+                }
+                
+                pendingUsersList.innerHTML = users.map(user => `
+                    <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px; margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <div>
+                                <strong style="font-size: 16px;">${user.email}</strong>
+                                <div style="color: var(--muted); font-size: 13px; margin-top: 4px;">
+                                    Registered: ${new Date(user.registeredAt).toLocaleString()}
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <select id="tier-${user.id}" style="flex: 1; padding: 8px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); border-radius: 6px; color: white;">
+                                <option value="basic" ${user.tier === 'basic' ? 'selected' : ''}>Basic</option>
+                                <option value="premium" ${user.tier === 'premium' ? 'selected' : ''}>Premium</option>
+                                <option value="vip" ${user.tier === 'vip' ? 'selected' : ''}>VIP</option>
+                                <option value="instructor" ${user.tier === 'instructor' ? 'selected' : ''}>Instructor</option>
+                            </select>
+                            <button onclick="approveUser('${user.id}')" style="padding: 8px 16px; background: #4caf50; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">
+                                ✓ Approve
+                            </button>
+                            <button onclick="rejectUser('${user.id}')" style="padding: 8px 16px; background: #f44336; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">
+                                ✗ Reject
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading pending users:', error);
+                pendingUsersList.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 20px;">Error loading pending users</div>';
+            }
+        }
+
+        async function approveUser(userId) {
+            try {
+                const tierSelect = document.getElementById(`tier-${userId}`);
+                const tier = tierSelect ? tierSelect.value : 'basic';
+                
+                const response = await fetch(`${API_BASE_URL}/api/admin/approve-user/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tier })
+                });
+                
+                if (!response.ok) throw new Error('Failed to approve user');
+                
+                const data = await response.json();
+                console.log('✅ User approved:', data);
+                alert(`User ${data.user.email} approved successfully!`);
+                
+                // Reload pending users list
+                loadPendingUsers();
+                loadPendingUsersCount();
+            } catch (error) {
+                console.error('❌ Error approving user:', error);
+                alert('Failed to approve user');
+            }
+        }
+
+        async function rejectUser(userId) {
+            if (!confirm('Are you sure you want to reject this registration? This cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/reject-user/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to reject user');
+                
+                const data = await response.json();
+                console.log('✅ User rejected:', data);
+                alert('User registration rejected');
+                
+                // Reload pending users list
+                loadPendingUsers();
+                loadPendingUsersCount();
+            } catch (error) {
+                console.error('❌ Error rejecting user:', error);
+                alert('Failed to reject user');
+            }
+        }
+
+        // Make functions available globally
+        window.approveUser = approveUser;
+        window.rejectUser = rejectUser;
 
 
         }); // End DOMContentLoaded

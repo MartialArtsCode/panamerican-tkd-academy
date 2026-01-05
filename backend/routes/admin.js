@@ -43,4 +43,119 @@ router.delete('/remove-user', adminAuth, async (req, res) => {
   res.status(200).json({ message: 'User removed by admin.' });
 });
 
+// Get all users (for admin management)
+router.get('/users', adminAuth, async (req, res) => {
+  try {
+    const users = await User.find({});
+    const decryptedUsers = users.map(u => ({
+      id: u._id,
+      email: decrypt(u.email),
+      isAdmin: u.isAdmin,
+      approved: u.approved,
+      tier: u.tier || 'basic',
+      registeredAt: u.registeredAt,
+      approvedAt: u.approvedAt,
+      approvedBy: u.approvedBy
+    }));
+    res.json(decryptedUsers);
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
+// Get pending registrations
+router.get('/pending-users', adminAuth, async (req, res) => {
+  console.log('📋 Fetching pending registrations');
+  
+  try {
+    const pendingUsers = await User.find({ approved: false, isAdmin: false });
+    const decryptedUsers = pendingUsers.map(u => ({
+      id: u._id,
+      email: decrypt(u.email),
+      tier: u.tier || 'basic',
+      registeredAt: u.registeredAt
+    }));
+    
+    console.log('✅ Found pending users:', decryptedUsers.length);
+    res.json(decryptedUsers);
+  } catch (err) {
+    console.error('❌ Error fetching pending users:', err);
+    res.status(500).json({ error: 'Failed to fetch pending users' });
+  }
+});
+
+// Approve user registration
+router.post('/approve-user/:userId', adminAuth, async (req, res) => {
+  console.log('✅ User approval request:', req.params.userId);
+  
+  try {
+    const { userId } = req.params;
+    const { tier } = req.body;
+    
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      console.warn('❌ User not found:', userId);
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    user.approved = true;
+    user.approvedAt = new Date();
+    user.approvedBy = req.user.email || 'admin';
+    if (tier) user.tier = tier;
+    
+    await user.save();
+    
+    const userEmail = decrypt(user.email);
+    console.log('✅ User approved:', userEmail);
+    
+    // Notify the user via Socket.IO if they're connected
+    if (req.app.get('io')) {
+      req.app.get('io').emit('account-approved', {
+        email: userEmail,
+        message: 'Your account has been approved! You can now log in.'
+      });
+    }
+    
+    res.json({ 
+      message: 'User approved successfully',
+      user: {
+        id: user._id,
+        email: userEmail,
+        tier: user.tier,
+        approved: true
+      }
+    });
+  } catch (err) {
+    console.error('❌ Error approving user:', err);
+    res.status(500).json({ error: 'Failed to approve user' });
+  }
+});
+
+// Reject user registration
+router.delete('/reject-user/:userId', adminAuth, async (req, res) => {
+  console.log('❌ User rejection request:', req.params.userId);
+  
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      console.warn('❌ User not found:', userId);
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    const userEmail = decrypt(user.email);
+    await User.findByIdAndDelete(userId);
+    
+    console.log('✅ User rejected and deleted:', userEmail);
+    
+    res.json({ message: 'User registration rejected and removed' });
+  } catch (err) {
+    console.error('❌ Error rejecting user:', err);
+    res.status(500).json({ error: 'Failed to reject user' });
+  }
+});
+
 export default router;

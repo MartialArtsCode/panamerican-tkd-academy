@@ -11,14 +11,60 @@ const router = express.Router();
 
 // Local registration
 router.post('/register', async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) return res.status(400).json({ message: 'Email and password required.' });
-  const existing = await User.findOne({ email: encrypt(email) });
-  if (existing) return res.status(409).json({ message: 'User already exists.' });
-  const hashed = await bcrypt.hash(password, 10);
-  const user = new User({ email: encrypt(email), password: encrypt(hashed), isAdmin: false });
-  await user.save();
-  res.status(201).json({ message: 'User registered.' });
+  console.log('📝 Registration attempt:', { email: req.body.email });
+  
+  try {
+    const { email, password, name } = req.body;
+    
+    if (!email || !password) {
+      console.warn('❌ Registration failed: Missing credentials');
+      return res.status(400).json({ message: 'Email and password required.' });
+    }
+    
+    console.log('🔍 Checking for existing user:', email);
+    const existing = await User.findOne({ email: encrypt(email) });
+    
+    if (existing) {
+      console.warn('❌ Registration failed: User already exists:', email);
+      return res.status(409).json({ message: 'User already exists.' });
+    }
+    
+    console.log('🔒 Hashing password');
+    const hashed = await bcrypt.hash(password, 10);
+    
+    console.log('💾 Creating pending user account');
+    const user = new User({ 
+      email: encrypt(email), 
+      password: encrypt(hashed), 
+      isAdmin: false,
+      approved: false,
+      tier: 'basic',
+      registeredAt: new Date()
+    });
+    
+    await user.save();
+    
+    console.log('✅ User registered (pending approval):', email);
+    
+    // Emit event to notify admins (Socket.IO will handle this)
+    if (req.app.get('io')) {
+      req.app.get('io').to('admins').emit('new-registration', {
+        email: email,
+        registeredAt: new Date().toISOString(),
+        message: `New registration: ${email} is waiting for approval`
+      });
+      console.log('📢 Notified admins of new registration');
+    }
+    
+    res.status(201).json({ 
+      message: 'Registration submitted. Please wait for admin approval.',
+      pendingApproval: true
+    });
+  } catch (error) {
+    console.error('❌ Registration error:', error);
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ message: 'Server error during registration.' });
+  }
 });
 
 
@@ -48,6 +94,15 @@ router.post('/login', async (req, res) => {
     if (!valid) {
       console.warn('❌ Login failed: Invalid password for:', email);
       return res.status(401).json({ message: 'Invalid credentials.' });
+    }
+    
+    // Check if user is approved
+    if (!user.approved && !user.isAdmin) {
+      console.warn('❌ Login failed: User not approved yet:', email);
+      return res.status(403).json({ 
+        message: 'Your account is pending admin approval. Please wait for confirmation.',
+        pendingApproval: true
+      });
     }
     
     console.log('✅ Password valid, generating token');
