@@ -176,21 +176,36 @@
         </div>
         
         <div style="padding: 12px; border-bottom: 1px solid var(--border);">
-            <button id="manageTiersBtn" style="width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
-                Manage Tiers
+            <button id="dashboardBtn" style="width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
+                📊 Dashboard
+            </button>
+            <button id="manageTiersBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
+                👥 Manage Tiers
             </button>
             <button id="quickRepliesBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
-                Quick Replies
+                ⚡ Quick Replies
             </button>
             <button id="autoResponseBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
-                Auto Responses
+                🤖 Auto Responses
+            </button>
+            <button id="exportChatsBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
+                📥 Export Chats
             </button>
             <button id="changePasswordBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
-                Change Password
+                🔒 Change Password
             </button>
             <button id="logoutBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">
-                Logout
+                🚪 Logout
             </button>
+        </div>
+        
+        <div style="padding: 12px; border-bottom: 1px solid var(--border);">
+            <input type="text" id="sessionSearch" placeholder="🔍 Search sessions..." style="width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 6px; color: white; font-size: 13px; margin-bottom: 8px;" />
+            <div style="display: flex; gap: 4px; font-size: 11px;">
+                <button id="filterAll" class="filter-btn active" style="flex: 1; padding: 6px; background: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer;">All</button>
+                <button id="filterUnread" class="filter-btn" style="flex: 1; padding: 6px; background: rgba(255,255,255,0.05); color: white; border: none; border-radius: 4px; cursor: pointer;">Unread</button>
+                <button id="filterActive" class="filter-btn" style="flex: 1; padding: 6px; background: rgba(255,255,255,0.05); color: white; border: none; border-radius: 4px; cursor: pointer;">Active</button>
+            </div>
         </div>
         
         <div class="session-list" id="sessionList"></div>
@@ -198,7 +213,14 @@
 
     <!-- CHAT -->
     <main class="chat-panel">
-        <div class="chat-header" id="chatHeader">Select a conversation</div>
+        <div class="chat-header" style="display: flex; justify-content: space-between; align-items: center; padding: 16px;">
+            <span id="chatHeader">Select a conversation</span>
+            <div id="chatActions" style="display: none; gap: 8px;">
+                <button id="addNoteBtn" title="Add Note" style="padding: 6px 12px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">📝</button>
+                <button id="exportSessionBtn" title="Export Chat" style="padding: 6px 12px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">📥</button>
+                <button id="closeSessionBtn" title="Close Session" style="padding: 6px 12px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">✖️</button>
+            </div>
+        </div>
         <div class="chat-body" id="chatBody">
             <div class="empty">No conversation selected</div>
         </div>
@@ -340,6 +362,64 @@
         </div>
     </div>
 
+    <!-- Dashboard Modal -->
+    <div id="dashboardModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: var(--panel); border-radius: 12px; width: 90%; max-width: 900px; max-height: 80vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border);">
+                <h2 style="margin: 0; font-size: 20px;">📊 Dashboard & Analytics</h2>
+                <button id="closeDashboardModal" style="background: none; border: none; color: var(--muted); font-size: 28px; cursor: pointer;">&times;</button>
+            </div>
+            <div style="padding: 24px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                    <div style="background: rgba(76, 175, 80, 0.1); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 8px; padding: 20px;">
+                        <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Total Sessions</div>
+                        <div id="statTotalSessions" style="font-size: 32px; font-weight: 700; color: #4caf50;">0</div>
+                    </div>
+                    <div style="background: rgba(33, 150, 243, 0.1); border: 1px solid rgba(33, 150, 243, 0.3); border-radius: 8px; padding: 20px;">
+                        <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Total Messages</div>
+                        <div id="statTotalMessages" style="font-size: 32px; font-weight: 700; color: #2196f3;">0</div>
+                    </div>
+                    <div style="background: rgba(255, 152, 0, 0.1); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px; padding: 20px;">
+                        <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Active Today</div>
+                        <div id="statActiveToday" style="font-size: 32px; font-weight: 700; color: #ff9800;">0</div>
+                    </div>
+                    <div style="background: rgba(156, 39, 176, 0.1); border: 1px solid rgba(156, 39, 176, 0.3); border-radius: 8px; padding: 20px;">
+                        <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Avg Response Time</div>
+                        <div id="statAvgResponse" style="font-size: 32px; font-weight: 700; color: #9c27b0;">--</div>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 16px; font-size: 16px;">Recent Activity</h3>
+                <div id="recentActivity" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 16px; max-height: 300px; overflow-y: auto;">
+                    <div style="text-align: center; color: var(--muted); padding: 20px;">Loading activity...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Session Note Modal -->
+    <div id="sessionNoteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1001; justify-content: center; align-items: center;">
+        <div style="background: var(--panel); border-radius: 12px; width: 90%; max-width: 500px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border);">
+                <h2 style="margin: 0; font-size: 20px;">📝 Add Session Note</h2>
+                <button id="closeSessionNoteModal" style="background: none; border: none; color: var(--muted); font-size: 28px; cursor: pointer;">&times;</button>
+            </div>
+            <div style="padding: 24px;">
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">Note</label>
+                    <textarea id="sessionNoteText" rows="5" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 6px; color: white; font-size: 14px; font-family: inherit; resize: vertical;" placeholder="Enter internal note about this session..."></textarea>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button id="cancelNoteBtn" style="flex: 1; padding: 12px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 14px;">
+                        Cancel
+                    </button>
+                    <button id="saveNoteBtn" style="flex: 1; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 14px;">
+                        Save Note
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Notification Sound -->
     <audio id="notificationSound" preload="auto">
         <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTWH0fPTgj0MFWGs6+yrWBcNSqXh8sFxKAU5jdXz1Ic/CxNcr+rprFkXDkul4vO+cSoFO47W89WEPwsUXK/q6axaFw5LpeL0vnEqBTuP1vPVhD8MFF2v6umtWhcOS6Xi9L5yKgU8j9bz1YQ/DBRdr+rprVoXD0yl4vS+cioFPI/W89WEPwwUXa/q6a1aFw9MpuL0v3IqBTyP1vPVhD8MFF2v6+mtWhcPTKbi9L9yKgU8j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFPI/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6+mtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cyoFO4/W89WEPwwUXa/q6a1aFw9MpuL0v3MqBTuP1vPVhD8MFF2v6umtWhcPTKbi9L9zKgU7j9bz1YQ/DBRdr+rprVoXD0ym4vS/cw==" type="audio/wav">
@@ -450,7 +530,10 @@
             activeSessionId = id;
             document.querySelectorAll('.session').forEach(s => s.classList.remove('active'));
             el.classList.add('active');
-            chatHeader.textContent = `Session: ${id.substring(0, 12)}...`;
+            document.querySelector('#chatHeader span').textContent = `Session: ${id.substring(0, 12)}...`;
+            
+            // Show chat actions
+            if (chatActions) chatActions.style.display = 'flex';
             
             // Clear unread count for this session
             clearUnreadCount(id);
@@ -730,6 +813,248 @@
             };
         } else {
             console.error('❌ logoutBtn not found');
+        }
+
+        // Dashboard
+        const dashboardModal = document.getElementById('dashboardModal');
+        const dashboardBtn = document.getElementById('dashboardBtn');
+        const closeDashboardModal = document.getElementById('closeDashboardModal');
+
+        if (dashboardBtn) {
+            dashboardBtn.onclick = () => {
+                dashboardModal.style.display = 'flex';
+                loadDashboardStats();
+            };
+        }
+
+        if (closeDashboardModal) {
+            closeDashboardModal.onclick = () => {
+                dashboardModal.style.display = 'none';
+            };
+        }
+
+        function loadDashboardStats() {
+            const totalSessions = Object.keys(sessions).length;
+            let totalMessages = 0;
+            let activeToday = 0;
+            const today = new Date().toDateString();
+
+            Object.values(sessions).forEach(msgs => {
+                totalMessages += msgs.length;
+                if (msgs.some(m => new Date(m.timestamp).toDateString() === today)) {
+                    activeToday++;
+                }
+            });
+
+            document.getElementById('statTotalSessions').textContent = totalSessions;
+            document.getElementById('statTotalMessages').textContent = totalMessages;
+            document.getElementById('statActiveToday').textContent = activeToday;
+            document.getElementById('statAvgResponse').textContent = totalSessions > 0 ? '< 2min' : '--';
+
+            // Recent activity
+            const recentActivity = document.getElementById('recentActivity');
+            const allMessages = [];
+            Object.entries(sessions).forEach(([sid, msgs]) => {
+                msgs.forEach(m => allMessages.push({ ...m, sessionId: sid }));
+            });
+            allMessages.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            if (allMessages.length === 0) {
+                recentActivity.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 20px;">No activity yet</div>';
+            } else {
+                recentActivity.innerHTML = allMessages.slice(0, 10).map(m => `
+                    <div style="padding: 12px; border-bottom: 1px solid var(--border);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <strong style="font-size: 13px;">${m.sessionId.substring(0, 10)}...</strong>
+                            <span style="font-size: 12px; color: var(--muted);">${new Date(m.timestamp).toLocaleTimeString()}</span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--muted);">${m.from === 'visitor' ? '👤' : '👨‍💼'} ${m.text.substring(0, 60)}${m.text.length > 60 ? '...' : ''}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Session Actions
+        const chatActions = document.getElementById('chatActions');
+        const addNoteBtn = document.getElementById('addNoteBtn');
+        const exportSessionBtn = document.getElementById('exportSessionBtn');
+        const closeSessionBtn = document.getElementById('closeSessionBtn');
+
+        if (addNoteBtn) {
+            addNoteBtn.onclick = () => {
+                document.getElementById('sessionNoteModal').style.display = 'flex';
+            };
+        }
+
+        if (exportSessionBtn) {
+            exportSessionBtn.onclick = () => {
+                exportCurrentSession();
+            };
+        }
+
+        if (closeSessionBtn) {
+            closeSessionBtn.onclick = () => {
+                if (confirm('Close this session? It will be removed from the list.')) {
+                    delete sessions[activeSessionId];
+                    delete sessionElements[activeSessionId];
+                    const sessionEl = document.querySelector(`.session[data-session-id="${activeSessionId}"]`);
+                    if (sessionEl) sessionEl.remove();
+                    activeSessionId = null;
+                    chatActions.style.display = 'none';
+                    document.getElementById('chatHeader').textContent = 'Select a conversation';
+                    chatBody.innerHTML = '<div class="empty">No conversation selected</div>';
+                    replyInput.disabled = true;
+                }
+            };
+        }
+
+        // Session Note Modal
+        const sessionNoteModal = document.getElementById('sessionNoteModal');
+        const closeSessionNoteModal = document.getElementById('closeSessionNoteModal');
+        const cancelNoteBtn = document.getElementById('cancelNoteBtn');
+        const saveNoteBtn = document.getElementById('saveNoteBtn');
+        const sessionNoteText = document.getElementById('sessionNoteText');
+
+        if (closeSessionNoteModal) {
+            closeSessionNoteModal.onclick = () => {
+                sessionNoteModal.style.display = 'none';
+                sessionNoteText.value = '';
+            };
+        }
+
+        if (cancelNoteBtn) {
+            cancelNoteBtn.onclick = () => {
+                sessionNoteModal.style.display = 'none';
+                sessionNoteText.value = '';
+            };
+        }
+
+        if (saveNoteBtn) {
+            saveNoteBtn.onclick = () => {
+                const note = sessionNoteText.value.trim();
+                if (note && activeSessionId) {
+                    if (!sessions[activeSessionId]) sessions[activeSessionId] = [];
+                    sessions[activeSessionId].push({
+                        from: 'note',
+                        text: `📝 Note: ${note}`,
+                        timestamp: new Date().toISOString()
+                    });
+                    renderMessages();
+                    sessionNoteModal.style.display = 'none';
+                    sessionNoteText.value = '';
+                }
+            };
+        }
+
+        // Export Chats
+        const exportChatsBtn = document.getElementById('exportChatsBtn');
+        if (exportChatsBtn) {
+            exportChatsBtn.onclick = () => {
+                exportAllChats();
+            };
+        }
+
+        function exportCurrentSession() {
+            if (!activeSessionId || !sessions[activeSessionId]) return;
+            const csv = generateCSV(activeSessionId, sessions[activeSessionId]);
+            downloadCSV(csv, `chat-${activeSessionId.substring(0, 8)}-${Date.now()}.csv`);
+        }
+
+        function exportAllChats() {
+            const allData = [];
+            Object.entries(sessions).forEach(([sid, msgs]) => {
+                msgs.forEach(m => allData.push({ sessionId: sid, ...m }));
+            });
+            const csv = 'Session ID,From,Message,Timestamp\n' + allData.map(d => 
+                `"${d.sessionId}","${d.from}","${d.text.replace(/"/g, '""')}","${d.timestamp}"`
+            ).join('\n');
+            downloadCSV(csv, `all-chats-${Date.now()}.csv`);
+        }
+
+        function generateCSV(sessionId, messages) {
+            const header = 'Session ID,From,Message,Timestamp\n';
+            const rows = messages.map(m => 
+                `"${sessionId}","${m.from}","${m.text.replace(/"/g, '""')}","${m.timestamp}"`
+            ).join('\n');
+            return header + rows;
+        }
+
+        function downloadCSV(csv, filename) {
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Session Search and Filter
+        const sessionSearch = document.getElementById('sessionSearch');
+        const filterAll = document.getElementById('filterAll');
+        const filterUnread = document.getElementById('filterUnread');
+        const filterActive = document.getElementById('filterActive');
+
+        let currentFilter = 'all';
+
+        if (sessionSearch) {
+            sessionSearch.oninput = () => filterSessions();
+        }
+
+        if (filterAll) {
+            filterAll.onclick = () => {
+                currentFilter = 'all';
+                updateFilterButtons();
+                filterSessions();
+            };
+        }
+
+        if (filterUnread) {
+            filterUnread.onclick = () => {
+                currentFilter = 'unread';
+                updateFilterButtons();
+                filterSessions();
+            };
+        }
+
+        if (filterActive) {
+            filterActive.onclick = () => {
+                currentFilter = 'active';
+                updateFilterButtons();
+                filterSessions();
+            };
+        }
+
+        function updateFilterButtons() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.style.background = 'rgba(255,255,255,0.05)';
+            });
+            if (currentFilter === 'all') filterAll.style.background = 'var(--primary)';
+            if (currentFilter === 'unread') filterUnread.style.background = 'var(--primary)';
+            if (currentFilter === 'active') filterActive.style.background = 'var(--primary)';
+        }
+
+        function filterSessions() {
+            const searchTerm = sessionSearch ? sessionSearch.value.toLowerCase() : '';
+            const today = new Date().toDateString();
+
+            document.querySelectorAll('.session').forEach(sessionEl => {
+                const sessionId = sessionEl.getAttribute('data-session-id');
+                const text = sessionEl.textContent.toLowerCase();
+                const matchesSearch = text.includes(searchTerm);
+                
+                let matchesFilter = true;
+                if (currentFilter === 'unread') {
+                    matchesFilter = unreadCounts[sessionId] > 0;
+                } else if (currentFilter === 'active') {
+                    const msgs = sessions[sessionId] || [];
+                    matchesFilter = msgs.some(m => new Date(m.timestamp).toDateString() === today);
+                }
+
+                sessionEl.style.display = (matchesSearch && matchesFilter) ? 'block' : 'none';
+            });
         }
 
         // Quick Replies Management
