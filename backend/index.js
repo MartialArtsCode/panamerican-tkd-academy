@@ -37,12 +37,31 @@ const PORT = process.env.PORT || 3000;
    APP SETUP
 ====================== */
 const app = express();
-app.use(cors());
+
+// CORS configuration - allow GitHub Pages and localhost
+const corsOptions = {
+    origin: [
+        'https://martialartscode.github.io',
+        'http://localhost:8000',
+        'http://127.0.0.1:8000'
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: { origin: '*' }
+    cors: {
+        origin: [
+            'https://martialartscode.github.io',
+            'http://localhost:8000',
+            'http://127.0.0.1:8000'
+        ],
+        credentials: true
+    }
 });
 
 /* ======================
@@ -123,8 +142,18 @@ const Session = mongoose.model('Session', SessionSchema);
 /* ======================
    AUTH ROUTES
 ====================== */
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({ 
+        status: 'ok', 
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || 'development'
+    });
+});
+
 // Login endpoint (matches frontend expectation)
 app.post('/auth/login', (req, res) => {
+    console.log('🔐 Login attempt:', req.body.email);
     const { email, password } = req.body;
     
     if (!email || !password) {
