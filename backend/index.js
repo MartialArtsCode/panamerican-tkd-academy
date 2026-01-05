@@ -401,6 +401,117 @@ app.put('/api/admin/auto-response', (req, res) => {
     }
 });
 
+/* ======================
+   QUICK REPLY TEMPLATES
+====================== */
+const TEMPLATES_FILE = path.join(__dirname, 'data', 'templates.json');
+
+function loadTemplates() {
+    try {
+        if (!fs.existsSync(TEMPLATES_FILE)) {
+            return [];
+        }
+        const data = fs.readFileSync(TEMPLATES_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.error('Error loading templates:', error);
+        return [];
+    }
+}
+
+function saveTemplates(templates) {
+    try {
+        const dir = path.dirname(TEMPLATES_FILE);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        fs.writeFileSync(TEMPLATES_FILE, JSON.stringify(templates, null, 2));
+        return true;
+    } catch (error) {
+        console.error('Error saving templates:', error);
+        return false;
+    }
+}
+
+// Get all templates
+app.get('/api/admin/templates', authMiddleware, (req, res) => {
+    const templates = loadTemplates();
+    res.json({ templates });
+});
+
+// Create new template
+app.post('/api/admin/templates', authMiddleware, (req, res) => {
+    const { name, message } = req.body;
+    
+    if (!name || !message) {
+        return res.status(400).json({ error: 'Name and message are required' });
+    }
+    
+    const templates = loadTemplates();
+    const newTemplate = {
+        id: Date.now().toString(),
+        name: name.trim(),
+        message: message.trim(),
+        createdAt: new Date().toISOString()
+    };
+    
+    templates.push(newTemplate);
+    
+    if (saveTemplates(templates)) {
+        res.json({ message: 'Template created successfully', template: newTemplate });
+    } else {
+        res.status(500).json({ error: 'Failed to save template' });
+    }
+});
+
+// Update template
+app.put('/api/admin/templates/:id', authMiddleware, (req, res) => {
+    const { id } = req.params;
+    const { name, message } = req.body;
+    
+    if (!name || !message) {
+        return res.status(400).json({ error: 'Name and message are required' });
+    }
+    
+    const templates = loadTemplates();
+    const templateIndex = templates.findIndex(t => t.id === id);
+    
+    if (templateIndex === -1) {
+        return res.status(404).json({ error: 'Template not found' });
+    }
+    
+    templates[templateIndex] = {
+        ...templates[templateIndex],
+        name: name.trim(),
+        message: message.trim(),
+        updatedAt: new Date().toISOString()
+    };
+    
+    if (saveTemplates(templates)) {
+        res.json({ message: 'Template updated successfully', template: templates[templateIndex] });
+    } else {
+        res.status(500).json({ error: 'Failed to update template' });
+    }
+});
+
+// Delete template
+app.delete('/api/admin/templates/:id', authMiddleware, (req, res) => {
+    const { id } = req.params;
+    
+    const templates = loadTemplates();
+    const filteredTemplates = templates.filter(t => t.id !== id);
+    
+    if (templates.length === filteredTemplates.length) {
+        return res.status(404).json({ error: 'Template not found' });
+    }
+    
+    if (saveTemplates(filteredTemplates)) {
+        res.json({ message: 'Template deleted successfully' });
+    } else {
+        res.status(500).json({ error: 'Failed to delete template' });
+    }
+});
+
 function authenticateAdmin(token) {
     try {
         return jwt.verify(token, JWT_SECRET);
