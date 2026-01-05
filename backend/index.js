@@ -269,30 +269,26 @@ app.get('/api/admin/users', (req, res) => {
     res.json({ users: allUsers });
 });
 
-app.put('/api/admin/users/:email/tier', (req, res) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-        return res.status(401).json({ error: 'No authorization header' });
-    }
-    
-    const token = authHeader.split(' ')[1];
-    const user = authenticateAdmin(token);
-    
-    if (!user || !user.isAdmin) {
-        return res.status(403).json({ error: 'Admin access required' });
-    }
+app.put('/api/admin/users/:email/tier', authMiddleware, (req, res) => {
+    console.log('📥 Tier update request:', { 
+        email: req.params.email, 
+        tier: req.body.tier,
+        user: req.user 
+    });
     
     const { email } = req.params;
     const { tier } = req.body;
     
     const validTiers = ['basic', 'premium', 'vip', 'instructor', 'admin'];
     if (!validTiers.includes(tier)) {
+        console.log('❌ Invalid tier:', tier);
         return res.status(400).json({ error: 'Invalid tier' });
     }
     
     // Update in userAccounts
     const existingUser = userAccounts.get(email);
     if (existingUser) {
+        console.log('✅ Updating user in userAccounts:', email);
         existingUser.tier = tier;
         userAccounts.set(email, existingUser);
         saveUsers();
@@ -302,10 +298,12 @@ app.put('/api/admin/users/:email/tier', (req, res) => {
     // Update in testUsers
     const testUser = testUsers.find(u => u.email === email);
     if (testUser) {
+        console.log('✅ Updating user in testUsers:', email);
         testUser.tier = tier;
         return res.json({ message: 'Tier updated successfully', user: testUser });
     }
     
+    console.log('❌ User not found:', email);
     res.status(404).json({ error: 'User not found' });
 });
 
