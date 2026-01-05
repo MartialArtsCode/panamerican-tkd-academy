@@ -719,6 +719,7 @@ function initLoginModal() {
 
         try {
             const apiUrl = `${API_BASE_URL}/auth/login`;
+            console.log('🔐 Login attempt:', { email, apiUrl });
 
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -728,13 +729,27 @@ function initLoginModal() {
                 body: JSON.stringify({ email, password })
             });
 
-            const data = await response.json();
+            console.log('📥 Login response status:', response.status);
+
+            let data;
+            try {
+                data = await response.json();
+                console.log('📦 Login response data:', { ...data, token: data.token ? '[HIDDEN]' : undefined });
+            } catch (parseError) {
+                console.error('❌ Failed to parse login response:', parseError);
+                loginError.textContent = 'Server error. Please try again later.';
+                return;
+            }
 
             if (response.ok && data.token) {
+                console.log('✅ Login successful');
+                
                 // Store token and user info
                 localStorage.setItem('auth_token', data.token);
                 localStorage.setItem('user_email', email);
                 localStorage.setItem('is_admin', data.isAdmin ? 'true' : 'false');
+                
+                console.log('💾 Credentials saved to localStorage');
                 
                 // Handle "Remember Me"
                 if (rememberMeCheckbox.checked) {
@@ -750,6 +765,8 @@ function initLoginModal() {
                     ? `${BASE_PATH}/admin/admin.html` 
                     : `${BASE_PATH}/member/member.html`;
                 
+                console.log('🔀 Redirecting to:', redirectUrl);
+                
                 // Show success message for new accounts
                 if (data.message && data.message.includes('created')) {
                     loginSuccess.textContent = '✓ Account created and saved! Redirecting...';
@@ -762,11 +779,35 @@ function initLoginModal() {
                     window.location.href = redirectUrl;
                 }
             } else {
-                loginError.textContent = data.message || 'Invalid credentials';
+                console.warn('❌ Login failed:', response.status, data.message);
+                
+                // Enhanced error messages based on status code
+                if (response.status === 401) {
+                    loginError.textContent = data.message || 'Invalid email or password';
+                } else if (response.status === 404) {
+                    loginError.textContent = 'Login service unavailable';
+                } else if (response.status === 500) {
+                    loginError.textContent = 'Server error. Please try again later.';
+                } else {
+                    loginError.textContent = data.message || 'Login failed. Please try again.';
+                }
             }
         } catch (error) {
-            console.error('Login error:', error);
-            loginError.textContent = 'Connection error. Please try again.';
+            console.error('❌ Login error:', error);
+            console.error('Error details:', {
+                message: error.message,
+                stack: error.stack,
+                name: error.name
+            });
+            
+            // More specific error messages
+            if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                loginError.textContent = 'Cannot connect to server. Please check your connection.';
+            } else if (error.name === 'AbortError') {
+                loginError.textContent = 'Request timeout. Please try again.';
+            } else {
+                loginError.textContent = 'Connection error. Please try again.';
+            }
         }
     });
 }

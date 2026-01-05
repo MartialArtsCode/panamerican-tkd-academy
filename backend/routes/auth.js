@@ -24,13 +24,46 @@ router.post('/register', async (req, res) => {
 
 // Local login
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email: encrypt(email) });
-  if (!user) return res.status(401).json({ message: 'Invalid credentials.' });
-  const valid = await bcrypt.compare(password, decrypt(user.password));
-  if (!valid) return res.status(401).json({ message: 'Invalid credentials.' });
-  const token = jwt.sign({ email: email, isAdmin: user.isAdmin || false }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  res.json({ token });
+  console.log('🔐 Login attempt:', { email: req.body.email });
+  
+  try {
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+      console.warn('❌ Login failed: Missing credentials');
+      return res.status(400).json({ message: 'Email and password required.' });
+    }
+    
+    console.log('🔍 Looking up user:', email);
+    const user = await User.findOne({ email: encrypt(email) });
+    
+    if (!user) {
+      console.warn('❌ Login failed: User not found:', email);
+      return res.status(401).json({ message: 'Invalid credentials.' });
+    }
+    
+    console.log('✅ User found, verifying password');
+    const valid = await bcrypt.compare(password, decrypt(user.password));
+    
+    if (!valid) {
+      console.warn('❌ Login failed: Invalid password for:', email);
+      return res.status(401).json({ message: 'Invalid credentials.' });
+    }
+    
+    console.log('✅ Password valid, generating token');
+    const token = jwt.sign(
+      { email: email, isAdmin: user.isAdmin || false }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: '1h' }
+    );
+    
+    console.log('✅ Login successful:', { email, isAdmin: user.isAdmin || false });
+    res.json({ token, isAdmin: user.isAdmin || false });
+  } catch (error) {
+    console.error('❌ Login error:', error);
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ message: 'Server error during login. Please try again.' });
+  }
 });
 
 // Google OAuth
