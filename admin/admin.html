@@ -179,8 +179,11 @@
             <button id="manageTiersBtn" style="width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
                 Manage Tiers
             </button>
-            <button id="changePasswordBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">
+            <button id="changePasswordBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 8px;">
                 Change Password
+            </button>
+            <button id="logoutBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">
+                Logout
             </button>
         </div>
         
@@ -504,6 +507,15 @@
                 console.error('Error changing password:', error);
                 passwordError.textContent = 'Network error. Please try again.';
                 passwordError.style.display = 'block';
+            }
+        };
+
+        // Logout
+        const logoutBtn = document.getElementById('logoutBtn');
+        logoutBtn.onclick = () => {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = `${BASE_PATH}/index.html`;
             }
         };
 
