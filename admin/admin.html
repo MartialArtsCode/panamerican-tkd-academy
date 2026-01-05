@@ -8,8 +8,8 @@
     <!-- Config -->
     <script src="../config.js"></script>
     
-    <!-- Socket.IO -->
-    <script src="/socket.io/socket.io.js"></script>
+    <!-- Socket.IO - Load from CDN for reliability -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 
     <style>
         :root {
@@ -426,11 +426,17 @@
     </audio>
 
     <script>
+        console.log('🚀 Admin script loaded');
+        
         // Wait for DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('✅ DOMContentLoaded fired');
+            
             // Check authentication
             const authToken = localStorage.getItem('auth_token');
             const isAdmin = localStorage.getItem('is_admin') === 'true';
+            
+            console.log('🔐 Auth check:', { hasToken: !!authToken, isAdmin });
             
             if (!authToken || !isAdmin) {
                 alert('Admin access required. Redirecting to login...');
