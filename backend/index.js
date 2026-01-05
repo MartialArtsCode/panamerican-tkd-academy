@@ -226,7 +226,9 @@ app.post('/auth/login', (req, res) => {
         isAdmin: false,
         approved: false,
         tier: 'basic',
-        registeredAt: new Date()
+        registeredAt: new Date(),
+        name: email.split('@')[0], // Default name from email
+        profilePicture: null
     };
     
     userAccounts.set(email, newUser);
@@ -470,6 +472,94 @@ app.put('/api/users/change-password', (req, res) => {
     }
     
     res.status(404).json({ error: 'User not found' });
+});
+
+// Update user profile (name and profile picture)
+app.put('/api/users/profile', authMiddleware, (req, res) => {
+    console.log('📝 Profile update request:', req.user.email);
+    
+    try {
+        const { name, profilePicture } = req.body;
+        
+        if (!name && profilePicture === undefined) {
+            return res.status(400).json({ error: 'Name or profile picture required' });
+        }
+        
+        // Find user in userAccounts
+        const user = userAccounts.get(req.user.email);
+        
+        if (!user) {
+            // Check test users
+            const testUser = testUsers.find(u => u.email === req.user.email);
+            if (testUser) {
+                if (name) testUser.name = name;
+                if (profilePicture !== undefined) testUser.profilePicture = profilePicture;
+                testUser.updatedAt = new Date();
+                console.log('✅ Test user profile updated');
+                return res.json({ 
+                    message: 'Profile updated successfully',
+                    user: {
+                        email: testUser.email,
+                        name: testUser.name,
+                        profilePicture: testUser.profilePicture,
+                        tier: testUser.tier
+                    }
+                });
+            }
+            console.warn('❌ User not found:', req.user.email);
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        // Update fields
+        if (name) {
+            user.name = name;
+            console.log('✅ Updated name:', name);
+        }
+        if (profilePicture !== undefined) {
+            user.profilePicture = profilePicture;
+            console.log('✅ Updated profile picture');
+        }
+        
+        user.updatedAt = new Date();
+        userAccounts.set(req.user.email, user);
+        saveUsers();
+        
+        console.log('✅ Profile updated successfully');
+        res.json({ 
+            message: 'Profile updated successfully',
+            user: {
+                email: user.email,
+                name: user.name,
+                profilePicture: user.profilePicture,
+                tier: user.tier
+            }
+        });
+    } catch (error) {
+        console.error('❌ Error updating profile:', error);
+        res.status(500).json({ error: 'Failed to update profile' });
+    }
+});
+
+// Get user profile
+app.get('/api/users/profile', authMiddleware, (req, res) => {
+    try {
+        const user = userAccounts.get(req.user.email) || testUsers.find(u => u.email === req.user.email);
+        
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        res.json({
+            email: user.email,
+            name: user.name || user.email.split('@')[0],
+            profilePicture: user.profilePicture || null,
+            tier: user.tier || 'basic',
+            isAdmin: user.isAdmin || false
+        });
+    } catch (error) {
+        console.error('❌ Error fetching profile:', error);
+        res.status(500).json({ error: 'Failed to fetch profile' });
+    }
 });
 
 // Auto-response settings endpoints

@@ -763,7 +763,7 @@ function initLoginModal() {
                 // Determine redirect location based on user role
                 const redirectUrl = data.isAdmin 
                     ? `${BASE_PATH}/admin/admin.html` 
-                    : `${BASE_PATH}/member/member.html`;
+                    : `${BASE_PATH}/member/profile.html`;
                 
                 console.log('🔀 Redirecting to:', redirectUrl);
                 
