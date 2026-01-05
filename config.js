@@ -15,10 +15,12 @@ const API_BASE_URL = isLocalhost
     : PRODUCTION_API_URL;
 
 // Base path for GitHub Pages (repository name)
-const BASE_PATH = window.location.pathname.includes('/panamerican-tkd-academy') 
+// Check if we're on GitHub Pages, then always use the repo base path
+const BASE_PATH = window.location.hostname.includes('github.io') 
     ? '/panamerican-tkd-academy' 
     : '';
 
 console.log(`🔧 Environment: ${isLocalhost ? 'Local' : 'Production'}`);
 console.log(`🌐 API URL: ${API_BASE_URL}`);
 console.log(`📁 Base Path: ${BASE_PATH || '(root)'}`);
+console.log(`🌍 Full URL: ${window.location.href}`);
