@@ -51,9 +51,7 @@ function initSocketIO() {
         return;
     }
 
-    const socketUrl = window.location.hostname === 'localhost'
-        ? 'http://localhost:3000'
-        : window.location.origin;
+    const socketUrl = API_BASE_URL;
 
     socket = io(socketUrl, {
         reconnection: true,
@@ -795,10 +793,7 @@ function initLoginModal() {
         }
 
         try {
-            // Determine the API URL based on environment
-            const apiUrl = window.location.hostname === 'localhost'
-                ? 'http://localhost:3000/auth/login'
-                : '/auth/login';
+            const apiUrl = `${API_BASE_URL}/auth/login`;
 
             const response = await fetch(apiUrl, {
                 method: 'POST',

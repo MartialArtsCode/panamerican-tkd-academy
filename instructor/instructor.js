@@ -45,7 +45,7 @@ document.getElementById('changePasswordForm').addEventListener('submit', async (
     }
     
     try {
-        const response = await fetch('http://localhost:3000/api/users/change-password', {
+        const response = await fetch(`${API_BASE_URL}/api/users/change-password`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${authToken}`,

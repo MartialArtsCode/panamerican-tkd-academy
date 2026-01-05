@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PTA Admin Dashboard</title>
 
+    <!-- Config -->
+    <script src="../config.js"></script>
+    
     <!-- Socket.IO -->
     <script src="/socket.io/socket.io.js"></script>
 
@@ -250,7 +253,7 @@
             window.location.href = '/index.html';
         }
 
-        const socket = io('http://localhost:3000', {
+        const socket = io(API_BASE_URL, {
             reconnection: true,
             reconnectionDelay: 1000
         });
@@ -474,7 +477,7 @@
             }
 
             try {
-                const response = await fetch('http://localhost:3000/api/users/change-password', {
+                const response = await fetch(`${API_BASE_URL}/api/users/change-password`, {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${authToken}`,
@@ -508,7 +511,7 @@
             try {
                 tiersList.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 40px;">Loading users...</div>';
                 
-                const response = await fetch('http://localhost:3000/api/admin/users', {
+                const response = await fetch(`${API_BASE_URL}/api/admin/users`, {
                     headers: {
                         'Authorization': `Bearer ${authToken}`
                     }
@@ -550,7 +553,7 @@
 
         async function updateTier(email, newTier) {
             try {
-                const response = await fetch(`http://localhost:3000/api/admin/users/${encodeURIComponent(email)}/tier`, {
+                const response = await fetch(`${API_BASE_URL}/api/admin/users/${encodeURIComponent(email)}/tier`, {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${authToken}`,
