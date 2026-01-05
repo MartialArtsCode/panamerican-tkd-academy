@@ -475,10 +475,12 @@
             console.log('✅ Admin connected to server');
             console.log('📤 Sending identify: type=admin, has token=' + !!authToken);
             socket.emit('identify', { type: 'admin', token: authToken });
+            console.log('🔊 Registered listener for visitor-message events');
         });
 
         socket.on('disconnect', () => {
             console.warn('❌ Admin disconnected from server');
+            console.warn('⚠️ Will attempt reconnection...');
         });
         
         socket.on('connect_error', (error) => {

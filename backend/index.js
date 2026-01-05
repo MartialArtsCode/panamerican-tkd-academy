@@ -624,6 +624,7 @@ io.on('connection', socket => {
         }
 
         console.log('📤 Emitting visitor-message to admins room');
+        console.log('👥 Current admins in room:', onlineAdmins.size);
         io.to('admins').emit('visitor-message', data);
 
         // Check if we should send auto-response
