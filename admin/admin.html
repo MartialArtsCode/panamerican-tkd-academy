@@ -426,28 +426,39 @@
     </audio>
 
     <script>
-        // Check authentication
-        const authToken = localStorage.getItem('auth_token');
-        const isAdmin = localStorage.getItem('is_admin') === 'true';
-        
-        if (!authToken || !isAdmin) {
-            alert('Admin access required. Redirecting to login...');
-            window.location.href = `${BASE_PATH}/index.html`;
-        }
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check authentication
+            const authToken = localStorage.getItem('auth_token');
+            const isAdmin = localStorage.getItem('is_admin') === 'true';
+            
+            if (!authToken || !isAdmin) {
+                alert('Admin access required. Redirecting to login...');
+                window.location.href = `${BASE_PATH}/index.html`;
+                return;
+            }
 
-        const socket = io(API_BASE_URL, {
-            reconnection: true,
-            reconnectionDelay: 1000
-        });
-        
-        const sessionList = document.getElementById('sessionList');
-        const chatBody = document.getElementById('chatBody');
-        const chatHeader = document.getElementById('chatHeader');
-        const replyInput = document.getElementById('replyInput');
-        const sendReply = document.getElementById('sendReply');
+            // Ensure all modals are hidden on load
+            const modals = ['tierModal', 'passwordModal', 'autoResponseModal', 'quickRepliesModal', 
+                            'quickReplyEditorModal', 'dashboardModal', 'sessionNoteModal'];
+            modals.forEach(id => {
+                const modal = document.getElementById(id);
+                if (modal) modal.style.display = 'none';
+            });
 
-        let activeSessionId = null;
-        let sessions = {};
+            const socket = io(API_BASE_URL, {
+                reconnection: true,
+                reconnectionDelay: 1000
+            });
+            
+            const sessionList = document.getElementById('sessionList');
+            const chatBody = document.getElementById('chatBody');
+            const chatHeader = document.getElementById('chatHeader');
+            const replyInput = document.getElementById('replyInput');
+            const sendReply = document.getElementById('sendReply');
+
+            let activeSessionId = null;
+            let sessions = {};
         let sessionElements = {};
 
         // Connect and authenticate as admin
@@ -1490,3 +1501,8 @@
         // Make updateTier available globally
         window.updateTier = updateTier;
 
+
+        }); // End DOMContentLoaded
+    </script>
+</body>
+</html>
