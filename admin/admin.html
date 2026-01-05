@@ -1482,6 +1482,9 @@
 
         async function updateTier(email, newTier) {
             try {
+                // Get authToken from localStorage since this function is called from inline HTML
+                const authToken = localStorage.getItem('auth_token');
+                
                 const response = await fetch(`${API_BASE_URL}/api/admin/users/${encodeURIComponent(email)}/tier`, {
                     method: 'PUT',
                     headers: {
@@ -1491,7 +1494,10 @@
                     body: JSON.stringify({ tier: newTier })
                 });
                 
-                if (!response.ok) throw new Error('Failed to update tier');
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to update tier');
+                }
                 
                 const data = await response.json();
                 console.log('✅ Tier updated:', data);
@@ -1499,8 +1505,8 @@
                 // Reload users to reflect changes
                 loadUsers();
             } catch (error) {
-                console.error('Error updating tier:', error);
-                alert('Failed to update tier. Please try again.');
+                console.error('❌ Error updating tier:', error);
+                alert(`Failed to update tier: ${error.message}`);
             }
         }
 
