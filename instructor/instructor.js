@@ -4,7 +4,7 @@ const userEmail = localStorage.getItem('user_email');
 
 if (!authToken) {
     alert('Please login to access instructor tools');
-    window.location.href = '../index.html';
+    window.location.href = `${BASE_PATH}/index.html`;
 }
 
 // Set instructor name
@@ -122,7 +122,7 @@ function switchView(viewName) {
 document.getElementById('logoutBtn').addEventListener('click', () => {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_email');
-    window.location.href = '../index.html';
+    window.location.href = `${BASE_PATH}/index.html`;
 });
 
 // Attendance functions

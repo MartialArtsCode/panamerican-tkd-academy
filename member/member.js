@@ -14,7 +14,7 @@ function initMemberPortal() {
 
     if (!authToken || !userEmail) {
         // Not logged in, redirect to home
-        window.location.href = '../index.html';
+        window.location.href = `${BASE_PATH}/index.html`;
         return;
     }
 
@@ -82,7 +82,7 @@ function handleLogout() {
     alert('You have been logged out successfully.');
 
     // Redirect to home page
-    window.location.href = '../index.html';
+    window.location.href = `${BASE_PATH}/index.html`;
 }
 
 function initQuickActions() {
@@ -194,7 +194,7 @@ setInterval(() => {
     const authToken = localStorage.getItem('auth_token');
     if (!authToken) {
         console.warn('⚠️ Session expired');
-        window.location.href = '../index.html';
+        window.location.href = `${BASE_PATH}/index.html`;
     }
 }, 60000); // Check every minute
 

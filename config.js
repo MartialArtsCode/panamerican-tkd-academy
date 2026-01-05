@@ -14,5 +14,11 @@ const API_BASE_URL = isLocalhost
     ? 'http://localhost:3000' 
     : PRODUCTION_API_URL;
 
+// Base path for GitHub Pages (repository name)
+const BASE_PATH = window.location.pathname.includes('/panamerican-tkd-academy') 
+    ? '/panamerican-tkd-academy' 
+    : '';
+
 console.log(`🔧 Environment: ${isLocalhost ? 'Local' : 'Production'}`);
 console.log(`🌐 API URL: ${API_BASE_URL}`);
+console.log(`📁 Base Path: ${BASE_PATH || '(root)'}`);
