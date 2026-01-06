@@ -1,9 +1,8 @@
-import express from 'express';
-import User from '../models/User.js';
-import { authenticateToken } from '../middleware/auth.middleware.js';
-import { decrypt } from '../utils/crypto.js';
-
+const express = require('express');
 const router = express.Router();
+const User = require('../models/User');
+const { authenticateToken } = require('../middleware/auth.middleware');
+const { decrypt } = require('../utils/crypto');
 
 // Get current user profile
 router.get('/profile', authenticateToken, async (req, res) => {
@@ -66,4 +65,4 @@ router.put('/profile', authenticateToken, async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

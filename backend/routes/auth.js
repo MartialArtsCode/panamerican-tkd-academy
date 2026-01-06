@@ -1,10 +1,9 @@
-
-import express from 'express';
-import passport from 'passport';
-import jwt from 'jsonwebtoken';
-import { encrypt, decrypt } from '../utils/crypto.js';
-import bcrypt from 'bcrypt';
-import User from '../models/User.js';
+const express = require('express');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const { encrypt, decrypt } = require('../utils/crypto');
+const bcrypt = require('bcrypt');
+const User = require('../models/User');
 
 const router = express.Router();
 
@@ -135,4 +134,4 @@ router.post('/apple/callback', passport.authenticate('apple', { failureRedirect:
   res.json({ token });
 });
 
-export default router;
+module.exports = router;
