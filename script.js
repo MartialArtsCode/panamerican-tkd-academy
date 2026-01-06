@@ -718,8 +718,10 @@ function initLoginModal() {
         }
 
         try {
-            const apiUrl = `${API_BASE_URL}/auth/login`;
-            console.log('🔐 Login attempt:', { email, apiUrl });
+            // Use different endpoint for signup vs login
+            const endpoint = isSignupMode ? '/auth/register' : '/auth/login';
+            const apiUrl = `${API_BASE_URL}${endpoint}`;
+            console.log(isSignupMode ? '📝 Registration attempt:' : '🔐 Login attempt:', { email, apiUrl });
 
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -734,10 +736,32 @@ function initLoginModal() {
             let data;
             try {
                 data = await response.json();
-                console.log('📦 Login response data:', { ...data, token: data.token ? '[HIDDEN]' : undefined });
+                console.log('📦 Response data:', { ...data, token: data.token ? '[HIDDEN]' : undefined });
             } catch (parseError) {
-                console.error('❌ Failed to parse login response:', parseError);
+                console.error('❌ Failed to parse response:', parseError);
                 loginError.textContent = 'Server error. Please try again later.';
+                return;
+            }
+
+            // Handle registration success (pending approval)
+            if (isSignupMode && response.ok) {
+                console.log('✅ Registration successful (pending approval)');
+                loginSuccess.textContent = '✓ Account created! Please wait for admin approval before logging in.';
+                loginSuccess.style.display = 'block';
+                loginError.textContent = '';
+                
+                // Reset form and switch back to login mode
+                setTimeout(() => {
+                    loginForm.reset();
+                    isSignupMode = false;
+                    modalTitle.textContent = 'Sign In';
+                    submitBtnText.textContent = 'Sign In';
+                    toggleText.textContent = "Don't have an account?";
+                    toggleMode.textContent = 'Create Account';
+                    confirmPasswordGroup.style.display = 'none';
+                    confirmPasswordInput.required = false;
+                    loginSuccess.style.display = 'none';
+                }, 3000);
                 return;
             }
 
@@ -779,17 +803,33 @@ function initLoginModal() {
                     window.location.href = redirectUrl;
                 }
             } else {
-                console.warn('❌ Login failed:', response.status, data.message);
+                console.warn('❌ Request failed:', response.status, data.message);
                 
-                // Enhanced error messages based on status code
-                if (response.status === 401) {
-                    loginError.textContent = data.message || 'Invalid email or password';
-                } else if (response.status === 404) {
-                    loginError.textContent = 'Login service unavailable';
-                } else if (response.status === 500) {
-                    loginError.textContent = 'Server error. Please try again later.';
+                // Enhanced error messages based on status code and mode
+                if (isSignupMode) {
+                    // Registration error messages
+                    if (response.status === 409) {
+                        loginError.textContent = 'An account with this email already exists';
+                    } else if (response.status === 400) {
+                        loginError.textContent = data.message || 'Please provide valid email and password';
+                    } else if (response.status === 500) {
+                        loginError.textContent = 'Server error. Please try again later.';
+                    } else {
+                        loginError.textContent = data.message || 'Registration failed. Please try again.';
+                    }
                 } else {
-                    loginError.textContent = data.message || 'Login failed. Please try again.';
+                    // Login error messages
+                    if (response.status === 401) {
+                        loginError.textContent = data.message || 'Invalid email or password';
+                    } else if (response.status === 403) {
+                        loginError.textContent = data.message || 'Your account is pending approval';
+                    } else if (response.status === 404) {
+                        loginError.textContent = 'Login service unavailable';
+                    } else if (response.status === 500) {
+                        loginError.textContent = 'Server error. Please try again later.';
+                    } else {
+                        loginError.textContent = data.message || 'Login failed. Please try again.';
+                    }
                 }
             }
         } catch (error) {
