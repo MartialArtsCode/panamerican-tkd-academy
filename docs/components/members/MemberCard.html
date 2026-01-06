@@ -1,0 +1,92 @@
+import React from 'react';
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Award, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { createPageUrl } from '@/utils';
+import { motion } from 'framer-motion';
+
+const beltColors = {
+  white: 'bg-gray-100 text-gray-800 border-gray-300',
+  yellow: 'bg-yellow-100 text-yellow-800 border-yellow-500',
+  orange: 'bg-orange-100 text-orange-800 border-orange-500',
+  orange_green_stripe: 'bg-gradient-to-r from-orange-100 to-green-100 text-orange-800 border-orange-500',
+  green: 'bg-green-100 text-green-800 border-green-600',
+  green_blue_stripe: 'bg-gradient-to-r from-green-100 to-blue-100 text-green-800 border-green-600',
+  blue: 'bg-blue-100 text-blue-800 border-blue-600',
+  blue_red_stripe: 'bg-gradient-to-r from-blue-100 to-red-100 text-blue-800 border-blue-600',
+  black: 'bg-gray-900 text-white border-gray-600',
+};
+
+const tierStyles = {
+  student: { label: 'Student', icon: '🥋', gradient: 'from-blue-500 to-blue-600' },
+  instructor: { label: 'Instructor', icon: '👊', gradient: 'from-purple-500 to-purple-600' },
+  master: { label: 'Master', icon: '🏆', gradient: 'from-red-500 to-red-600' },
+};
+
+export default function MemberCard({ member, index }) {
+  const tierStyle = tierStyles[member.tier] || tierStyles.student;
+  
+  const formatBelt = (belt) => {
+    if (!belt) return 'White';
+    return belt.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05 }}
+    >
+      <Link to={createPageUrl('Profile') + `?email=${member.email}`}>
+        <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer">
+          {/* Tier banner */}
+          <div className={`h-1.5 bg-gradient-to-r ${tierStyle.gradient}`} />
+          
+          <div className="p-5">
+            <div className="flex items-center gap-4">
+              <Avatar className="h-14 w-14 ring-2 ring-offset-2 ring-gray-100 group-hover:ring-red-100 transition-all">
+                <AvatarImage src={member.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${member.full_name}`} />
+                <AvatarFallback className="bg-gradient-to-br from-red-100 to-orange-100 text-red-600 font-semibold">
+                  {member.full_name?.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
+              
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className="font-semibold text-gray-900 truncate">{member.full_name}</h3>
+                  <span className="text-lg">{tierStyle.icon}</span>
+                </div>
+                <p className="text-sm text-gray-500">{tierStyle.label}</p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2 mt-4">
+              <Badge 
+                variant="outline" 
+                className={`border-2 ${beltColors[member.belt || 'white']}`}
+              >
+                {formatBelt(member.belt)}
+              </Badge>
+              
+              {member.training_hours > 0 && (
+                <Badge variant="secondary" className="gap-1 bg-gray-100">
+                  <Clock className="w-3 h-3" />
+                  {member.training_hours}h
+                </Badge>
+              )}
+              
+              {member.achievements?.length > 0 && (
+                <Badge variant="secondary" className="gap-1 bg-yellow-100 text-yellow-800">
+                  <Award className="w-3 h-3" />
+                  {member.achievements.length}
+                </Badge>
+              )}
+            </div>
+          </div>
+        </Card>
+      </Link>
+    </motion.div>
+  );
+}

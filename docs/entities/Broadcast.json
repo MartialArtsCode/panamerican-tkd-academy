@@ -1,0 +1,55 @@
+{
+  "name": "Broadcast",
+  "type": "object",
+  "properties": {
+    "sender_email": {
+      "type": "string"
+    },
+    "sender_name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "target_group": {
+      "type": "string",
+      "enum": [
+        "all",
+        "white",
+        "yellow",
+        "orange",
+        "orange_green_stripe",
+        "green",
+        "green_blue_stripe",
+        "blue",
+        "blue_red_stripe",
+        "black"
+      ],
+      "default": "all",
+      "description": "Target audience by belt level or all students"
+    },
+    "recipient_emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of recipient emails"
+    },
+    "read_by": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Emails of users who have read the broadcast"
+    }
+  },
+  "required": [
+    "sender_email",
+    "title",
+    "content"
+  ]
+}

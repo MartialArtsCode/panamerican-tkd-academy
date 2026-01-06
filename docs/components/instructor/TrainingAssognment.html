@@ -1,0 +1,279 @@
+import React, { useState } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Plus, Target, CheckCircle2, Clock, Loader2, Trash2 } from 'lucide-react';
+import { format } from 'date-fns';
+
+export default function TrainingAssignment({ currentUser }) {
+  const [showDialog, setShowDialog] = useState(false);
+  const [newModule, setNewModule] = useState({
+    title: '',
+    description: '',
+    assigned_to_email: '',
+    module_type: 'technique',
+    due_date: '',
+    notes: '',
+  });
+  const queryClient = useQueryClient();
+
+  const { data: students = [] } = useQuery({
+    queryKey: ['students'],
+    queryFn: () => base44.entities.User.filter({ tier: 'student' }),
+  });
+
+  const { data: modules = [], isLoading } = useQuery({
+    queryKey: ['trainingModules'],
+    queryFn: () => base44.entities.TrainingModule.filter(
+      { assigned_by_email: currentUser.email },
+      '-created_date'
+    ),
+  });
+
+  const createMutation = useMutation({
+    mutationFn: (data) => {
+      const student = students.find(s => s.email === data.assigned_to_email);
+      return base44.entities.TrainingModule.create({
+        ...data,
+        assigned_by_email: currentUser.email,
+        assigned_by_name: currentUser.full_name,
+        student_name: student?.full_name,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['trainingModules'] });
+      setShowDialog(false);
+      setNewModule({
+        title: '',
+        description: '',
+        assigned_to_email: '',
+        module_type: 'technique',
+        due_date: '',
+        notes: '',
+      });
+    },
+  });
+
+  const updateStatusMutation = useMutation({
+    mutationFn: ({ id, status }) => {
+      const data = { status };
+      if (status === 'completed') {
+        data.completion_date = new Date().toISOString().split('T')[0];
+      }
+      return base44.entities.TrainingModule.update(id, data);
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['trainingModules'] }),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id) => base44.entities.TrainingModule.delete(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['trainingModules'] }),
+  });
+
+  const moduleTypeLabels = {
+    technique: 'Technique',
+    forms: 'Forms',
+    sparring: 'Sparring',
+    flexibility: 'Flexibility',
+    strength: 'Strength',
+    goal: 'Goal'
+  };
+
+  const statusColors = {
+    assigned: 'bg-gray-100 text-gray-800',
+    in_progress: 'bg-blue-100 text-blue-800',
+    completed: 'bg-green-100 text-green-800'
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Create Assignment */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle>Training Assignments</CardTitle>
+            <Dialog open={showDialog} onOpenChange={setShowDialog}>
+              <DialogTrigger asChild>
+                <Button className="bg-gradient-to-r from-orange-600 to-orange-700 gap-2">
+                  <Plus className="w-4 h-4" />
+                  Assign Training
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-lg">
+                <DialogHeader>
+                  <DialogTitle>Assign Training Module</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 pt-4">
+                  <div>
+                    <Label>Student *</Label>
+                    <Select
+                      value={newModule.assigned_to_email}
+                      onValueChange={(value) => setNewModule({ ...newModule, assigned_to_email: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choose student..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {students.map((student) => (
+                          <SelectItem key={student.email} value={student.email}>
+                            {student.full_name} - {student.belt}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label>Title *</Label>
+                    <Input
+                      value={newModule.title}
+                      onChange={(e) => setNewModule({ ...newModule, title: e.target.value })}
+                      placeholder="e.g., Master Back Kick"
+                    />
+                  </div>
+
+                  <div>
+                    <Label>Description</Label>
+                    <Textarea
+                      value={newModule.description}
+                      onChange={(e) => setNewModule({ ...newModule, description: e.target.value })}
+                      placeholder="Details about the training module..."
+                      rows={3}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Type *</Label>
+                      <Select
+                        value={newModule.module_type}
+                        onValueChange={(value) => setNewModule({ ...newModule, module_type: value })}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="technique">Technique</SelectItem>
+                          <SelectItem value="forms">Forms</SelectItem>
+                          <SelectItem value="sparring">Sparring</SelectItem>
+                          <SelectItem value="flexibility">Flexibility</SelectItem>
+                          <SelectItem value="strength">Strength</SelectItem>
+                          <SelectItem value="goal">Goal</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>Due Date</Label>
+                      <Input
+                        type="date"
+                        value={newModule.due_date}
+                        onChange={(e) => setNewModule({ ...newModule, due_date: e.target.value })}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label>Notes</Label>
+                    <Textarea
+                      value={newModule.notes}
+                      onChange={(e) => setNewModule({ ...newModule, notes: e.target.value })}
+                      placeholder="Additional notes or instructions..."
+                      rows={2}
+                    />
+                  </div>
+
+                  <Button
+                    onClick={() => createMutation.mutate(newModule)}
+                    disabled={!newModule.title || !newModule.assigned_to_email || createMutation.isPending}
+                    className="w-full bg-gradient-to-r from-orange-600 to-orange-700"
+                  >
+                    {createMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Assign Module'}
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+            </div>
+          ) : modules.length === 0 ? (
+            <div className="text-center py-12 text-gray-500">
+              <Target className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+              <p>No training modules assigned yet</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {modules.map((module) => {
+                const student = students.find(s => s.email === module.assigned_to_email);
+                return (
+                  <div key={module.id} className="p-4 bg-gradient-to-br from-orange-50 to-white rounded-xl border border-orange-100">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 flex-wrap mb-2">
+                          <h3 className="font-semibold text-gray-900">{module.title}</h3>
+                          <Badge variant="outline" className="bg-orange-100 text-orange-800">
+                            {moduleTypeLabels[module.module_type]}
+                          </Badge>
+                          <Badge className={statusColors[module.status]}>
+                            {module.status === 'assigned' && 'Assigned'}
+                            {module.status === 'in_progress' && 'In Progress'}
+                            {module.status === 'completed' && 'Completed'}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-gray-600 mb-2">
+                          Assigned to: <strong>{student?.full_name || module.assigned_to_email}</strong>
+                        </p>
+                        {module.description && (
+                          <p className="text-sm text-gray-600 mb-2">{module.description}</p>
+                        )}
+                        {module.due_date && (
+                          <div className="flex items-center gap-1 text-sm text-gray-500">
+                            <Clock className="w-4 h-4" />
+                            Due: {format(new Date(module.due_date), 'MMM d, yyyy')}
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex gap-2">
+                        {module.status !== 'completed' && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => updateStatusMutation.mutate({
+                              id: module.id,
+                              status: module.status === 'assigned' ? 'in_progress' : 'completed'
+                            })}
+                            className="text-green-600 hover:text-green-700"
+                          >
+                            <CheckCircle2 className="w-4 h-4" />
+                          </Button>
+                        )}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => deleteMutation.mutate(module.id)}
+                          className="text-red-500 hover:text-red-600"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

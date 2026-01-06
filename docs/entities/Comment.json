@@ -1,0 +1,32 @@
+{
+  "name": "Comment",
+  "type": "object",
+  "properties": {
+    "post_id": {
+      "type": "string",
+      "description": "Reference to parent post"
+    },
+    "content": {
+      "type": "string"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "author_email": {
+      "type": "string"
+    },
+    "author_tier": {
+      "type": "string",
+      "enum": [
+        "student",
+        "instructor",
+        "master"
+      ]
+    }
+  },
+  "required": [
+    "post_id",
+    "content",
+    "author_email"
+  ]
+}

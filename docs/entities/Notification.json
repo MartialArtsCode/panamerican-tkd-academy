@@ -1,0 +1,46 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user receiving the notification"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "like",
+        "comment",
+        "mention"
+      ],
+      "description": "Type of notification"
+    },
+    "actor_email": {
+      "type": "string",
+      "description": "Email of the user who triggered the notification"
+    },
+    "actor_name": {
+      "type": "string",
+      "description": "Name of the user who triggered the notification"
+    },
+    "post_id": {
+      "type": "string",
+      "description": "Reference to the post"
+    },
+    "content": {
+      "type": "string",
+      "description": "Notification message"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the notification has been read"
+    }
+  },
+  "required": [
+    "user_email",
+    "type",
+    "actor_email",
+    "content"
+  ]
+}

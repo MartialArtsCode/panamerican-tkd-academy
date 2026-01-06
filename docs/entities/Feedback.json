@@ -1,0 +1,53 @@
+{
+  "name": "Feedback",
+  "type": "object",
+  "properties": {
+    "student_email": {
+      "type": "string"
+    },
+    "student_name": {
+      "type": "string"
+    },
+    "instructor_email": {
+      "type": "string"
+    },
+    "instructor_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "technique",
+        "discipline",
+        "progress",
+        "attitude",
+        "general"
+      ]
+    },
+    "rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "1-5 rating"
+    },
+    "comments": {
+      "type": "string"
+    },
+    "strengths": {
+      "type": "string"
+    },
+    "areas_for_improvement": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "student_email",
+    "instructor_email",
+    "category",
+    "rating"
+  ]
+}

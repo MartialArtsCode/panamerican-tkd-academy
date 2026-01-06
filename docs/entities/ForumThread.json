@@ -1,0 +1,50 @@
+{
+  "name": "ForumThread",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "author_email": {
+      "type": "string"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "author_tier": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "general",
+        "techniques",
+        "training",
+        "events",
+        "belt_tests",
+        "questions"
+      ],
+      "default": "general"
+    },
+    "is_pinned": {
+      "type": "boolean",
+      "default": false
+    },
+    "replies_count": {
+      "type": "number",
+      "default": 0
+    },
+    "views_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "title",
+    "content",
+    "author_email"
+  ]
+}

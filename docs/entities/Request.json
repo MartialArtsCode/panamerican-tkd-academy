@@ -1,0 +1,61 @@
+{
+  "name": "Request",
+  "type": "object",
+  "properties": {
+    "requester_email": {
+      "type": "string",
+      "description": "Email of the user making the request"
+    },
+    "requester_name": {
+      "type": "string",
+      "description": "Name of the user making the request"
+    },
+    "request_type": {
+      "type": "string",
+      "enum": [
+        "belt_promotion",
+        "event_registration",
+        "class_enrollment",
+        "other"
+      ],
+      "description": "Type of request"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the request"
+    },
+    "description": {
+      "type": "string",
+      "description": "Details of the request"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "declined"
+      ],
+      "default": "pending",
+      "description": "Status of the request"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Notes from admin when accepting/declining"
+    },
+    "resolved_by": {
+      "type": "string",
+      "description": "Email of admin who resolved the request"
+    },
+    "resolved_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when request was resolved"
+    }
+  },
+  "required": [
+    "requester_email",
+    "requester_name",
+    "request_type",
+    "title"
+  ]
+}

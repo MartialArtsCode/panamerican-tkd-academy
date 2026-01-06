@@ -1,0 +1,159 @@
+import React, { useState, useEffect } from 'react';
+import { base44 } from '@/api/base44Client';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Loader2, CheckCircle2, UserPlus } from 'lucide-react';
+import { createPageUrl } from '@/utils';
+
+const beltLabels = {
+  white: 'White Belt',
+  yellow: 'Yellow Belt',
+  orange: 'Orange Belt',
+  orange_green_stripe: 'Orange Green Stripe',
+  green: 'Green Belt',
+  green_blue_stripe: 'Green Blue Stripe',
+  blue: 'Blue Belt',
+  blue_red_stripe: 'Blue Red Stripe',
+  black: 'Black Belt',
+};
+
+const tierLabels = {
+  student: '🥋 Student',
+  instructor: '👊 Instructor',
+  master: '🏆 Master',
+};
+
+export default function AcceptInvite() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const [error, setError] = useState(null);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const tier = urlParams.get('tier') || 'student';
+  const belt = urlParams.get('belt') || 'white';
+
+  useEffect(() => {
+    const processInvite = async () => {
+      try {
+        // Check if user is authenticated
+        const isAuthenticated = await base44.auth.isAuthenticated();
+        
+        if (!isAuthenticated) {
+          // Redirect to login with return URL
+          const returnUrl = window.location.href;
+          base44.auth.redirectToLogin(returnUrl);
+          return;
+        }
+
+        // User is authenticated, get their profile
+        const user = await base44.auth.me();
+        setCurrentUser(user);
+
+        // Auto-update the user's profile with invite parameters
+        setIsUpdating(true);
+        await base44.auth.updateMe({
+          tier: tier,
+          belt: belt,
+          training_hours: 0,
+        });
+        
+        setIsUpdating(false);
+        setIsComplete(true);
+
+        // Redirect to profile after 2 seconds
+        setTimeout(() => {
+          window.location.href = createPageUrl('Profile');
+        }, 2000);
+
+      } catch (err) {
+        setError(err.message);
+        setIsLoading(false);
+      }
+    };
+
+    processInvite();
+  }, []);
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardHeader>
+            <CardTitle className="text-red-600">Error</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-600">{error}</p>
+            <Button
+              onClick={() => window.location.href = createPageUrl('Feed')}
+              className="w-full mt-4"
+            >
+              Go to Feed
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (isComplete) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardHeader>
+            <div className="flex justify-center mb-4">
+              <CheckCircle2 className="w-16 h-16 text-green-600" />
+            </div>
+            <CardTitle className="text-center">Welcome to the Dojang!</CardTitle>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <p className="text-gray-600">
+              Your account has been set up successfully.
+            </p>
+            <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-600">Tier:</span>
+                <span className="font-semibold">{tierLabels[tier]}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-600">Belt:</span>
+                <span className="font-semibold">{beltLabels[belt]}</span>
+              </div>
+            </div>
+            <p className="text-sm text-gray-500">Redirecting to your profile...</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
+      <Card className="max-w-md w-full">
+        <CardHeader>
+          <div className="flex justify-center mb-4">
+            <UserPlus className="w-16 h-16 text-blue-600" />
+          </div>
+          <CardTitle className="text-center">Setting Up Your Account</CardTitle>
+        </CardHeader>
+        <CardContent className="text-center space-y-4">
+          <Loader2 className="w-8 h-8 animate-spin mx-auto text-blue-600" />
+          <p className="text-gray-600">
+            {isUpdating ? 'Configuring your profile...' : 'Please wait...'}
+          </p>
+          <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600">Tier:</span>
+              <span className="font-semibold">{tierLabels[tier]}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600">Belt:</span>
+              <span className="font-semibold">{beltLabels[belt]}</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

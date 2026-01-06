@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panamerican Taekwondo Academy - Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 3rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        h2 {
+            color: #764ba2;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            border-color: #667eea;
+        }
+        
+        .card h3 {
+            color: #667eea;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .entity-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .entity-tag {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        
+        .entity-tag:hover {
+            background: #764ba2;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🥋 Panamerican Taekwondo Academy</h1>
+            <p class="subtitle">Documentation Hub</p>
+        </header>
+
+        <section class="section">
+            <h2><span class="icon">📄</span> Pages</h2>
+            <div class="grid">
+                <a href="pages/Feed.html" class="card">
+                    <h3>Feed</h3>
+                    <p>Main social feed and activity stream</p>
+                </a>
+                <a href="pages/Events.html" class="card">
+                    <h3>Events</h3>
+                    <p>Event calendar and management</p>
+                </a>
+                <a href="pages/Members.html" class="card">
+                    <h3>Members</h3>
+                    <p>Member directory and profiles</p>
+                </a>
+                <a href="pages/Forum.html" class="card">
+                    <h3>Forum</h3>
+                    <p>Discussion board and community forum</p>
+                </a>
+                <a href="pages/Messages.html" class="card">
+                    <h3>Messages</h3>
+                    <p>Direct messaging system</p>
+                </a>
+                <a href="pages/Profile.html" class="card">
+                    <h3>Profile</h3>
+                    <p>User profile and settings</p>
+                </a>
+                <a href="pages/InstructorTools.html" class="card">
+                    <h3>Instructor Tools</h3>
+                    <p>Tools for instructors and masters</p>
+                </a>
+                <a href="pages/Admin.html" class="card">
+                    <h3>Admin</h3>
+                    <p>Administrative dashboard</p>
+                </a>
+                <a href="pages/Setup.html" class="card">
+                    <h3>Setup</h3>
+                    <p>Initial setup and configuration</p>
+                </a>
+                <a href="pages/AcceptInvite.html" class="card">
+                    <h3>Accept Invite</h3>
+                    <p>Invitation acceptance flow</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><span class="icon">🧩</span> Components</h2>
+            <div class="grid">
+                <a href="components/UserNotRegisteredError.html" class="card">
+                    <h3>User Not Registered Error</h3>
+                    <p>Error handling component</p>
+                </a>
+                <a href="components/admin/ClassScheduleManager.html" class="card">
+                    <h3>Class Schedule Manager</h3>
+                    <p>Admin class scheduling</p>
+                </a>
+                <a href="components/events/CalendarView.html" class="card">
+                    <h3>Calendar View</h3>
+                    <p>Event calendar display</p>
+                </a>
+                <a href="components/events/EventCard.html" class="card">
+                    <h3>Event Card</h3>
+                    <p>Individual event display</p>
+                </a>
+                <a href="components/feed/CommentSection.html" class="card">
+                    <h3>Comment Section</h3>
+                    <p>Post comments interface</p>
+                </a>
+                <a href="components/feed/CreatePost.html" class="card">
+                    <h3>Create Post</h3>
+                    <p>Post creation form</p>
+                </a>
+                <a href="components/feed/PostCard.html" class="card">
+                    <h3>Post Card</h3>
+                    <p>Individual post display</p>
+                </a>
+                <a href="components/instructor/AttendanceTracker.html" class="card">
+                    <h3>Attendance Tracker</h3>
+                    <p>Track student attendance</p>
+                </a>
+                <a href="components/instructor/ClassScheduler.html" class="card">
+                    <h3>Class Scheduler</h3>
+                    <p>Schedule classes and sessions</p>
+                </a>
+                <a href="components/instructor/FeedbackForm.html" class="card">
+                    <h3>Feedback Form</h3>
+                    <p>Student feedback interface</p>
+                </a>
+                <a href="components/instructor/TrainingAssognment.html" class="card">
+                    <h3>Training Assignment</h3>
+                    <p>Assign training modules</p>
+                </a>
+                <a href="components/members/MemberCard.html" class="card">
+                    <h3>Member Card</h3>
+                    <p>Member profile card</p>
+                </a>
+                <a href="components/messages/BroadcastMessage.html" class="card">
+                    <h3>Broadcast Message</h3>
+                    <p>Send messages to groups</p>
+                </a>
+                <a href="components/notifications/NotificationDropdown.html" class="card">
+                    <h3>Notification Dropdown</h3>
+                    <p>Notifications interface</p>
+                </a>
+                <a href="components/request/RequestForm.html" class="card">
+                    <h3>Request Form</h3>
+                    <p>Submit requests</p>
+                </a>
+                <a href="components/ui/BeltProgress.html" class="card">
+                    <h3>Belt Progress</h3>
+                    <p>Belt advancement tracker</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><span class="icon">📊</span> Data Entities</h2>
+            <div class="entity-list">
+                <a href="entities/Achievement.json" class="entity-tag">Achievement</a>
+                <a href="entities/Attendance.json" class="entity-tag">Attendance</a>
+                <a href="entities/Broadcast.json" class="entity-tag">Broadcast</a>
+                <a href="entities/Class.json" class="entity-tag">Class</a>
+                <a href="entities/Comment.json" class="entity-tag">Comment</a>
+                <a href="entities/Event.json" class="entity-tag">Event</a>
+                <a href="entities/FamilyRelationship.json" class="entity-tag">FamilyRelationship</a>
+                <a href="entities/Feedback.json" class="entity-tag">Feedback</a>
+                <a href="entities/ForumReply.json" class="entity-tag">ForumReply</a>
+                <a href="entities/ForumThread.json" class="entity-tag">ForumThread</a>
+                <a href="entities/Message.json" class="entity-tag">Message</a>
+                <a href="entities/Notification.json" class="entity-tag">Notification</a>
+                <a href="entities/Post.json" class="entity-tag">Post</a>
+                <a href="entities/RecurringSchedule.json" class="entity-tag">RecurringSchedule</a>
+                <a href="entities/Request.json" class="entity-tag">Request</a>
+                <a href="entities/TrainingModule.json" class="entity-tag">TrainingModule</a>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><span class="icon">🎨</span> Reference</h2>
+            <div class="grid">
+                <a href="Layout.js" class="card">
+                    <h3>Layout.js</h3>
+                    <p>React layout component reference</p>
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 Panamerican Taekwondo Academy | Documentation Hub</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "name": "Event",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "training",
+        "tournament",
+        "belt_test",
+        "seminar",
+        "social"
+      ]
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "time": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of user emails attending"
+    },
+    "max_capacity": {
+      "type": "number"
+    },
+    "required_belt": {
+      "type": "string",
+      "description": "Minimum belt required to attend"
+    }
+  },
+  "required": [
+    "title",
+    "date"
+  ]
+}

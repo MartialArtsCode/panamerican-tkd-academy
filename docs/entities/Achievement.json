@@ -1,0 +1,36 @@
+{
+  "name": "Achievement",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "belt",
+        "tournament",
+        "training",
+        "community",
+        "special"
+      ]
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "awarded_date": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "name",
+    "user_email"
+  ]
+}

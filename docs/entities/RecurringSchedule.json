@@ -1,0 +1,64 @@
+{
+  "name": "RecurringSchedule",
+  "type": "object",
+  "properties": {
+    "class_name": {
+      "type": "string",
+      "description": "Name of the class"
+    },
+    "day_of_week": {
+      "type": "string",
+      "enum": [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday"
+      ],
+      "description": "Day of the week"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "Start time (e.g., 16:00)"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "End time (e.g., 17:00)"
+    },
+    "instructor_email": {
+      "type": "string",
+      "description": "Instructor email"
+    },
+    "instructor_name": {
+      "type": "string",
+      "description": "Instructor name"
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced",
+        "all_levels"
+      ],
+      "default": "all_levels"
+    },
+    "max_students": {
+      "type": "number",
+      "default": 20
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the schedule is active"
+    }
+  },
+  "required": [
+    "class_name",
+    "day_of_week",
+    "start_time",
+    "end_time"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "TrainingModule",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "assigned_to_email": {
+      "type": "string",
+      "description": "Student email"
+    },
+    "assigned_by_email": {
+      "type": "string",
+      "description": "Instructor email"
+    },
+    "assigned_by_name": {
+      "type": "string"
+    },
+    "module_type": {
+      "type": "string",
+      "enum": [
+        "technique",
+        "forms",
+        "sparring",
+        "flexibility",
+        "strength",
+        "goal"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "assigned",
+        "in_progress",
+        "completed"
+      ],
+      "default": "assigned"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "assigned_to_email",
+    "assigned_by_email",
+    "module_type"
+  ]
+}

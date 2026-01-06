@@ -1,0 +1,54 @@
+{
+  "name": "FamilyRelationship",
+  "type": "object",
+  "properties": {
+    "parent_email": {
+      "type": "string",
+      "description": "Email of the parent/guardian"
+    },
+    "parent_name": {
+      "type": "string",
+      "description": "Name of the parent/guardian"
+    },
+    "student_email": {
+      "type": "string",
+      "description": "Email of the student (child)"
+    },
+    "student_name": {
+      "type": "string",
+      "description": "Name of the student (child)"
+    },
+    "student_belt": {
+      "type": "string",
+      "enum": [
+        "white",
+        "yellow",
+        "orange",
+        "orange_green_stripe",
+        "green",
+        "green_blue_stripe",
+        "blue",
+        "blue_red_stripe",
+        "red",
+        "red_black_stripe",
+        "black"
+      ],
+      "default": "white",
+      "description": "Belt rank of the student"
+    },
+    "relationship": {
+      "type": "string",
+      "enum": [
+        "parent",
+        "guardian",
+        "sibling"
+      ],
+      "default": "parent",
+      "description": "Type of relationship"
+    }
+  },
+  "required": [
+    "parent_email",
+    "student_email"
+  ]
+}

@@ -39,12 +39,17 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 // CORS configuration - allow GitHub Pages and localhost
-const corsOptions = {
-    origin: [
+const allowedOrigins = process.env.CORS_ORIGIN 
+    ? process.env.CORS_ORIGIN.split(',')
+    : [
         'https://martialartscode.github.io',
         'http://localhost:8000',
-        'http://127.0.0.1:8000'
-    ],
+        'http://127.0.0.1:8000',
+        'http://localhost:5500'
+    ];
+
+const corsOptions = {
+    origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -55,11 +60,7 @@ app.use(express.json());
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: [
-            'https://martialartscode.github.io',
-            'http://localhost:8000',
-            'http://127.0.0.1:8000'
-        ],
+        origin: allowedOrigins,
         credentials: true
     }
 });
@@ -70,16 +71,14 @@ app.set('io', io);
 /* ======================
    DATABASE
 ====================== */
-// MongoDB connection (optional - only connect if MONGO_URI is explicitly set)
-if (process.env.MONGO_URI && process.env.MONGO_URI !== 'mongodb://127.0.0.1:27017/pta_chat') {
-    mongoose.connect(process.env.MONGO_URI)
-        .then(() => console.log('✅ MongoDB connected'))
-        .catch(err => {
-            console.warn('⚠️ MongoDB connection failed:', err.message);
-            console.warn('📦 Using file-based storage instead');
-        });
+// MongoDB connection with proper configuration
+const connectDB = require('./config/db');
+
+if (process.env.MONGO_URI) {
+    connectDB();
 } else {
     console.log('📦 Using file-based storage (MongoDB not configured)');
+    console.log('💡 Set MONGO_URI in .env to use MongoDB');
 }
 
 /* ======================
@@ -147,6 +146,32 @@ function saveUsers() {
 
 // Load users on startup
 loadUsers();
+
+/* ======================
+   IMPORT ROUTES
+====================== */
+const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin');
+const healthRoutes = require('./routes/health');
+const feedRoutes = require('./routes/feed');
+const eventsRoutes = require('./routes/events');
+const forumRoutes = require('./routes/forum');
+const classesRoutes = require('./routes/classes');
+const membersRoutes = require('./routes/members');
+const notificationsRoutes = require('./routes/notifications');
+
+/* ======================
+   ROUTES
+====================== */
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/health', healthRoutes);
+app.use('/api/feed', feedRoutes);
+app.use('/api/events', eventsRoutes);
+app.use('/api/forum', forumRoutes);
+app.use('/api/classes', classesRoutes);
+app.use('/api/members', membersRoutes);
+app.use('/api/notifications', notificationsRoutes);
 
 /* ======================
    MODELS

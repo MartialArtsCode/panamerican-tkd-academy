@@ -1,0 +1,58 @@
+{
+  "name": "Post",
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "string",
+      "description": "Post text content"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Optional image attachment"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "Optional video attachment"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "author_email": {
+      "type": "string"
+    },
+    "author_tier": {
+      "type": "string",
+      "enum": [
+        "student",
+        "instructor",
+        "master"
+      ]
+    },
+    "author_belt": {
+      "type": "string"
+    },
+    "likes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of user emails who liked"
+    },
+    "comments_count": {
+      "type": "number",
+      "default": 0
+    },
+    "is_announcement": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_pinned": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "content",
+    "author_email"
+  ]
+}
