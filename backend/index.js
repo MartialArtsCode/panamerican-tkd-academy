@@ -159,6 +159,7 @@ const forumRoutes = require('./routes/forum');
 const classesRoutes = require('./routes/classes');
 const membersRoutes = require('./routes/members');
 const notificationsRoutes = require('./routes/notifications');
+const usersRoutes = require('./routes/users');
 
 /* ======================
    ROUTES
@@ -172,6 +173,7 @@ app.use('/api/forum', forumRoutes);
 app.use('/api/classes', classesRoutes);
 app.use('/api/members', membersRoutes);
 app.use('/api/notifications', notificationsRoutes);
+app.use('/api/users', usersRoutes);
 
 /* ======================
    MODELS

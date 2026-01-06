@@ -1,0 +1,69 @@
+import express from 'express';
+import User from '../models/User.js';
+import { authenticateToken } from '../middleware/auth.middleware.js';
+import { decrypt } from '../utils/crypto.js';
+
+const router = express.Router();
+
+// Get current user profile
+router.get('/profile', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.user.email });
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return user data (decrypt sensitive fields)
+    res.json({
+      email: req.user.email,
+      name: user.name || req.user.email.split('@')[0],
+      tier: user.tier || 'basic',
+      belt: user.belt,
+      profilePicture: user.profilePicture,
+      isAdmin: user.isAdmin,
+      approved: user.approved,
+      registeredAt: user.registeredAt,
+      familyMembers: user.familyMembers || []
+    });
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Update current user profile
+router.put('/profile', authenticateToken, async (req, res) => {
+  try {
+    const { name, profilePicture, belt } = req.body;
+    
+    const user = await User.findOne({ email: req.user.email });
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update allowed fields
+    if (name) user.name = name;
+    if (profilePicture !== undefined) user.profilePicture = profilePicture;
+    if (belt) user.belt = belt;
+
+    await user.save();
+
+    res.json({
+      message: 'Profile updated successfully',
+      user: {
+        email: req.user.email,
+        name: user.name,
+        tier: user.tier,
+        belt: user.belt,
+        profilePicture: user.profilePicture
+      }
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+export default router;
