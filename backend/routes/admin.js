@@ -1,9 +1,8 @@
-
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import { encrypt, decrypt } from '../utils/crypto.js';
-import User from '../models/User.js';
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const { encrypt, decrypt } = require('../utils/crypto');
+const User = require('../models/User');
 const router = express.Router();
 
 // Simple admin check middleware
@@ -158,4 +157,4 @@ router.delete('/reject-user/:userId', adminAuth, async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
