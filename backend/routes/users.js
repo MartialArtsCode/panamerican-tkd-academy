@@ -2,18 +2,19 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const { authenticateToken } = require('../middleware/auth.middleware');
-const { decrypt } = require('../utils/crypto');
+const { encrypt, decrypt } = require('../utils/crypto');
 
 // Get current user profile
 router.get('/profile', authenticateToken, async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.user.email });
+    // Email in database is encrypted, so encrypt the token email to search
+    const user = await User.findOne({ email: encrypt(req.user.email) });
     
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Return user data (decrypt sensitive fields)
+    // Return user data
     res.json({
       email: req.user.email,
       name: user.name || req.user.email.split('@')[0],
@@ -36,7 +37,8 @@ router.put('/profile', authenticateToken, async (req, res) => {
   try {
     const { name, profilePicture, belt } = req.body;
     
-    const user = await User.findOne({ email: req.user.email });
+    // Email in database is encrypted
+    const user = await User.findOne({ email: encrypt(req.user.email) });
     
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
