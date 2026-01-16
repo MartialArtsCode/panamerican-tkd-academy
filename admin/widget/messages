@@ -1,2 +1,3 @@
 #Download widget messaging dependencies
+#index.html/widget-messaging forwards messages to admin
 #Connect widget to backend/admin/admin.html
