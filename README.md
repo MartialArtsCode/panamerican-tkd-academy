@@ -187,8 +187,8 @@ panamerican_taekwondo_academy/
 
 ### Default Admin Account
 ```
-Email: panamericantkd22@gmail.com
-Password: admin123
+Email: p*********tkd22@gmail.com
+Password: *****n123
 ```
 
 ## 📚 API Documentation
