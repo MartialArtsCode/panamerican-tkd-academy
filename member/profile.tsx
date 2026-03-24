@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - PTA</title>
-    <script src="../config.js"></script>
+    <script src="../config.jsx"></script>
     <style>
         :root {
             --primary: #cc1f2b;
@@ -208,7 +208,7 @@
             My Profile
         </h1>
         <div>
-            <button class="btn" onclick="window.location.href='${BASE_PATH}/index.html'">← Back to Home</button>
+            <button class="btn" onclick="window.location.href='${BASE_PATH}/index.tsx'">← Back to Home</button>
             <button class="btn" onclick="logout()">🚪 Logout</button>
         </div>
     </div>
@@ -258,7 +258,7 @@
 
         if (!authToken) {
             alert('Please log in first');
-            window.location.href = `${BASE_PATH}/index.html`;
+            window.location.href = `${BASE_PATH}/index.tsx`;
         }
 
         // Load user profile
@@ -276,7 +276,7 @@
 
                 const user = await response.json();
                 
-                // Update UI
+                //Update UI
                 document.getElementById('profileName').textContent = user.name || user.email.split('@')[0];
                 document.getElementById('profileEmail').textContent = user.email;
                 document.getElementById('profileTier').textContent = (user.tier || 'basic').toUpperCase();
@@ -362,7 +362,7 @@
             localStorage.removeItem('auth_token');
             localStorage.removeItem('user_email');
             localStorage.removeItem('is_admin');
-            window.location.href = `${BASE_PATH}/index.html`;
+            window.location.href = `${BASE_PATH}/index.tsx`;
         }
 
         // Load profile on page load
