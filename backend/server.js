@@ -202,7 +202,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve static files (Your frontend folder)
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname,'../')));
 
 const server = http.createServer(app);
 const io = new Server(server, {
