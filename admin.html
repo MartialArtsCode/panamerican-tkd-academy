@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PTA Admin Monitor</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body { background: #1a1a1a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .stats-card { border: 2px solid #FFD700; padding: 40px; border-radius: 15px; text-align: center; }
+        #count { font-size: 5rem; color: #4ade80; display: block; }
+        h2 { margin-top: 0; color: #FFD700; }
+    </style>
+</head>
+<body>
+    <div class="stats-card">
+        <h2>Live Academy Visitors</h2>
+        <span id="count">0</span>
+        <p>Active sessions on App-Do</p>
+    </div>
+
+    <script>
+        const socket = io();
+        socket.on('visitorCount', (count) => {
+            document.getElementById('count').innerText = count;
+        });
+    </script>
+</body>
+</html>
