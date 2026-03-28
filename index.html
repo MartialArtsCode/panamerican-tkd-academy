@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join Panamerican Taekwondo Academy - Professional martial arts training in Winston-Salem, NC.">
     <title>App-Do | Panamerican Taekwondo Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* --- Widget Styles --- */
-        .chat-widget { position: fixed; bottom: 25px; right: 25px; z-index: 9999; font-family: sans-serif; }
+        /* --- Essential Widget CSS --- */
+        .chat-widget { position: fixed; bottom: 25px; right: 25px; z-index: 9999; font-family: 'Segoe UI', sans-serif; }
         .chat-widget-button {
             width: 70px; height: 70px; border-radius: 50%; background: #d4af37; border: none; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; display: flex; align-items: center; justify-content: center; padding: 0;
         }
         .chat-icon-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #d4af37; }
         .chat-pulse {
@@ -37,39 +38,123 @@
         .chat-input { flex: 1; border: 1px solid #ddd; padding: 10px 15px; border-radius: 25px; outline: none; }
         .chat-send-btn { background: #d4af37; color: white; border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; }
         
-        /* --- External Google Section Styles --- */
-        .google-reviews-section { padding: 50px 20px; text-align: center; background: #f9f9f9; }
-        .stars-outer { color: #f4c150; font-size: 24px; margin-bottom: 10px; }
-        .google-btn { 
-            display: inline-block; padding: 12px 30px; border: 2px solid #4285F4; 
-            color: #4285F4; border-radius: 30px; text-decoration: none; 
-            font-weight: bold; transition: 0.3s; margin-top: 15px;
+        /* --- External Testimonials Style --- */
+        .testimonials-section { padding: 60px 20px; text-align: center; background: #fdfdfd; border-top: 1px solid #eee; }
+        .stars-gold { color: #f4c150; font-size: 26px; margin-bottom: 15px; }
+        .google-link-btn { 
+            display: inline-block; padding: 14px 35px; border: 2px solid #4285F4; 
+            color: #4285F4; border-radius: 35px; text-decoration: none; 
+            font-weight: bold; transition: 0.3s; margin-top: 20px;
         }
-        .google-btn:hover { background: #4285F4; color: #fff; }
+        .google-link-btn:hover { background: #4285F4; color: #fff; }
     </style>
 </head>
 <body>
 
-    <header><img src="full.png" alt="Panamerican TKD" class="header-logo"></header>
+    <header><img src="full.png" alt="Academy Logo" class="header-logo"></header>
+    
+    <nav class="quick-nav">
+        <a href="#home" class="nav-btn"><i class="fas fa-home"></i> Home</a>
+        <a href="#about" class="nav-btn"><i class="fas fa-info-circle"></i> About</a>
+        <a href="#programs" class="nav-btn"><i class="fas fa-graduation-cap"></i> Programs</a>
+        <a href="#schedule" class="nav-btn"><i class="fas fa-calendar-alt"></i> Schedule</a>
+        <a href="#testimonials" class="nav-btn"><i class="fas fa-star"></i> Reviews</a>
+        <a href="#contact" class="nav-btn"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+    
+    <div class="belt-divider"></div>
     
     <main>
         <section id="home" class="hero-section">
-            <h2 class="hero-title">Master the Art of Taekwondo</h2>
+            <h2 class="hero-title">Master the art of Taekwondo</h2>
         </section>
 
-        <section id="testimonials" class="google-reviews-section">
+        <div class="belt-divider-yellow"></div>
+        <div class="centered-tagline">
+            <h1>• Discipline • Respect • Excellence •</h1>   
+            <h2>Empower your spirit. Strengthen your body. Begin your journey today.</h2>
+        </div>
+        
+        <div class="belt-divider-orange"></div>
+
+        <section id="cta" class="cta-section">
+            <h2>Schedule Your Free Trial Today</h2>
+            <div class="button-group">
+                <a class="glassy-button" href="https://wa.me/13366248499?text=Free%20Trial" target="_blank"><i class="fab fa-whatsapp"></i>Join via WhatsApp!</a>
+                <a class="glassy-button" href="sms:+13366248499"><i class="fas fa-sms"></i> Text Us!</a>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
             <div class="container">
-                <h2>What Our Students Say</h2>
-                <div class="stars-outer">
+                <h2>About Panamerican Taekwondo Academy</h2>
+                <p>Authentic training for over 20 years.</p>
+                </div>
+        </section>
+
+        <div class="belt-divider-green"></div>
+
+        <section id="programs" class="programs-section">
+            <div class="container">
+                <h2>Training Programs</h2>
+                <div class="programs-grid">
+                    <div class="program-card"><h3>Power Up</h3><p>All Ages</p><ul><li>Coordination</li><li>Focus</li></ul></div>
+                    <div class="program-card featured"><h3>Little Ninjas</h3><p>5-9</p><ul><li>Tradition</li><li>Discipline</li></ul></div>
+                    </div>
+            </div>
+        </section>
+
+        <div class="belt-divider-greenstripe"></div>
+
+        <section id="schedule" class="schedule-section">
+            <div class="container">
+                <h2>Class Schedule</h2>
+                <div class="schedule-wrapper">
+                    <table class="schedule-table">
+                        <thead><tr><th>Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>
+                        <tbody>
+                            <tr><td class="time-col">4:00 PM</td><td class="class-power-up">Power Up</td><td>-</td><td class="class-power-up">Power Up</td><td>-</td><td class="class-power-up">Power Up</td><td class="class-family">Family</td></tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <div class="belt-divider-blue"></div>
+
+        <section id="testimonials" class="testimonials-section">
+            <div class="container">
+                <h2>Verified Student Reviews</h2>
+                <div class="stars-gold">
                     <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
-                <p><strong>5.0 Rating</strong> based on student experiences in Winston-Salem.</p>
-                <a href="https://www.google.com/search?q=panamerican+taekwondo+academy" target="_blank" class="google-btn">
-                    <i class="fab fa-google"></i> Read All Google Reviews
+                <p>We are proud to be the highest-rated academy in Winston-Salem.</p>
+                <a href="https://www.google.com/search?q=panamerican+taekwondo+academy" target="_blank" class="google-link-btn">
+                    <i class="fab fa-google"></i> Read 5-Star Reviews
                 </a>
             </div>
         </section>
+
+        <div class="belt-divider-bluestripe"></div>
+
+        <section id="contact" class="contact-section">
+            <div class="contact-form">
+                <h3>Schedule Trial Class</h3>
+                <form action="https://formsubmit.co/panamericantkd22@gmail.com" method="POST">
+                    <button type="submit" class="btn-submit">Submit Request</button>
+                </form>
+            </div>
+        </section>
     </main>
+
+    <div class="belt-divider-redstripe"></div>
+    <footer>
+        <button class="login-btn" id="loginBtn"><i class="fas fa-shield-alt"></i> Login</button>
+        <p>© 2026 Panamerican Taekwondo Academy.</p>
+    </footer>
+
+    <div id="loginModal" class="login-modal" style="display:none;">
+        </div>
 
     <div class="chat-widget" id="chatWidget">
         <button class="chat-widget-button" onclick="toggleChat()">
@@ -77,21 +162,15 @@
             <span class="chat-pulse"></span>
             <span class="chat-badge">1</span>
         </button>
-
         <div class="chat-widget-popup" id="chatPopup">
             <div class="chat-header">
-                <div>
-                    <h4 style="margin:0">Master Chat</h4>
-                    <p class="chat-status"><span class="status-dot"></span>Online</p>
-                </div>
-                <button onclick="toggleChat()" style="background:none; border:none; color:white; cursor:pointer; font-size:24px;">&times;</button>
+                <div><h4 style="margin:0">Master Chat</h4><p class="chat-status"><span class="status-dot"></span>Online</p></div>
+                <button onclick="toggleChat()" style="background:none; border:none; color:white; font-size:24px;">&times;</button>
             </div>
-            <div class="chat-body">
-                <p>🥋 <strong>Welcome!</strong><br>How can we help you today?</p>
-            </div>
+            <div class="chat-body"><p>🥋 How can we help you join our family today?</p></div>
             <div class="chat-footer">
                 <div class="chat-input-row">
-                    <input type="text" id="chatInput" class="chat-input" placeholder="Message Master...">
+                    <input type="text" id="chatInput" class="chat-input" placeholder="Ask Master...">
                     <button class="chat-send-btn" onclick="handleSend()"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
@@ -104,32 +183,24 @@
 
         function toggleChat() {
             const popup = document.getElementById('chatPopup');
-            const badge = document.querySelector('.chat-badge');
             const isVisible = popup.style.display === 'flex';
             popup.style.display = isVisible ? 'none' : 'flex';
-            if (!isVisible && badge) badge.style.display = 'none';
+            if (!isVisible) document.querySelector('.chat-badge').style.display = 'none';
         }
 
         function handleSend() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
             if (!message) return;
-
             const url = `https://api.callmebot.com/whatsapp.php?phone=${phoneNumber}&apikey=${apiKey}&text=${encodeURIComponent(message)}`;
-            
-            fetch(url, { mode: 'no-cors' })
-                .then(() => {
-                    alert("Message sent to the Master!");
-                    input.value = "";
-                })
-                .catch(() => {
-                    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
-                });
+            fetch(url, { mode: 'no-cors' }).then(() => {
+                alert("Message Sent!");
+                input.value = "";
+            }).catch(() => {
+                window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+            });
         }
-
-        document.getElementById('chatInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleSend();
-        });
+        document.getElementById('chatInput').addEventListener('keypress', (e) => { if(e.key==='Enter') handleSend(); });
     </script>
 </body>
 </html>
