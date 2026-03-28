@@ -7,148 +7,98 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* --- Widget & Animation Styles --- */
-        .chat-widget { position: fixed; bottom: 25px; right: 25px; z-index: 9999; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
-        .chat-widget-button {
-            width: 70px; height: 70px; border-radius: 50%;
-            background: #d4af37; border: none; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            position: relative; display: flex; align-items: center; justify-content: center; padding: 0;
-        }
-
-        .chat-icon-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #d4af37; }
-
-        .chat-pulse {
-            position: absolute; width: 100%; height: 100%;
-            border-radius: 50%; background: #d4af37;
-            opacity: 0.6; z-index: -1;
-            animation: pta-pulse 2s infinite;
-        }
-
-        @keyframes pta-pulse {
-            0% { transform: scale(1); opacity: 0.6; }
-            100% { transform: scale(1.6); opacity: 0; }
-        }
-
-        .chat-badge {
-            position: absolute; top: -2px; right: -2px;
-            background: #ff0000; color: white;
-            width: 24px; height: 24px; border-radius: 50%;
-            font-size: 12px; font-weight: bold;
-            display: flex; align-items: center; justify-content: center;
-            border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-
-        .chat-widget-popup {
-            position: absolute; bottom: 90px; right: 0;
-            width: 320px; background: white; border-radius: 15px;
-            display: none; flex-direction: column;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            overflow: hidden; border: 1px solid #eee;
-        }
-
+        /* Embedded Widget Styles for immediate fix */
+        .chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: sans-serif; }
+        .chat-button { width: 60px; height: 60px; border-radius: 50%; background: #d4af37; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
+        .chat-popup { position: absolute; bottom: 80px; right: 0; width: 300px; background: white; border-radius: 12px; display: none; flex-direction: column; box-shadow: 0 8px 24px rgba(0,0,0,0.2); overflow: hidden; border: 1px solid #ddd; }
         .chat-header { background: #000; color: #d4af37; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .chat-status { font-size: 11px; color: #4CAF50; margin: 0; display: flex; align-items: center; }
-        .status-dot { height: 8px; width: 8px; background-color: #4CAF50; border-radius: 50%; margin-right: 5px; }
-        
-        .chat-body { padding: 20px; background: #fff; max-height: 300px; overflow-y: auto; color: #444; }
-        
-        /* Review Section Styling */
-        .review-box { margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 15px; text-align: center; }
-        .stars { color: #f4c150; font-size: 18px; margin-bottom: 5px; }
-        .review-btn { 
-            display: inline-block; padding: 10px 20px; border: 1px solid #4285F4; 
-            color: #4285F4; border-radius: 25px; text-decoration: none; 
-            font-weight: bold; font-size: 13px; transition: 0.3s;
-        }
-        .review-btn:hover { background: #4285F4; color: #fff; }
-
-        .chat-footer { padding: 12px; display: flex; gap: 8px; border-top: 1px solid #f0f0f0; }
-        .chat-input { flex: 1; border: 1px solid #ddd; padding: 10px 15px; border-radius: 25px; outline: none; }
-        .chat-send-btn { background: #d4af37; color: white; border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; transition: 0.3s; }
+        .chat-header h4 { margin: 0; font-size: 16px; }
+        .chat-body { padding: 15px; background: #f9f9f9; min-height: 80px; font-size: 14px; color: #333; }
+        .chat-footer { padding: 10px; display: flex; gap: 5px; border-top: 1px solid #eee; background: white; }
+        .chat-input { flex: 1; border: 1px solid #ddd; padding: 8px; border-radius: 4px; outline: none; }
+        .chat-send { background: #d4af37; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
     </style>
 </head>
 <body>
+    <header>
+        <img src="full.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+    </header>
 
-    <header><img src="full.png" class="header-logo"></header>
-    <main><section id="home"><h1>Welcome to Panamerican TKD</h1></section></main>
+    <nav class="quick-nav">
+        <a href="#home" class="nav-btn"><i class="fas fa-home"></i> Home</a>
+        <a href="#about" class="nav-btn"><i class="fas fa-info-circle"></i> About</a>
+        <a href="#contact" class="nav-btn"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
 
-    <div class="chat-widget" id="chatWidget">
-        <button class="chat-widget-button" id="chatButton" onclick="toggleChat()">
-            <img src="logo.png" alt="Logo" class="chat-icon-img">
-            <span class="chat-pulse"></span>
-            <span class="chat-badge">1</span>
-        </button>
+    <main>
+        <section id="home" class="hero-section">
+            <h2 class="hero-title">Master the Art of Taekwondo</h2>
+        </section>
+        
+        <div class="belt-divider-yellow"></div>
 
-        <div class="chat-widget-popup" id="chatPopup">
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>About Our Academy</h2>
+                <p>Authentic Taekwondo training in Winston-Salem for over 20 years.</p>
+            </div>
+        </section>
+    </main>
+
+    <div class="chat-widget">
+        <div class="chat-popup" id="chatPopup">
             <div class="chat-header">
-                <div>
-                    <h4 style="margin:0">Master Chat</h4>
-                    <p class="chat-status"><span class="status-dot"></span>Online</p>
-                </div>
-                <button onclick="toggleChat()" style="background:none; border:none; color:white; cursor:pointer; font-size:24px;">&times;</button>
+                <h4>Panamerican Academy</h4>
+                <button onclick="toggleChat()" style="background:none; border:none; color:white; cursor:pointer;">&times;</button>
             </div>
-            
-            <div class="chat-body" id="chatMessages">
-                <p>🥋 <strong>Hello!</strong><br>How can we help you join our family today?</p>
-                
-                <div class="review-box">
-                    <div class="stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p style="font-size: 11px; margin-bottom: 10px; color: #888;">Highest Rated Academy in Winston-Salem</p>
-                    <a href="https://g.page/r/YOUR_LINK_HERE/review" target="_blank" class="review-btn">
-                        <i class="fab fa-google"></i> See 5-Star Reviews
-                    </a>
-                </div>
+            <div class="chat-body">
+                <p>👋 Hello! How can we help you today?</p>
             </div>
-
             <div class="chat-footer">
-                <input type="text" id="chatInput" class="chat-input" placeholder="Message Master...">
-                <button class="chat-send-btn" onclick="sendToWhatsApp()"><i class="fas fa-paper-plane"></i></button>
+                <input type="text" id="chatInput" class="chat-input" placeholder="Type a message...">
+                <button class="chat-send" onclick="sendToWhatsApp()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
+        <button class="chat-button" onclick="toggleChat()">
+            <i class="fab fa-whatsapp"></i>
+        </button>
     </div>
+
+    <footer>
+        <p>&copy; 2026 Panamerican Taekwondo Academy</p>
+    </footer>
+
     <script>
-    function toggleChat() {
-        const popup = document.getElementById('chatPopup');
-        const badge = document.querySelector('.chat-badge');
-        if (!popup) return; // Safety check
-        
-        const isVisible = popup.style.display === 'flex';
-        popup.style.display = isVisible ? 'none' : 'flex';
-        
-        if (!isVisible && badge) {
-            badge.style.display = 'none';
+        function toggleChat() {
+            const popup = document.getElementById('chatPopup');
+            popup.style.display = (popup.style.display === 'flex') ? 'none' : 'flex';
         }
-    }
 
-    function sendToWhatsApp() {
-        const input = document.getElementById('chatInput');
-        if (!input) return;
-        
-        const msg = input.value.trim();
-        if (!msg) return;
+        async function sendToWhatsApp() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
 
-        const phone = "13366248499";
-        const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-        
-        window.open(url, '_blank');
-        input.value = "";
-        toggleChat();
-    }
+            try {
+                const response = await fetch('/api/messenger/send-whatsapp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
 
-    // Ensures the input listener waits for the page to load
-    document.addEventListener('DOMContentLoaded', () => {
-        const chatInput = document.getElementById('chatInput');
-        if (chatInput) {
-            chatInput.addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') sendToWhatsApp();
-            });
+                if (response.ok) {
+                    alert("Message sent to the Master!");
+                    input.value = "";
+                    toggleChat();
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                // Fallback to direct WhatsApp link if server is down
+                const phone = "13366248499";
+                window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+            }
         }
-    });
-</script>
-
+    </script>
 </body>
 </html>
