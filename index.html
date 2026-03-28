@@ -396,66 +396,95 @@
     <!-- Floating Chat Widget -->
     
     <div class="chat-widget" id="chatWidget">
-        <button class="chat-widget-button" id="chatButton">
-            <img src="icon.png" alt="Chat with us" class="chat-icon"><span class="chat-pulse"></span>
-            <span class="chat-badge">1</span>
-    </div>
-    <div class="chat-widget-popup" id="chatPopup">
+    <button class="chat-widget-button" id="chatButton">
+        <img src="icon.png" alt="Chat with us" class="chat-icon">
+        <span class="chat-pulse"></span>
+        <span class="chat-badge">1</span>
+    </button>
+
+    <div class="chat-widget-popup" id="chatPopup" style="display: none;">
         <div class="chat-header">
-            <img src="icon.png" alt="Panamerican TKD" class="chat-header-icon">
+            <div class="header-info">
+                <img src="icon.png" alt="Panamerican TKD" class="chat-header-icon">
                 <div class="chat-header-text">
                     <h4>Panamerican TKD</h4>
                     <p class="chat-status"><span class="status-dot"></span>Online</p>
-                        <button class="chat-close" id="chatClose" aria-label="Close chat">
-                            <i class="fas fa-times"></i>
-                        </button>
                 </div>
-            <div class="chat-body" id="chatMessages">
-                <div class="chat-message bot-message">
-                    <div class="message-avatar">
-                        <img src="icon.png" alt="Bot">
-                    </div>
-                    <div class="message-content">
-                        <p>👋 Hello! Welcome to Panamerican Taekwondo Academy!</p><span class="message-time">Just now</span>
-                    </div>
-                </div>
-                <div class="chat-message bot-message">
-                    <div class="message-avatar">
-                        <img src="icon.png" alt="Bot">
-                    </div>
-                    <div class="message-content">
-                        <p>How can we help you today?</p>
-                        <span class="message-time">Just now</span>
-                    </div>
-                </div>
-                <div class="chat-footer">
-                    <div class="quick-replies">
-                        <button class="whatsapp-reply-btn" data-message="I want to schedule a free trial" aria-label="Schedule a free trial">
-                            <i class="fas fa-calendar-check"></i>Free Trial
-                        </button>
-                        <button class="whatsapp-reply-btn" data-message="Tell me about your programs" aria-label="Learn about programs">
-                            <i class="fas fa-info-circle"></i> Programs
-                        </button>
-                        <button class="whatsapp-reply-btn" data-message="What are your class schedules?" aria-label="View class schedules">
-                            <i class="fas fa-clock"></i> Schedule
-                        </button>
-                        <button class="whatsapp-reply-btn" data-message="I have a question" aria-label="Ask a question">
-                            <i class="fas fa-question-circle"></i>Aout
-                        </button>
-                    </div>
-                </div>
-                <div class="chat-input-wrapper">
-                    <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message"/>
-                    <button class="chat-send-btn" id="chatSend" aria-label="Send message">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
+            </div>
+            <button class="chat-close" id="chatClose" aria-label="Close chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="chat-body" id="chatMessages">
+            <div class="chat-message bot-message">
+                <div class="message-content">
+                    <p>👋 Hello! How can we help you today?</p>
                 </div>
             </div>
         </div>
+
+        <div class="chat-footer">
+            <div class="quick-replies">
+                <button class="whatsapp-reply-btn" data-message="Free Trial Info">Free Trial</button>
+                <button class="whatsapp-reply-btn" data-message="Program Info">Programs</button>
+            </div>
+            <div class="chat-input-wrapper">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type your message...">
+                <button class="chat-send-btn" id="chatSend">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
     </div>
-    
-    <script src="script.js"></script>
-    <script src="config.js"></script>
+</div>
+
+<script>
+    const chatSend = document.getElementById('chatSend');
+    const chatInput = document.getElementById('chatInput');
+    const apiKey = "3581131"; 
+    const phoneNumber = "13366248499"; // Your academy number
+
+    function sendMessageToWhatsApp(text) {
+        if (!text.trim()) return;
+        
+        // CallMeBot API URL
+        const url = `https://api.callmebot.com/whatsapp.php?phone=${phoneNumber}&text=${encodeURIComponent(text)}&apikey=${apiKey}`;
+        
+        // Send the request in the background
+        fetch(url, { mode: 'no-cors' })
+            .then(() => {
+                alert("Message sent to the Academy!");
+                chatInput.value = "";
+            })
+            .catch(err => console.error("Error sending message:", err));
+    }
+
+    chatSend.addEventListener('click', () => {
+        sendMessageToWhatsApp(chatInput.value);
+    });
+
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessageToWhatsApp(chatInput.value);
+    });
+
+    // Handle Quick Reply Buttons
+    document.querySelectorAll('.whatsapp-reply-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            sendMessageToWhatsApp(btn.getAttribute('data-message'));
+        });
+    });
+
+    // Toggle Visibility Logic
+    const chatBtn = document.getElementById('chatButton');
+    const chatPopup = document.getElementById('chatPopup');
+    const chatClose = document.getElementById('chatClose');
+
+    chatBtn.onclick = () => chatPopup.style.display = 'flex';
+    chatClose.onclick = () => chatPopup.style.display = 'none';
+</script>
+<script src="script.js"></script>
+<script src="config.js"></script>
     <!--script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script-->
 </body>
 </html>
