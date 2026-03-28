@@ -334,9 +334,9 @@
     <!-- Red-Black Belt Divider -->
     <div class="belt-divider-redblack"></div>
     <footer>
-        <div>
-            <button class="login-btn" id="loginBtn" aria-label="Login to Admin">
-                <span><i class="fas fa-shield-alt"></i> Login</span>
+    <!--div>
+    <button class="login-btn" id="loginBtn" aria-label="Login to Admin">
+    <span><i class="fas fa-shield-alt"></i> Login</span>
             </button>
             <div class="login-modal" id="loginModal" style="display: none;">
                 <div class="modal-content">
@@ -367,7 +367,8 @@
                             </label>
                         </div>
                         <div class="error-message" id="loginError"></div>
-                        <!--Login-->
+    </div>
+                        <!--Login--
                         <div class="success-message" id="loginSuccess" style="color: #4CAF50"; margin: 10px 0; display: none;"></div>
                         <button type="submit" class="btn-submit" id="submitBtn">
                             <i class="fas fa-sign-in-alt"></i>
@@ -393,65 +394,62 @@
 
     <!-- Floating Chat Widget -->
 <div class="chat-widget" id="chatWidget">
-    <div class="chat-widget-button" id="chatButton">
-        <img src="icon.png" alt="Chat with us" class="chat-icon">
-        <span class="chat-pulse"></span>
-        <span class="chat-badge">1</span>
-    </div>
-    <div class="chat-widget-popup" id="chatPopup">
-        <div class="chat-header">
-            <img src="icon.png" alt="Panamerican TKD" class="chat-header-icon">
-            <div class="chat-header-text">
-                <h4>Panamerican TKD</h4>
-                <p class="chat-status"><span class="status-dot"></span>Online</p>
-            </div>
+<div class="chat-widget-button" id="chatButton">
+    <img src="icon.png" alt="Chat with us" class="chat-icon">
+    <span class="chat-pulse"></span>
+    <span class="chat-badge">1</span>
+</div>
+<div class="chat-widget-popup" id="chatPopup">
+    <div class="chat-header">
+        <img src="icon.png" alt="Panamerican TKD" class="chat-header-icon">
+        <div class="chat-header-text">
+            <h4>Panamerican TKD</h4>
+            <p class="chat-status"><span class="status-dot"></span>Online</p>
             <button class="chat-close" id="chatClose" aria-label="Close chat">
                 <i class="fas fa-times"></i>
             </button>
         </div>
     </div>
-    <div class="chat-body" id="chatMessages">
-        <div class="chat-message bot-message">
-            <div class="message-avatar">
-                <img src="icon.png" alt="Bot">
-            </div>
-            <div class="message-content">
-                <p>👋 Hello! Welcome to Panamerican Taekwondo Academy!</p>
-                <span class="message-time">Just now</span>
-            </div>
+</div>
+<div class="chat-body" id="chatMessages">
+    <div class="chat-message bot-message">
+        <div class="message-avatar">
+            <img src="icon.png" alt="Bot">
         </div>
-        <div class="chat-message bot-message">
-            <div class="message-avatar">
-                <img src="icon.png" alt="Bot">
-            </div>
-            <div class="message-content">
-                <p>How can we help you today?</p>
-                <span class="message-time">Just now</span>
-            </div>
+        <div class="message-content">
+            <p>👋 Hello! Welcome to Panamerican Taekwondo Academy!</p>
+            <span class="message-time">Just now</span>
         </div>
     </div>
-    <div class="chat-footer">
-        <div class="quick-replies">
-            <button class="whatsapp-reply-btn" data-message="I want to schedule a free trial" aria-label="Schedule a free trial">
-                <i class="fas fa-calendar-check"></i>Free Trial
-            </button>
-            <button class="whatsapp-reply-btn" data-message="Tell me about your programs" aria-label="Learn about programs">
-                <i class="fas fa-info-circle"></i> Programs
-            </button>
-            <button class="whatsapp-reply-btn" data-message="What are your class schedules?" aria-label="View class schedules">
-                <i class="fas fa-clock"></i> Schedule
-            </button>
-            <button class="whatsapp-reply-btn" data-message="I have a question" aria-label="Ask a question">
-                <i class="fas fa-question-circle"></i>Aout
-            </button>
+    <div class="chat-message bot-message">
+        <div class="message-avatar">
+            <img src="icon.png" alt="Bot">
         </div>
-        <div class="chat-input-wrapper">
-            <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message">
-            <button class="chat-send-btn" id="chatSend" aria-label="Send message">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
+        <div class="message-content">
+        <p>How can we help you today?</p>
+        <span class="message-time">Just now</span>
     </div>
+</div>
+<div class="chat-footer">
+    <div class="quick-replies">
+    <button class="whatsapp-reply-btn" data-message="I want to schedule a free trial" aria-label="Schedule a free trial">
+        <i class="fas fa-calendar-check"></i>Free Trial
+    </button>
+    <button class="whatsapp-reply-btn" data-message="Tell me about your programs" aria-label="Learn about programs">
+        <i class="fas fa-info-circle"></i> Programs
+    </button>
+    <button class="whatsapp-reply-btn" data-message="What are your class schedules?" aria-label="View class schedules">
+        <i class="fas fa-clock"></i> Schedule
+    </button>
+    <button class="whatsapp-reply-btn" data-message="I have a question" aria-label="Ask a question">
+        <i class="fas fa-question-circle"></i>Aout
+    </button>
+</div>
+<div class="chat-input-wrapper">
+<input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message" />
+    <button class="chat-send-btn" id="chatSend" aria-label="Send message">
+        <i class="fas fa-paper-plane"></i>
+    </button>
 </div>
     <script src="script.js"></script>
     <script src="config.js"></script>
