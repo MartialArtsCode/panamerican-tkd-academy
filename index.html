@@ -110,35 +110,36 @@
             </div>
         </div>
     </div>
-
     <script>
         function toggleChat() {
-            const popup = document.getElementById('chatPopup');
-            const badge = document.querySelector('.chat-badge');
+            const popup =
+        document.getElementById('chatPopup');
+            const badge = 
+        document.querySelector('.chat-badge');
             const isVisible = popup.style.display === 'flex';
-            popup.style.display = isVisible ? 'none' : 'flex';
-            if (!isVisible && badge) badge.style.display = 'none';
-        }
+        popup.style.display = isVisible ? 'none' : 'flex';
+        if (!isVisible && badge) badge.style.display = 'none';
+    }
 
-        async function sendToWhatsApp() {
-            const input = document.getElementById('chatInput');
-            const msg = input.value.trim();
-            if (!msg) return;
+    function sendToWhatsApp() {
+        const input = document.getElementById('chatInput');
+        const msg = input.value.trim();
+        if (!msg) return;
 
-            try {
-                const res = await fetch('/api/messenger/send-whatsapp', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg })
-                });
-                if (res.ok) {
-                    alert("Sent! We will reply shortly.");
-                    input.value = "";
-                }
-            } catch (err) {
-                window.open(`https://wa.me/13366248499?text=${encodeURIComponent(msg)}`, '_blank');
-            }
-        }
-    </script>
+        // Direct WhatsApp Link (No server needed for testing)
+        const phone = "13366248499";
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+        
+        window.open(url, '_blank');
+        input.value = "";
+        toggleChat();
+    }
+
+    // Allow 'Enter' key
+    document.getElementById('chatInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') sendToWhatsApp();
+    });
+</script>
+
 </body>
 </html>
