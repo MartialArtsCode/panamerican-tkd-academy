@@ -132,7 +132,7 @@
                         <li><i class="fas fa-check"></i> Traditional forms (Poomsae)</li>
                         <li><i class="fas fa-check"></i> Sparring techniques</li>
                         <li><i class="fas fa-check"></i> Self-defense</li>
-                        <li><i class="fas fa-check"></i> Basic Competition</li>
+                        <li><i class="fas fa-check"></i> Competition</li>
                     </ul>
                 </div>
                 <div class="program-card">
@@ -328,128 +328,134 @@
     </section>
     <!-- Red Belt with Black Stripe Divider -->
     <div class="belt-divider-redstripe"></div>
-    <div>>
+    <div>
         <section></section>
     </div>
+    
     <!-- Red-Black Belt Divider -->
     <div class="belt-divider-redblack"></div>
-    <footer>
+<footer>
     <!--div-->
     <button class="login-btn" id="loginBtn" aria-label="Login to Admin">
-    <span><i class="fas fa-shield-alt"></i> Login</span>
-            </button>
-            <div class="login-modal" id="loginModal" style="display: none;">
-                <div class="modal-content">
-                    <h3 id="modalTitle" style="text-align: center; margin-bottom: 20px; color: #fff;">Sign In</h3>
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="login-email">
-                                <i class="fas fa-envelope"></i> Email
-                            </label>
-                            <input type="email" id="login-email" name="email" placeholder="your@email.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="login-password">
-                                <i class="fas fa-lock"></i> Password
-                            </label>
-                            <input type="password" id="login-password" name="password" placeholder="Create your password" required minlength="6">
-                        </div>
-                        <div class="form-group" id="confirmPasswordGroup" style="display: none;">
-                            <label for="login-password-confirm">
-                                <i class="fas fa-lock"></i> Confirm Password
-                            </label>
-                            <input type="password" id="login-password-confirm" name="password-confirm" placeholder="Re-enter your password" minlength="6">
-                        </div>
-                        <div style="margin: 10px 0;">
-                            <label style="display: flex; align-items: center; color: #fff; cursor: pointer;">
-                                <input type="checkbox" id="rememberMe" style="margin-right: 8px; cursor: pointer;">
-                                <span>Remember me</span>
-                            </label>
-                        </div>
-                        <div class="error-message" id="loginError"></div>
-                        <div class="success-message" id="loginSuccess" style="color: #4CAF50"; margin: 10px 0; display: none;"></div>
-                        <button type="submit" class="btn-submit" id="submitBtn">
-                            <i class="fas fa-sign-in-alt"></i>
-                            <span id="submitBtnText">Sign In</span>
-                        </button>
-                        <div style="text-align: center; margin-top: 15px; color: #fff;">
-                            <span id="toggleText">Don't have an account?</span>
-                            <a href="#" id="toggleMode" style="color: #FFD700; text-decoration: none; margin-left: 5px; font-weight: bold;">Create Account</a></div>
-                        <button class="modal-close" id="closeModal" aria-label="Close">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </form>
-                </div>
+        <span>
+            <i class="fas fa-shield-alt"></i> Login
+        </span>
+    </button>
+        <div class="login-modal" id="loginModal" style="display: none;">
+            <div class="modal-content">
+                <h3 id="modalTitle" style="text-align: center; margin-bottom: 20px; color: #fff;">Sign In</h3>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="login-email">
+                            <i class="fas fa-envelope"></i> Email
+                        </label>
+                        <input type="email" id="login-email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <input type="password" id="login-password" name="password" placeholder="Create your password" required minlength="6">
+                    </div>
+                    <div class="form-group" id="confirmPasswordGroup" style="display: none;">
+                        <label for="login-password-confirm">
+                            <i class="fas fa-lock"></i> Confirm Password
+                        </label>
+                        <input type="password" id="login-password-confirm" name="password-confirm" placeholder="Re-enter your password" minlength="6">
+                    </div>
+                    <div style="margin: 10px 0;">
+                        <label style="display: flex; align-items: center; color: #fff; cursor: pointer;">
+                            <input type="checkbox" id="rememberMe" style="margin-right: 8px; cursor: pointer;">
+                            <span>Remember me</span>
+                        </label>
+                    </div>
+                    <div class="error-message" id="loginError"></div>
+                    <div class="success-message" id="loginSuccess" style="color: #4CAF50"; margin: 10px 0; display: none;"></div>
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <i class="fas fa-sign-in-alt"></i><span id="submitBtnText">Sign In</span>
+                    </button>
+                    <div style="text-align: center; margin-top: 15px; color: #fff;">
+                        <span id="toggleText">Don't have an account?</span>
+                        <a href="#" id="toggleMode" style="color: #FFD700; text-decoration: none; margin-left: 5px; font-weight: bold;">Create Account</a>
+                    </div>
+                    <button class="modal-close" id="closeModal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </form>
             </div>
         </div>
+        
         <div class="container">
             <p>&copy; 2025 Panamerican Taekwondo Academy. All rights reserved.</p>
             <p class="footer-tagline">Master the Art • Build Character • Achieve Excellence</p>
         </div>
-    </footer>
-    <!-- Black Belt Divider -->
-    <div class="belt-divider-black"></div>
+</footer>
+ <!-- Black Belt Divider -->
+<div class="belt-divider-black"></div>
 
     <!-- Floating Chat Widget -->
+    
     <div class="chat-widget" id="chatWidget">
         <button class="chat-widget-button" id="chatButton">
-            <img src="icon.png" alt="Chat with us" class="chat-icon">
-                <span class="chat-pulse"></span>
-                <span class="chat-badge">1</span>
+            <img src="icon.png" alt="Chat with us" class="chat-icon"><span class="chat-pulse"></span>
+            <span class="chat-badge">1</span>
     </div>
     <div class="chat-widget-popup" id="chatPopup">
         <div class="chat-header">
             <img src="icon.png" alt="Panamerican TKD" class="chat-header-icon">
                 <div class="chat-header-text">
-                <h4>Panamerican TKD</h4>
-                <p class="chat-status"><span class="status-dot"></span>Online</p>
-                    <button class="chat-close" id="chatClose" aria-label="Close chat"><i class="fas fa-times"></i></button>
+                    <h4>Panamerican TKD</h4>
+                    <p class="chat-status"><span class="status-dot"></span>Online</p>
+                        <button class="chat-close" id="chatClose" aria-label="Close chat">
+                            <i class="fas fa-times"></i>
+                        </button>
                 </div>
+            <div class="chat-body" id="chatMessages">
+                <div class="chat-message bot-message">
+                    <div class="message-avatar">
+                        <img src="icon.png" alt="Bot">
+                    </div>
+                    <div class="message-content">
+                        <p>👋 Hello! Welcome to Panamerican Taekwondo Academy!</p><span class="message-time">Just now</span>
+                    </div>
+                </div>
+                <div class="chat-message bot-message">
+                    <div class="message-avatar">
+                        <img src="icon.png" alt="Bot">
+                    </div>
+                    <div class="message-content">
+                        <p>How can we help you today?</p>
+                        <span class="message-time">Just now</span>
+                    </div>
+                </div>
+                <div class="chat-footer">
+                    <div class="quick-replies">
+                        <button class="whatsapp-reply-btn" data-message="I want to schedule a free trial" aria-label="Schedule a free trial">
+                            <i class="fas fa-calendar-check"></i>Free Trial
+                        </button>
+                        <button class="whatsapp-reply-btn" data-message="Tell me about your programs" aria-label="Learn about programs">
+                            <i class="fas fa-info-circle"></i> Programs
+                        </button>
+                        <button class="whatsapp-reply-btn" data-message="What are your class schedules?" aria-label="View class schedules">
+                            <i class="fas fa-clock"></i> Schedule
+                        </button>
+                        <button class="whatsapp-reply-btn" data-message="I have a question" aria-label="Ask a question">
+                            <i class="fas fa-question-circle"></i>Aout
+                        </button>
+                    </div>
+                </div>
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message"/>
+                    <button class="chat-send-btn" id="chatSend" aria-label="Send message">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="chat-body" id="chatMessages">
-        <div class="chat-message bot-message">
-            <div class="message-avatar">
-                <img src="icon.png" alt="Bot">
-            </div>
-            <div class="message-content">
-                <p>👋 Hello! Welcome to Panamerican Taekwondo Academy!</p><span class="message-time">Just now</span>
-            </div>
-        </div>
-        <div class="chat-message bot-message">
-            <div class="message-avatar">
-                <img src="icon.png" alt="Bot">
-            </div>
-            <div class="message-content">
-                <p>How can we help you today?</p>
-                <span class="message-time">Just now</span>
-            </div>
-    </div>
-    <div class="chat-footer">
-        <div class="quick-replies">
-        <button class="whatsapp-reply-btn" data-message="I want to schedule a free trial" aria-label="Schedule a free trial">
-            <i class="fas fa-calendar-check"></i>Free Trial
-        </button>
-        <button class="whatsapp-reply-btn" data-message="Tell me about your programs" aria-label="Learn about programs">
-            <i class="fas fa-info-circle"></i> Programs
-        </button>
-        <button class="whatsapp-reply-btn" data-message="What are your class schedules?" aria-label="View class schedules">
-            <i class="fas fa-clock"></i> Schedule
-        </button>
-        <button class="whatsapp-reply-btn" data-message="I have a question" aria-label="Ask a question">
-            <i class="fas fa-question-circle"></i>Aout
-        </button>
-        </div>
-    </div>
-    <div class="chat-input-wrapper">
-    <input type="text" class="chat-input" placeholder="Type your message..." id="chatInput" aria-label="Type your message" />
-        <button class="chat-send-btn" id="chatSend" aria-label="Send message">
-            <i class="fas fa-paper-plane"></i>
-        </button>
-    </div>
-</div>
+    
     <script src="script.js"></script>
     <script src="config.js"></script>
-    <!--script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script--> 
+    <!--script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script-->
 </body>
 </html>
