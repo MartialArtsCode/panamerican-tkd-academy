@@ -3,133 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App-Do | Panamerican Taekwondo Academy</title>
+    <meta name="description" content="Join Panamerican Taekwondo Academy - Professional martial arts training in Winston-Salem, NC. Programs for all ages!">
+    <meta name="keywords" content="taekwondo, martial arts, academy, self defense, kids classes, adult fitness, WTF curriculum, Winston-Salem">
+    <meta name="author" content="Panamerican Taekwondo Academy">
+    <title>App-Do | Panamerican Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Embedded Widget Styles for immediate fix */
-        .chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: sans-serif; }
-        .chat-button { width: 60px; height: 60px; border-radius: 50%; background: #d4af37; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
-        .chat-popup { position: absolute; bottom: 80px; right: 0; width: 300px; background: white; border-radius: 12px; display: none; flex-direction: column; box-shadow: 0 8px 24px rgba(0,0,0,0.2); overflow: hidden; border: 1px solid #ddd; }
+        /* --- Widget & Animation Styles --- */
+        .chat-widget { position: fixed; bottom: 25px; right: 25px; z-index: 9999; font-family: sans-serif; }
+        .chat-widget-button {
+            width: 70px; height: 70px; border-radius: 50%; background: #d4af37; border: none; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; display: flex; align-items: center; justify-content: center;
+        }
+        .chat-icon { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .chat-pulse {
+            position: absolute; width: 100%; height: 100%; border-radius: 50%; background: #d4af37;
+            opacity: 0.6; z-index: -1; animation: pta-pulse 2s infinite;
+        }
+        @keyframes pta-pulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.6); opacity: 0; } }
+        .chat-badge {
+            position: absolute; top: -2px; right: -2px; background: #ff0000; color: white; width: 22px; height: 22px;
+            border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center;
+            border: 2px solid white;
+        }
+        .chat-widget-popup {
+            position: absolute; bottom: 85px; right: 0; width: 320px; background: white; border-radius: 15px;
+            display: none; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; border: 1px solid #eee;
+        }
         .chat-header { background: #000; color: #d4af37; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .chat-header h4 { margin: 0; font-size: 16px; }
-        .chat-body { padding: 15px; background: #f9f9f9; min-height: 80px; font-size: 14px; color: #333; }
-        .chat-footer { padding: 10px; display: flex; gap: 5px; border-top: 1px solid #eee; background: white; }
-        .chat-input { flex: 1; border: 1px solid #ddd; padding: 8px; border-radius: 4px; outline: none; }
-        .chat-send { background: #d4af37; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+        .chat-status { font-size: 11px; color: #4CAF50; margin: 0; }
+        .status-dot { height: 8px; width: 8px; background-color: #4CAF50; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .chat-body { padding: 20px; background: #fff; max-height: 250px; overflow-y: auto; color: #444; }
+        .chat-footer { padding: 12px; border-top: 1px solid #f0f0f0; background: #f9f9f9; }
+        .chat-input-wrapper { display: flex; gap: 8px; margin-top: 10px; }
+        .chat-input { flex: 1; border: 1px solid #ddd; padding: 10px; border-radius: 20px; outline: none; }
+        .chat-send-btn { background: #d4af37; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
+        .whatsapp-reply-btn { background: #eee; border: none; padding: 5px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; margin-right: 5px; }
     </style>
 </head>
 <body>
     <header>
-        <img src="full.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+        <img src="full.png" alt="Panamerican Taekwondo Academy Logo" class="header-logo">
     </header>
-
+    
     <nav class="quick-nav">
         <a href="#home" class="nav-btn"><i class="fas fa-home"></i> Home</a>
         <a href="#about" class="nav-btn"><i class="fas fa-info-circle"></i> About</a>
+        <a href="#programs" class="nav-btn"><i class="fas fa-graduation-cap"></i> Programs</a>
+        <a href="#schedule" class="nav-btn"><i class="fas fa-calendar-alt"></i> Schedule</a>
+        <a href="#testimonials" class="nav-btn"><i class="fas fa-star"></i> Reviews</a>
         <a href="#contact" class="nav-btn"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
-
+    
+    <div class="belt-divider"></div>
+    
     <main>
         <section id="home" class="hero-section">
-            <h2 class="hero-title">Master the Art of Taekwondo</h2>
+            <h2 class="hero-title">Master the art of Taekwondo</h2>
         </section>
-        
+
         <div class="belt-divider-yellow"></div>
+            
+        <div class="centered-tagline">
+            <h1>• Discipline • Respect • Excellence •</h1>   
+            <h2>Empower your spirit. Strengthen your body. Begin your journey today.</h2>
+        </div>
+        
+        <div class="belt-divider-orange"></div>
+
+        <section id="cta" class="cta-section">
+            <h2>Schedule Your Free Trial Today</h2>
+            <div class="button-group">
+                <a class="glassy-button" href="https://wa.me/13366248499?text=I%20want%20to%20schedule%20a%20free%20trial" target="_blank"><i class="fab fa-whatsapp"></i>Join via WhatsApp!</a>
+                <a class="glassy-button" href="sms:+13366248499?body=I%20want%20to%20schedule%20a%20free%20trial"><i class="fas fa-sms"></i> Text Us!</a>
+                <a class="glassy-button" href="https://www.facebook.com/Panamericantaekwondoacademy1/" target="_blank"><i class="fab fa-facebook"></i> Follow Us!</a>
+            </div>
+        </section>
+
+        <div class="belt-divider-orangestripe"></div>
 
         <section id="about" class="about-section">
             <div class="container">
-                <h2>About Our Academy</h2>
-                <p>Authentic Taekwondo training in Winston-Salem for over 20 years.</p>
+                <h2>About Panamerican Taekwondo Academy</h2>
+                <p>Teaching authentic Taekwondo for over 20 years.</p>
+                </div>
+        </section>
+
+        <div class="belt-divider-green"></div>
+        
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2>Contact Us</h2>
+                </div>
+        </section>
+
+        <div class="belt-divider-red"></div>
+
+        <section class="contact-form-section">
+            <div class="contact-form">
+                <h3>Schedule Trial</h3>
+                <form id="trial-form" action="https://formsubmit.co/panamericantkd22@gmail.com" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <button type="submit" class="btn-submit">Schedule Trial Class</button>
+                </form>
             </div>
         </section>
     </main>
 
-    <div class="chat-widget" id="chatWidget">
-    <button class="chat-widget-button" id="chatButton">
-        <img src="icon.png" alt="Chat" class="chat-icon">
-    </button>
-
-    <div class="chat-widget-popup" id="chatPopup" style="display: none;">
-        <div class="chat-header">
-            <h4>Panamerican TKD</h4>
-            <button id="chatClose">&times;</button>
-        </div>
-        <div class="chat-body" id="chatMessages">
-            <p>👋 Need a free trial or have questions?</p>
-        </div>
-        <div class="chat-footer">
-            <input type="text" id="chatInput" placeholder="Message Master...">
-            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-</div>
-
-<script>
-    const chatPopup = document.getElementById('chatPopup');
-    const chatInput = document.getElementById('chatInput');
-
-    // Toggle Chat
-    document.getElementById('chatButton').onclick = () => chatPopup.style.display = 'flex';
-    document.getElementById('chatClose').onclick = () => chatPopup.style.display = 'none';
-
-    async function postMessage(text) {
-        if(!text) return;
-        try {
-            const res = await fetch('/api/messenger/send-whatsapp', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ message: text })
-            });
-            if(res.ok) {
-                alert("Sent to the Academy!");
-                chatInput.value = "";
-            }
-        } catch (e) {
-            // Final Fallback: Direct WhatsApp Link
-            window.open(`https://wa.me/13366248499?text=${encodeURIComponent(text)}`);
-        }
-    }
-
-    document.getElementById('chatSend').onclick = () => postMessage(chatInput.value);
-</script>
-
-
     <footer>
-        <p>&copy; 2026 Panamerican Taekwondo Academy</p>
+        <button class="login-btn" id="loginBtn"><i class="fas fa-shield-alt"></i> Login</button>
+        <p>© 2026 Panamerican Taekwondo Academy. All rights reserved.</p>
     </footer>
 
+    <div class="chat-widget" id="chatWidget">
+        <button class="chat-widget-button" id="chatButton">
+            <img src="icon.png" alt="Chat" class="chat-icon">
+            <span class="chat-pulse"></span>
+            <span class="chat-badge">1</span>
+        </button>
+
+        <div class="chat-widget-popup" id="chatPopup">
+            <div class="chat-header">
+                <div class="header-info">
+                    <h4>Panamerican TKD</h4>
+                    <p class="chat-status"><span class="status-dot"></span>Online</p>
+                </div>
+                <button class="chat-close" id="chatClose">&times;</button>
+            </div>
+            <div class="chat-body" id="chatMessages">
+                <p>👋 Hello! How can we help you today?</p>
+            </div>
+            <div class="chat-footer">
+                <div class="quick-replies">
+                    <button class="whatsapp-reply-btn" data-message="Free Trial Info">Free Trial</button>
+                    <button class="whatsapp-reply-btn" data-message="Program Info">Programs</button>
+                </div>
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type a message...">
+                    <button class="chat-send-btn" id="chatSend"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function toggleChat() {
-            const popup = document.getElementById('chatPopup');
-            popup.style.display = (popup.style.display === 'flex') ? 'none' : 'flex';
-        }
+        const apiKey = "3581131"; 
+        const phoneNumber = "13366248499";
+        const chatPopup = document.getElementById('chatPopup');
+        const chatBtn = document.getElementById('chatButton');
+        const chatClose = document.getElementById('chatClose');
+        const chatSend = document.getElementById('chatSend');
+        const chatInput = document.getElementById('chatInput');
 
-        async function sendToWhatsApp() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            if (!message) return;
+        // Toggle Widget
+        chatBtn.onclick = () => {
+            chatPopup.style.display = 'flex';
+            document.querySelector('.chat-badge').style.display = 'none';
+        };
+        chatClose.onclick = () => chatPopup.style.display = 'none';
 
-            try {
-                const response = await fetch('/api/messenger/send-whatsapp', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: message })
+        function sendMessage(text) {
+            if (!text.trim()) return;
+            
+            // CallMeBot URL
+            const url = `https://api.callmebot.com/whatsapp.php?phone=${phoneNumber}&apikey=${apiKey}&text=${encodeURIComponent(text)}`;
+            
+            // Mode 'no-cors' allows the request to be sent without the browser blocking it for missing headers
+            fetch(url, { mode: 'no-cors' })
+                .then(() => {
+                    alert("Message sent to the Academy!");
+                    chatInput.value = "";
+                })
+                .catch(() => {
+                    // Fallback to direct link if API fails
+                    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`);
                 });
-
-                if (response.ok) {
-                    alert("Message sent to the Master!");
-                    input.value = "";
-                    toggleChat();
-                } else {
-                    throw new Error();
-                }
-            } catch (err) {
-                // Fallback to direct WhatsApp link if server is down
-                const phone = "13366248499";
-                window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
-            }
         }
+
+        chatSend.onclick = () => sendMessage(chatInput.value);
+        chatInput.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(chatInput.value); };
+
+        document.querySelectorAll('.whatsapp-reply-btn').forEach(btn => {
+            btn.onclick = () => sendMessage(btn.getAttribute('data-message'));
+        });
     </script>
 </body>
 </html>
