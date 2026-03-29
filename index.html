@@ -346,37 +346,40 @@
         <div class="container" style="margin-top: 20px;">
             <p>© 2026 Panamerican Taekwondo Academy. All rights reserved.</p>
             <p class="footer-tagline">Master the Art • Build Character • Achieve Excellence</p>
+            <div id="loginButton">
+                <!--------HERE-------------------------------------------------------------------->
+                <div>
+                    <div id="loginModal" class="modal fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="loginForm">
+                                    <div class="mb-3">
+                                        <label for="login-email" class="form-label">Email address</label>
+                                        <input type="email" class="form-control" id="login-email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="login-password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="login-password" required>
+                                    </div>
+                                    <div id="loginError" class="text-danger mb-3" style="display: none;"></div>
+                                    <button type="submit" class="btn btn-primary">Login</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
     <div class="belt-divider-black"></div>
     
-    <div>
-        <div id="loginModal" class="modal fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="loginModalLabel">Login</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="loginForm">
-                            <div class="mb-3">
-                                <label for="login-email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="login-email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="login-password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="login-password" required>
-                            </div>
-                            <div id="loginError" class="text-danger mb-3" style="display: none;"></div>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="chat-widget" id="chatWidget">
         <button class="chat-widget-button" id="chatButton" onclick="toggleChat()">
