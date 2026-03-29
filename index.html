@@ -416,75 +416,7 @@
 
         </div>
     </div>
-
-    <script>
     
-function sendToWhatsApp() {
-    // 1. Get the typed message from the input field
-    const inputElement = document.getElementById('chatInput');
-    const message = inputElement.value;
-
-    // 2. Set your WhatsApp number (include country code, no '+' or spaces)
-    const phoneNumber = "3366248499"; 
-
-    // 3. Make sure the message isn't empty before sending
-    if (message.trim() !== "") {
-        // Encode the message so it safely travels through the URL
-        const encodedMessage = encodeURIComponent(message);
-        
-        // Construct the final WhatsApp URL
-        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-        
-        // Open the WhatsApp chat in a new tab
-        window.open(whatsappUrl, '_blank');
-        
-        // Optional: Clear the input field after sending
-        inputElement.value = "";
-    } else {
-        alert("Please enter a message first!");
-    }
-}
-
-        // CallMeBot Integration Logic
-        const apiKey = "3581131"; 
-        const phoneNumber = "13366248499";
-
-        function toggleChat() {
-            const popup = document.getElementById('widget-chat-input');
-            const badge = document.querySelector('.chat-badge');
-            const isVisible = popup.style.display === 'flex';
-            popup.style.display = isVisible ? 'none' : 'flex';
-            if (!isVisible && badge) badge.style.display = 'none';
-        }
-
-        function sendToWhatsApp() {
-            const input = document.getElementById('chatInput');
-            const msg = input.value.trim();
-            if (!msg) return;
-
-            const url = `https://api.callmebot.com/whatsapp.php?phone=${phoneNumber}&apikey=${apiKey}&text=${encodeURIComponent(msg)}`;
-            
-            fetch(url, { mode: 'no-cors' })
-                .then(() => {
-                    alert("Message sent to the Master!");
-                    input.value = "";
-                })
-                .catch(() => {
-                    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`, '_blank');
-                    input.value = "g";
-                });
-        }
-
-        // Allow 'Enter' key to send message
-        document.addEventListener('DOMContentLoaded', () => {
-            const chatInput = document.getElementById('chatInput');
-            if (chatInput) {
-                chatInput.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter') sendToWhatsApp();
-                });
-            }
-        });
-    </script>
     <script src="config.js"></script>
     <script src="app.js"></script>
     <script src="script.js"></script>
