@@ -393,7 +393,7 @@
         <div class="chat-widget-popup" id="chatPopup">
             <div class="chat-header">
                 <div>
-                    <h4 style="margin:0">Master Chat</h4>
+                    <h4 style="margin:0">Panamerican TKD</h4>
                     <p class="chat-status"><span class="status-dot"></span>Online</p>
                 </div>
                 <button onclick="toggleChat()" style="background:none; border:none; color:white; cursor:pointer; font-size:24px;">&times;</button>
@@ -404,19 +404,49 @@
             </div>
 
             <div class="chat-footer">
-                <input type="text" id="chatInput" class="chat-input" placeholder="Message Master...">
-                <button class="chat-send-btn" onclick="sendToWhatsApp()"><i class="fas fa-paper-plane"></i></button>
+                <input type="text" id="chatInput" class="chat-input" placeholder="Type your message...">
+                <button class="chat-send-btn" onclick="sendToWhatsApp()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
+
         </div>
     </div>
 
     <script>
+    
+function sendToWhatsApp() {
+    // 1. Get the typed message from the input field
+    const inputElement = document.getElementById('chatInput');
+    const message = inputElement.value;
+
+    // 2. Set your WhatsApp number (include country code, no '+' or spaces)
+    const phoneNumber = "3366248499"; 
+
+    // 3. Make sure the message isn't empty before sending
+    if (message.trim() !== "") {
+        // Encode the message so it safely travels through the URL
+        const encodedMessage = encodeURIComponent(message);
+        
+        // Construct the final WhatsApp URL
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        
+        // Open the WhatsApp chat in a new tab
+        window.open(whatsappUrl, '_blank');
+        
+        // Optional: Clear the input field after sending
+        inputElement.value = "";
+    } else {
+        alert("Please enter a message first!");
+    }
+}
+
         // CallMeBot Integration Logic
         const apiKey = "3581131"; 
         const phoneNumber = "13366248499";
 
         function toggleChat() {
-            const popup = document.getElementById('chatPopup');
+            const popup = document.getElementById('widget-chat-input');
             const badge = document.querySelector('.chat-badge');
             const isVisible = popup.style.display === 'flex';
             popup.style.display = isVisible ? 'none' : 'flex';
@@ -437,7 +467,7 @@
                 })
                 .catch(() => {
                     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`, '_blank');
-                    input.value = "";
+                    input.value = "g";
                 });
         }
 
