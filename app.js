@@ -1,7 +1,7 @@
 // API Configuration and Utilities
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:3000/api'
-    : 'https://panamerican-tkd-backend.onrender.com/api';
+    : 'url';
 
 const api = {
     // Auth
