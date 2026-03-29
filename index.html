@@ -343,9 +343,37 @@
     <div class="belt-divider-redblack"></div>
 
     <footer>
-        <button class="login-btn" id="loginBtn" aria-label="Login to Admin" onclick="document.getElementById('loginModal').style.display='flex'">
-            <span><i class="fas fa-shield-alt"></i>Members</span>
-        </button>
+        <!-- Login Button -->
+        <button id="loginBtn">Login</button>  <!-- ⬅️ Must be loginBtn, not loginButton -->
+        <!-- Login Modal -->
+        <div id="loginModal">  <!-- ⬅️ Must be loginModal -->
+            <form id="loginForm">  <!-- ⬅️ Must be loginForm -->
+                <!-- Email Input -->
+                <input id="login-email" type="email" placeholder="Enter your email">
+                <!-- Password Input -->
+                <input id="login-password" type="password" placeholder="Enter your password">
+                <!-- Confirm Password (for signup) -->
+                <div id="confirmPasswordGroup" style="display: none;">
+                    <input id="login-password-confirm" type="password" placeholder="Confirm password">
+                </div>
+                <!-- Toggle Mode Link -->
+                <a id="toggleMode" href="#">Create Account</a>
+                <span id="toggleText">Don't have an account?</span>
+                <!-- Submit Button -->
+                <button type="submit">
+                    <span id="submitBtnText">Sign In</span>
+                </button>
+                <!-- Modal Title -->
+                <h2 id="modalTitle">Sign In</h2>
+                <!-- Error/Success Messages -->
+                <div id="loginError"></div>
+                <div id="loginSuccess"></div>
+                <!-- Close Button -->
+                <button id="closeModal">✕</button>
+                <!-- Remember Me Checkbox -->
+                <input id="rememberMe" type="checkbox">
+            </form>
+        </div>
         
         <div class="container" style="margin-top: 20px;">
             <p>© 2026 Panamerican Taekwondo Academy. All rights reserved.</p>
@@ -355,33 +383,7 @@
 
     <div class="belt-divider-black"></div>
 
-    <div class="login-modal" id="loginModal" style="display: none;">
-        <div class="modal-content">
-            <h3 id="modalTitle" style="text-align: center; margin-bottom: 20px; color: #fff;">Sign In</h3>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="login-email" style="color: #fff;"><i class="fas fa-envelope"></i> Email</label>
-                    <input type="email" id="login-email" name="email" placeholder="your@email.com" required style="width: 100%; padding: 10px; margin-top: 5px;">
-                </div>
-                <div class="form-group" style="margin-top: 15px;">
-                    <label for="login-password" style="color: #fff;"><i class="fas fa-lock"></i> Password</label>
-                    <input type="password" id="login-password" name="password" placeholder="Enter your password" required minlength="6" style="width: 100%; padding: 10px; margin-top: 5px;">
-                </div>
-                <div style="margin: 15px 0;">
-                    <label style="display: flex; align-items: center; color: #fff; cursor: pointer;">
-                        <input type="checkbox" id="rememberMe" style="margin-right: 8px; cursor: pointer;">
-                        <span>Remember me</span>
-                    </label>
-                </div>
-                <button type="button" class="btn-submit" id="submitBtn" style="width: 100%; padding: 10px; background: #d4af37; border: none; font-weight: bold; cursor: pointer;">
-                    <i class="fas fa-sign-in-alt"></i> Sign In
-                </button>
-            </form>
-            <button class="modal-close" id="closeModal" onclick="document.getElementById('loginModal').style.display='none'" aria-label="Close">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    </div>
+    
 
     <div class="chat-widget" id="chatWidget">
         <button class="chat-widget-button" id="chatButton" onclick="toggleChat()">
