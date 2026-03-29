@@ -6,7 +6,7 @@
     --accent: #cc1f2b;
     --accent-light: #ff2d3d;
     --muted: #6b7280;
-    --max-width: 1200px;
+    --max-width: flex;
     --gap: 1.5rem;
     --radius: 12px;
     --gradient-bg: linear-gradient(to bottom, #383636, #000000);
@@ -26,7 +26,7 @@
         .schedule-table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 600px;
+            min-width: flex;
             background: rgba(255, 255, 255, 0.336);
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
