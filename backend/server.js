@@ -18,7 +18,7 @@ const ADMIN_PHONE = "13366248499";
 app.post('/api/messenger/send-whatsapp', async (req, res) => {
     const { message } = req.body;
     try {
-        const url = `https://api.callmebot.com/whatsapp.php?phone=${ADMIN_PHONE}&apikey=${API_KEY}&text=${encodeURIComponent(message)}`;
+        const url = `https://wa.me/message/XZ5FWOI5CSXAO1`;
         await axios.get(url);
         res.status(200).json({ success: true });
     } catch (e) {
