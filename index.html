@@ -416,6 +416,36 @@
 
         </div>
     </div>
+    <script>
+    document.getElementById("loginForm").addEventListener("submit", async function (e) {
+        e.preventDefault(); // Stops the default form submission behavior
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        try {
+            const response = await fetch("http://localhost:5000/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                document.getElementById("loginSuccess").textContent = "Login successful!";
+                document.getElementById("loginSuccess").style.display = "block";
+                window.location.href = "/dashboard"; // Redirect to a protected page
+            } else {
+                document.getElementById("loginError").textContent = data.message || "Login failed!";
+                document.getElementById("loginError").style.display = "block";
+            }
+        } catch (error) {
+            document.getElementById("loginError").textContent = "An unexpected error occurred.";
+            document.getElementById("loginError").style.display = "block";
+        }
+    });
+    </script>
     
     <script src="config.js"></script>
     <script src="app.js"></script>
