@@ -5,7 +5,7 @@
  */
 
 // Backend API URL - configured for Render.com deployment
-const PRODUCTION_API_URL = 'https://pta-backend-6ncd.onrender.com'; 'https://github.com/MartialArtsCode/panamerican-tkd-academy/backend/config/config.js';
+const PRODUCTION_API_URL = 'https://pta-backend-6ncd.onrender.com'; 'https://github.com/MartialArtsCode/panamerican-tkd-academy/backend/config/db.js';
 
 const isLocalhost = window.location.hostname === 'localhost' || 
                     window.location.hostname === '127.0.0.1' ||
