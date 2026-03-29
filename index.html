@@ -341,17 +341,7 @@
     </main>
     
     <div class="belt-divider-redblack"></div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const hangulTrigger = document.getElementById("hangulTrigger");
-            if (hangulTrigger) {
-                hangulTrigger.addEventListener("click", function () {
-                    const loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
-                    loginModal.show();
-                });
-            }
-        });
-    </script>
+    
     <footer>
         <div id="loginModal" class="modal fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -389,7 +379,6 @@
     </footer>
 
     <div class="belt-divider-black">
-       <span id="hangul-trigger">커건도</span>
         <script>
             hangulTrigger.addEventListener("touchstart", function ();
             const loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
