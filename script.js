@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('🥋 Panamerican Taekwondo Academy Loaded');
 
     sessionId = getSessionId();
-
+    initMongoDB();
     initSocketIO();
     initChatWidget();
     initLoginModal();
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ====================== */
 function initSocketIO() {
     console.log('🚀 Initializing Socket.IO...');
-    console.log('🌐 API_BASE_URL:', API_BASE_URL);
+    console.log('🌐 API_BASE_URL:', "https://pta-backend-6ncd.onrender.com/auth/login");
     console.log('🆔 Session ID:', sessionId);
     
     if (typeof io === 'undefined') {
