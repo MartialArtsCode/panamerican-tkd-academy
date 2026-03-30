@@ -204,7 +204,7 @@ function initSocketIO() {
 
             // Authentication (mock)
             loginBtn.addEventListener('click', () => openModal());
-            loginCancel.addEventListener('click', () => closeModal());
+            closeModal.addEventListener('click', () => closeModal());
             loginModal.addEventListener('click', (e) => {
                 if (e.target === loginModal) closeModal();
             });
