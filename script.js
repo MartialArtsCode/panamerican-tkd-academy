@@ -368,7 +368,7 @@ function initSocketIO() {
                     if (scheduleSection) scheduleSection.scrollIntoView({ behavior: 'smooth' });
                 });
             }
-        })();
+        });
 
 /* ======================
    CHAT WIDGET (Socket.IO-based)
