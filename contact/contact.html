@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Panamerican Taekwondo Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --blue: #23409a;
+      --blue-deep: #16275f;
+      --red: #f31c24;
+      --white: #ffffff;
+      --ink: #0e0e14;
+      --card-bg: #13161f;
+      --border: rgba(255, 255, 255, 0.07);
+      --gold: #c9a84c;
+      --gold-lt: #f0cc6a;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--ink);
+      color: var(--white);
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HOME BUTTON ──────────────────────────── */
+    .home-btn {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 9999;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--red);
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 0 0 0 3px rgba(243, 28, 36, 0.3), 0 4px 18px rgba(0, 0, 0, 0.6);
+      transition: background .2s, transform .15s;
+    }
+
+    .home-btn:hover {
+      background: #c0001a;
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      background:
+        linear-gradient(180deg, rgba(14, 14, 20, 0) 0%, var(--ink) 100%),
+        linear-gradient(135deg, rgba(22, 39, 95, 0.92) 0%, rgba(243, 28, 36, 0.55) 100%);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('../icon.png') center/260px no-repeat;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(38px, 7vw, 80px);
+      letter-spacing: 4px;
+      line-height: 1;
+      color: var(--white);
+    }
+
+    .hero h1 span {
+      color: var(--red);
+    }
+
+    .hero-sub {
+      margin-top: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 1px;
+      max-width: 520px;
+    }
+
+    .hero-rule {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+      border-radius: 2px;
+      margin: 20px auto 0;
+    }
+
+    /* ── CONTENT WRAPPER ──────────────────────── */
+    .content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+
+    /* ── CONTACT METHODS GRID ─────────────────── */
+    .methods-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 72px;
+    }
+
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: transform 0.28s cubic-bezier(.34, 1.56, .64, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--red);
+      box-shadow: 0 16px 40px rgba(243, 28, 36, 0.25), 0 0 0 1px rgba(243, 28, 36, 0.15);
+    }
+
+    .contact-card-icon {
+      font-size: 48px;
+      margin-bottom: 18px;
+      line-height: 1;
+      color: var(--red);
+      transition: transform 0.3s cubic-bezier(.34, 1.56, .64, 1);
+    }
+
+    .contact-card:hover .contact-card-icon {
+      transform: scale(1.15) rotate(-5deg);
+    }
+
+    .contact-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    .contact-card p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .contact-card-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 20px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity .2s, transform .15s;
+    }
+
+    .contact-card-btn:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+    }
+
+    /* ── INFO CARDS ───────────────────────────── */
+    .info-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .info-card {
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: 14px;
+      padding: 28px;
+      backdrop-filter: blur(8px);
+    }
+
+    .info-card h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .info-card p {
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    /* ── MAP SECTION ──────────────────────────── */
+    .map-section {
+      margin-bottom: 48px;
+    }
+
+    .map-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .map-container {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 420px;
+      border: none;
+      display: block;
+    }
+
+    /* ── HOURS TABLE ──────────────────────────── */
+    .hours-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+
+    .hours-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .hours-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .hours-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hours-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .hours-table td {
+      padding: 14px 0;
+      font-size: 13.5px;
+    }
+
+    .hours-table td:first-child {
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.7);
+      width: 140px;
+    }
+
+    .hours-table td:last-child {
+      color: var(--gold);
+      font-weight: 800;
+      text-align: right;
+    }
+
+    /* ── CTA BANNER ───────────────────────────── */
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(243, 28, 36, 0.15) 0%, rgba(201, 168, 76, 0.08) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 32px;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .cta-banner h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+      color: var(--white);
+    }
+
+    .cta-banner p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 24px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-banner-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 8px 24px rgba(243, 28, 36, 0.3);
+    }
+
+    .cta-banner-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(243, 28, 36, 0.4);
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 28px 20px 44px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 640px) {
+      .methods-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-banner {
+        padding: 32px 20px;
+      }
+
+      .cta-banner h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Home Button -->
+  <a href="../panamerican-taekwondo-academy/pta.html" class="home-btn">
+    <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z" />
+    </svg>
+    Home
+  </a>
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-eyebrow">Panamerican Taekwondo Academy · Winston-Salem, NC</p>
+    <h1>Get in <span>Touch</span></h1>
+    <p class="hero-sub">Have questions? Ready to start your journey? We're here to help.</p>
+    <div class="hero-rule"></div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- Contact Methods -->
+    <div class="methods-grid">
+      <!-- Phone Call -->
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <i class="fas fa-phone"></i>
+        </div>
+        <h3>Call Us</h3>
+        <p>Speak directly with our team during business hours</p>
+        <a href="tel:+13366248499" class="contact-card-btn">
+          <i class="fas fa-phone-alt"></i> Call
+        </a>
+      </div>
+
+      <!-- Text Message -->
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <i class="fas fa-sms"></i>
+        </div>
+        <h3>Text Us</h3>
+        <p>Send us a quick message and we'll reply shortly</p>
+        <a href="sms:+13366248499" class="contact-card-btn">
+          <i class="fas fa-message"></i> Text
+        </a>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+        <h3>WhatsApp</h3>
+        <p>Chat with us on WhatsApp for instant support</p>
+        <a href="https://wa.me/message/XZ5FWOI5CSXAO1" target="_blank" rel="noopener" class="contact-card-btn">
+          <i class="fab fa-whatsapp"></i> Message
+        </a>
+      </div>
+
+      <!-- Email -->
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <h3>Email</h3>
+        <p>Send us an email and we'll get back within 24hrs</p>
+        <a href="mailto:panamericantkd22@gmail.com" class="contact-card-btn">
+          <i class="fas fa-envelope-open"></i> Email
+        </a>
+      </div>
+
+      <!-- Visit Us -->
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <h3>Visit Our Dojang</h3>
+        <p>Stop by to tour our facility and meet the team</p>
+        <a href="https://maps.google.com/?q=3712+Reynolda+Rd+Winston-Salem+NC" target="_blank" rel="noopener"
+          class="contact-card-btn">
+          <i class="fas fa-directions"></i> Directions
+        </a>
+      </div>
+
+      <!-- Social Media -->
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <i class="fas fa-share-alt"></i>
+        </div>
+        <h3>Follow Us</h3>
+        <p>Stay updated on news, events, and promotions</p>
+        <a href="https://www.instagram.com/panamericantkd" target="_blank" rel="noopener" class="contact-card-btn">
+          <i class="fab fa-instagram"></i> Instagram
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Quick Info Cards -->
+    <div class="info-row">
+      <div class="info-card">
+        <h4>📍 Address</h4>
+        <p>3712 Reynolda Rd<br>Winston-Salem, NC 27106<br>United States</p>
+      </div>
+      <div class="info-card">
+        <h4>📞 Phone</h4>
+        <p>Main Line:<br><strong style="color: var(--gold-lt);">(336) 624-8499</strong><br><br>Text/WhatsApp: Same
+          number</p>
+      </div>
+      <div class="info-card">
+        <h4>✉️ Email</h4>
+        <p>General Inquiries:<br><strong style="color: var(--gold-lt);">panamericantkd22@gmail.com</strong></p>
+      </div>
+    </div>
+
+    <!-- Class Hours -->
+    <div class="hours-section">
+      <h2 class="hours-title">Class Schedule</h2>
+      <table class="hours-table">
+        <tr>
+          <td>Monday</td>
+          <td>4:00 PM – 8:00 PM</td>
+        </tr>
+        <tr>
+          <td>Tuesday</td>
+          <td>5:00 PM – 7:00 PM</td>
+        </tr>
+        <tr>
+          <td>Wednesday</td>
+          <td>4:00 PM – 8:00 PM</td>
+        </tr>
+        <tr>
+          <td>Thursday</td>
+          <td>5:00 PM – 7:00 PM</td>
+        </tr>
+        <tr>
+          <td>Friday</td>
+          <td>4:00 PM – 8:00 PM</td>
+        </tr>
+        <tr>
+          <td>Saturday</td>
+          <td>9:00 AM – 12:00 PM</td>
+        </tr>
+        <tr>
+          <td>Sunday</td>
+          <td>Closed</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Google Map -->
+    <div class="map-section">
+      <h2 class="map-title">Find Us On The Map</h2>
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3236.123!2d-80.232!3d36.089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x885429e5c5c5c5c5%3A0x!2zMzcuMDkwOCwgLTgwLjIzMjA!5e0!3m2!1sen!2sus!4v1234567890"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner">
+      <h2>Ready To Join?</h2>
+      <p>Don't wait to start your Taekwondo journey. Contact us today for your free consultation, or submit your
+        enrollment request right now.</p>
+      <a href="../join-now/join_now.html" class="cta-banner-btn">
+        <i class="fas fa-arrow-right"></i> Enroll Now
+      </a>
+    </div>
+
+    <footer>
+      &copy; 2026 Panamerican Taekwondo Academy &bull; 3712 Reynolda Rd, Winston-Salem, NC
+    </footer>
+
+</body>
+
+</html>
