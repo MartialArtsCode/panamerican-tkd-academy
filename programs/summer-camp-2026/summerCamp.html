@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summer Camp 2026 | Panamerican Taekwondo Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-50 font-sans text-slate-900 scroll-smooth">
+<a href="../panamerican-taekwondo-academy/pta.html"
+   style="position:fixed;top:14px;left:14px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#c0001a;border:2px solid #ff2233;border-radius:8px;color:#fff;font-family:sans-serif;font-size:15px;font-weight:800;letter-spacing:2px;text-decoration:none;text-transform:uppercase;box-shadow:0 0 0 3px rgba(192,0,26,0.35),0 4px 18px rgba(0,0,0,0.6);transition:background .2s,box-shadow .2s,transform .15s;">
+  <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z"/></svg>
+  Home
+</a>
+
+    <div id="top"></div>
+
+    <!-- ── Header ───────────────────────────────────────────────── -->
+    <header class="hero-bg h-80 flex items-center justify-center text-center text-white px-4">
+        <div>
+            <h1 class="text-5xl font-black uppercase tracking-tighter italic">Summer Camp 2026</h1>
+            <p class="text-2xl mt-2 text-red-500 font-bold tracking-widest uppercase">Panamerican Taekwondo Academy</p>
+        </div>
+    </header>
+
+    <!-- ── Main grid ─────────────────────────────────────────────── -->
+    <main class="max-w-5xl mx-auto p-6 -mt-16">
+        <div class="grid lg:grid-cols-5 gap-8">
+
+            <!-- ── Info panel ──────────────────────────────────────── -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white p-8 rounded-2xl shadow-xl border-t-8 border-red-600">
+                    <h2 class="text-2xl font-bold mb-4">Summer Camp Program</h2>
+                    <p class="text-slate-600 mb-6">Experience elite training, character building, and summer fun at our Winston-Salem academy.</p>
+
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">📍</span>
+                            <span><strong>Address:</strong> 3712 Reynolda Rd</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">🗓️</span>
+                            <span><strong>Dates:</strong> July 6 – July 30</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">⏰</span>
+                            <span><strong>Time:</strong> 8:00 AM – 2:00 PM</span>
+                        </div>
+                    </div>
+
+                    <!-- Pricing breakdown (populated by pricing.js) -->
+                    <div class="mt-8 bg-slate-900 text-white p-5 rounded-xl space-y-3">
+                        <div>
+                            <p class="text-xs uppercase tracking-widest text-red-400 font-bold">
+                                <span id="ebLabel">Early Bird</span> <span id="ebStatus"></span>
+                            </p>
+                            <p class="text-3xl font-black mt-1">
+                                $<span id="pricePerWeek">99</span>
+                                <span class="text-sm font-normal text-slate-400">/ week</span>
+                            </p>
+                            <p id="fullPkgLine" class="text-xs mt-1 text-yellow-300 font-bold">
+                                Full Package: $384 <span class="line-through text-slate-500 font-normal">$480</span> — save $96!
+                            </p>
+                            <p id="regularNote" class="text-xs mt-1 italic text-slate-300" style="display:none">
+                                *Register by May 20 for early bird rates
+                            </p>
+                        </div>
+                        <div class="border-t border-slate-700 pt-3">
+                            <p class="text-xs uppercase tracking-widest text-slate-400 font-bold">Your Total</p>
+                            <p id="totalDisplay" class="text-2xl font-black text-green-400 mt-1">$0</p>
+                            <p id="weeksSummary" class="text-xs text-slate-400 mt-1">No weeks selected</p>
+                            <p id="savingsLine" class="text-xs text-yellow-300 font-bold mt-1" style="display:none"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Form panel ──────────────────────────────────────── -->
+            <div class="lg:col-span-3 bg-white p-8 rounded-2xl shadow-xl relative overflow-hidden">
+
+                <!-- Success state -->
+                <div id="successMessage" class="text-center py-20">
+                    <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">✓</div>
+                    <h2 class="text-3xl font-black text-slate-900">Registration Received!</h2>
+                    <p class="mt-4 text-slate-600 text-lg">Thank you for choosing Panamerican Academy. We will reach out via WhatsApp/Phone shortly to finalize details.</p>
+                    <button onclick="location.reload()" class="mt-8 font-bold text-red-600 hover:text-red-700 underline">Register another student</button>
+                </div>
+
+                <!-- Registration form -->
+                <form id="campForm" action="https://formspree.io/f/mwvaqzyd" method="POST" class="space-y-5">
+                    <div class="border-b pb-4 mb-6">
+                        <h2 class="text-2xl font-black uppercase">Student Registration</h2>
+                        <p class="text-sm text-slate-500">Complete the form below to secure your spot.</p>
+                    </div>
+
+                    <!-- Parent info -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Parent Name</label>
+                            <input type="text" name="parent_name" required
+                                   class="w-full p-3 bg-slate-100 border-none rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Phone / WhatsApp</label>
+                            <input type="tel" name="phone" required placeholder="(000) 000-0000"
+                                   class="w-full p-3 bg-slate-100 border-none rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Student info -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Student Name & Age</label>
+                        <input type="text" name="student_info" required placeholder="e.g. Mateo, Age 10"
+                               class="w-full p-3 bg-slate-100 border-none rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+                    </div>
+
+                    <!-- Week selection -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-3">
+                            Select Week(s)
+                            <span class="eb-badge" id="ebBadge">Early Bird Active ✓</span>
+                        </label>
+
+                        <div class="grid grid-cols-2 gap-2">
+
+                            <!-- Full Summer Package -->
+                            <div class="week-card col-span-2">
+                                <input type="checkbox" id="wkFull" name="weeks[]" value="Full Summer Package (All 4 Weeks)">
+                                <label for="wkFull">
+                                    <svg class="check-icon w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    <span>🏆 Full Summer Package
+                                        <span class="opacity-75 font-normal text-xs" id="fullPkgCardNote">(All 4 weeks – Best Value)</span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Week 1 -->
+                            <div class="week-card">
+                                <input type="checkbox" id="wk1" name="weeks[]" value="Week 1: July 6-10">
+                                <label for="wk1">
+                                    <svg class="check-icon w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    <span>Week 1 <span class="opacity-75 font-normal">Jul 6–10</span></span>
+                                </label>
+                            </div>
+
+                            <!-- Week 2 -->
+                            <div class="week-card">
+                                <input type="checkbox" id="wk2" name="weeks[]" value="Week 2: July 13-17">
+                                <label for="wk2">
+                                    <svg class="check-icon w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    <span>Week 2 <span class="opacity-75 font-normal">Jul 13–17</span></span>
+                                </label>
+                            </div>
+
+                            <!-- Week 3 -->
+                            <div class="week-card">
+                                <input type="checkbox" id="wk3" name="weeks[]" value="Week 3: July 20-24">
+                                <label for="wk3">
+                                    <svg class="check-icon w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    <span>Week 3 <span class="opacity-75 font-normal">Jul 20–24</span></span>
+                                </label>
+                            </div>
+
+                            <!-- Week 4 -->
+                            <div class="week-card">
+                                <input type="checkbox" id="wk4" name="weeks[]" value="Week 4: July 27-31">
+                                <label for="wk4">
+                                    <svg class="check-icon w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    <span>Week 4 <span class="opacity-75 font-normal">Jul 27–31</span></span>
+                                </label>
+                            </div>
+
+                            <!-- Daily Drop-in -->
+                            <div class="week-card col-span-2">
+                                <input type="checkbox" id="wkDropin" name="weeks[]" value="Daily Drop-in Inquiry">
+                                <label for="wkDropin">
+                                    <svg class="check-icon w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    <span>Daily Drop-in Inquiry
+                                        <span class="opacity-75 font-normal text-xs">(we'll contact you with rates)</span>
+                                    </span>
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <!-- Hidden fields sent to Formspree -->
+                        <input type="hidden" name="selected_weeks" id="selectedWeeksField">
+                        <input type="hidden" name="total_amount"   id="totalAmountField">
+                    </div>
+
+                    <!-- Pay Now -->
+                    <div class="pt-2">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="text-xs font-bold uppercase text-slate-500">Pay Now (choose one)</p>
+                            <p id="payTotal" class="text-sm font-black text-red-600"></p>
+                        </div>
+
+                        <div class="grid sm:grid-cols-3 gap-3">
+                            <a id="venmoLink"   href="https://venmo.com/PanamericanTKD"         target="_blank" rel="noopener"
+                               class="pay-btn text-center bg-slate-900 hover:bg-slate-800 text-white font-black py-3 rounded-lg shadow transition">
+                                Pay with Venmo
+                            </a>
+                            <a id="cashappLink" href="https://cash.app/$PanamericanTKD"          target="_blank" rel="noopener"
+                               class="pay-btn text-center bg-slate-900 hover:bg-slate-800 text-white font-black py-3 rounded-lg shadow transition">
+                                Pay with Cash App
+                            </a>
+                            <a id="paypalLink"  href="https://www.paypal.me/PanamericanTKD"     target="_blank" rel="noopener"
+                               class="pay-btn text-center bg-slate-900 hover:bg-slate-800 text-white font-black py-3 rounded-lg shadow transition">
+                                Pay with PayPal
+                            </a>
+                        </div>
+
+                        <input type="hidden" name="payment_method" id="payment_method" value="">
+                        <p id="payHint" class="text-[11px] mt-2 text-slate-500">
+                            Select your week(s), click a payment option, complete payment in the new tab, then come back and submit.
+                        </p>
+                    </div>
+
+                    <button type="submit" id="submitBtn"
+                            class="w-full bg-red-600 hover:bg-red-700 text-white font-black py-4 rounded-lg shadow-lg shadow-red-200 transition duration-300 transform active:scale-[0.99]">
+                        Submit Registration
+                    </button>
+
+                    <p class="text-[10px] text-center text-slate-400 uppercase leading-tight">
+                        By submitting, you agree to be contacted by Panamerican Taekwondo Academy regarding summer programs.
+                    </p>
+                </form>
+            </div>
+
+            <!-- WhatsApp button -->
+            <a href="https://wa.me/message/XZ5FWOI5CSXAO1" target="_blank" style="text-decoration:none;">
+                <button style="background-color:#25D366;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;font-size:16px;">
+                    Contact us on WhatsApp
+                </button>
+            </a>
+
+        </div>
+    </main>
+
+    <footer class="text-center py-12 text-slate-400 text-xs font-medium uppercase tracking-widest">
+        &copy; 2026 Panamerican Taekwondo Academy &bull; Winston-Salem, NC
+    </footer>
+
+    <!-- ES module entry point -->
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>
