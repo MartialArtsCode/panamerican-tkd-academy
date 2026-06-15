@@ -1,0 +1,78 @@
+/* ─────────────────────────────────────────────────────────────
+   styles.css  —  Custom styles for Join Now page
+   Tailwind handles utility classes; this file adds
+   component-specific styles.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero-bg {
+    background: linear-gradient(135deg, rgba(16,40,160,0.88) 0%, rgba(192,0,26,0.82) 100%),
+                url('../../full.png') center/cover no-repeat;
+}
+
+/* ── Success message (hidden until form submits) ─────────────── */
+#successMessage { display: none; }
+
+/* ── Program info cards (left panel) ────────────────────────── */
+.program-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.program-card:hover { border-color: #dc2626; background: #fff5f5; }
+
+.program-card.little-tigers .program-emoji { font-size: 22px; }
+.program-card.kids          .program-emoji { font-size: 22px; }
+.program-card.youth         .program-emoji { font-size: 22px; }
+.program-card.adults        .program-emoji { font-size: 22px; }
+.program-card.family        .program-emoji { font-size: 22px; }
+
+/* ── Program radio selector cards ───────────────────────────── */
+.program-select-card input[type="radio"] { display: none; }
+
+.program-select-card label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    background: #f8fafc;
+    user-select: none;
+    width: 100%;
+}
+
+.program-select-card label:hover {
+    border-color: #ef4444;
+    background: #fff5f5;
+    color: #1e293b;
+}
+
+.program-select-card input[type="radio"]:checked + label {
+    border-color: #dc2626;
+    background: #dc2626;
+    color: white;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+
+.program-select-card input[type="radio"]:checked + label .check-icon {
+    opacity: 1;
+}
+
+/* ── Checkmark icon ──────────────────────────────────────────── */
+.check-icon {
+    opacity: 0;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+}
