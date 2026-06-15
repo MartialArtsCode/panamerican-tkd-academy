@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutrition & Taekwondo Open Class | Panamerican Taekwondo Academy</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX');
+  </script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: #050608;
+      color: #fff;
+    }
+
+    /* 🔥 High-Energy Action Kick + Nutrition Glow Background */
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(0,0,0,0.35), rgba(0,0,0,0.85)),
+        url('https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg') center/cover no-repeat;
+      text-align: center;
+      padding: 160px 20px 140px;
+      background-size: cover;
+    }
+
+    .hero-overlay {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 3.4rem;
+      margin: 0;
+      color: #ffe66b;
+      text-shadow: 0 4px 18px rgba(0,0,0,0.9);
+    }
+
+    .subtitle {
+      color: #fff;
+      font-size: 2.1rem;
+      margin: 18px 0 10px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.8);
+    }
+
+    .price {
+      font-size: 2.6rem;
+      color: #ffe66b;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    .date-time {
+      font-size: 1.4rem;
+      margin: 10px 0 20px;
+    }
+
+    /* Countdown */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0 10px;
+      flex-wrap: wrap;
+    }
+
+    .countdown-box {
+      background: rgba(0,0,0,0.55);
+      border-radius: 10px;
+      padding: 10px 14px;
+      min-width: 70px;
+      box-shadow: 0 0 12px rgba(255,230,107,0.35);
+    }
+
+    .countdown-number {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #ffe66b;
+    }
+
+    .countdown-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .event-info {
+      background: #151515;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+    }
+
+    /* 🔥 Glowing Animated Buttons */
+    .payment-btn, .btn {
+      display: inline-block;
+      padding: 18px 40px;
+      font-size: 1.35rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      min-width: 240px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: 0.3s ease;
+      box-shadow: 0 0 18px rgba(255,255,255,0.25);
+    }
+
+    .payment-btn::before, .btn::before {
+      content: "";
+      position: absolute;
+      top: -150%;
+      left: -150%;
+      width: 400%;
+      height: 400%;
+      background: radial-gradient(circle, rgba(255,255,255,0.28), transparent 60%);
+      animation: glow 4s infinite linear;
+    }
+
+    @keyframes glow {
+      0% { transform: translate(0,0); }
+      100% { transform: translate(50%,50%); }
+    }
+
+    .venmo { background: #3D95CE; color: #fff; }
+    .cashapp { background: #00C244; color: #fff; }
+    .paypal { background: #0070BA; color: #fff; }
+    .btn { background: #ff2b2b; color: #fff; font-size: 1.4rem; }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      background: #000;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      h1 { font-size: 2.4rem; }
+      .subtitle { font-size: 1.6rem; }
+      .price { font-size: 2.1rem; }
+      .payment-btn { font-size: 1.15rem; padding: 14px 26px; min-width: 210px; }
+      .hero { padding: 120px 16px 110px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-overlay">
+      <h1>PANAMERICAN TAEKWONDO ACADEMY</h1>
+      <h2 class="subtitle">NUTRITION & TAEKWONDO SPECIAL OPEN CLASS</h2>
+      <p class="price">$25 Registration</p>
+      <p class="date-time">May 21, 2026 • 6:00 PM</p>
+
+      <!-- Countdown Timer -->
+      <div id="countdown" class="countdown">
+        <div class="countdown-box">
+          <div id="days" class="countdown-number">0</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-box">
+          <div id="hours" class="countdown-number">0</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-box">
+          <div id="minutes" class="countdown-number">0</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-box">
+          <div id="seconds" class="countdown-number">0</div>
+          <div class="countdown-label">Seconds</div>
+        </div>
+      </div>
+
+      <p id="countdown-status" style="margin-top:8px; font-size:0.95rem; color:#ffe66b;"></p>
+
+      <a href="#register" class="btn">SECURE YOUR SPOT TODAY</a>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <div class="event-info">
+      <h2>Open Class for All Ages & Levels</h2>
+      <p>
+        <strong>Date:</strong> Thursday, May 21, 2026<br>
+        <strong>Time:</strong> 6:00 PM<br>
+        <strong>Location:</strong> 3712 Reynolda Rd, Winston-Salem, NC 27106
+      </p>
+    </div>
+
+    <h2 style="text-align:center; margin:40px 0;">What You'll Learn</h2>
+
+    <ul style="font-size:1.2rem; line-height:2; max-width:700px; margin:0 auto;">
+      <li>How proper nutrition boosts power, speed, and endurance</li>
+      <li>Best pre and post-training meals</li>
+      <li>Taekwondo + nutrition strategies</li>
+      <li>Recovery methods to maximize performance</li>
+    </ul>
+
+    <div id="register">
+      <h2 style="text-align:center; margin:50px 0 30px;">Register Now - $25</h2>
+
+      <div class="payment-options" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
+
+        <!-- VENMO -->
+        <a onclick="openPayment('venmo')" class="payment-btn venmo">💸 Pay with Venmo</a>
+
+        <!-- CASH APP -->
+        <a onclick="openPayment('cashapp')" class="payment-btn cashapp">💵 Pay with Cash App</a>
+
+        <!-- PAYPAL -->
+        <a onclick="openPayment('paypal')" class="payment-btn paypal">🅿️ Pay with PayPal</a>
+
+      </div>
+
+      <p style="text-align:center; font-size:1.05rem; margin-top:20px;">
+        After paying, your SMS app will open automatically so you can confirm your spot.
+      </p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>
+      <strong>Panamerican Taekwondo Academy</strong><br>
+      3712 Reynolda Rd, Winston-Salem, NC 27106<br>
+      Call/Text: (336) 624-8499
+    </p>
+    <p style="margin-top:20px;">Limited Spots • Payment reserves your place</p>
+  </footer>
+
+  <!-- 🔥 Payment Logic: Deep Links + Fallback + Auto-SMS + Countdown -->
+  <script>
+    // Countdown Timer to May 21, 2026 18:00 EDT
+    (function() {
+      const eventDate = new Date('May 21, 2026 18:00:00 GMT-0400'); // EDT
+      const daysEl = document.getElementById('days');
+      const hoursEl = document.getElementById('hours');
+      const minutesEl = document.getElementById('minutes');
+      const secondsEl = document.getElementById('seconds');
+      const statusEl = document.getElementById('countdown-status');
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = eventDate - now;
+
+        if (diff <= 0) {
+          daysEl.textContent = 0;
+          hoursEl.textContent = 0;
+          minutesEl.textContent = 0;
+          secondsEl.textContent = 0;
+          statusEl.textContent = "The event has started.";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        daysEl.textContent = days;
+        hoursEl.textContent = hours;
+        minutesEl.textContent = minutes;
+        secondsEl.textContent = seconds;
+
+        if (days === 0 && hours < 6) {
+          statusEl.textContent = "Happening soon — secure your spot now.";
+        } else if (days <= 3) {
+          statusEl.textContent = "Limited time left — spots are filling fast.";
+        } else {
+          statusEl.textContent = "";
+        }
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+
+    function openPayment(method) {
+      const links = {
+        venmo: {
+          app: "venmo://paycharge?txn=pay&recipients=PanamericanTKD&amount=25&note=Nutrition%20Class",
+          web: "https://venmo.com/u/PanamericanTKD"
+        },
+        cashapp: {
+          app: "cashapp://pay?recipient=$PanamericanTKD&amount=25&note=Nutrition%20Class",
+          web: "https://cash.app/$PanamericanTKD/25"
+        },
+        paypal: {
+          app: "paypal://send?recipient=PadillaFonseca&amount=25",
+          web: "https://paypal.me/PadillaFonseca/25"
+        }
+      };
+
+      const selected = links[method];
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'payment_click', { method });
+      }
+
+      // Try opening the app
+      window.location = selected.app;
+
+      // Fallback after 1 second
+      setTimeout(() => {
+        if (typeof gtag === 'function') {
+          gtag('event', 'payment_fallback', { method });
+        }
+        window.location = selected.web;
+
+        // Auto-open SMS app after fallback
+        setTimeout(() => {
+          window.location = "sms:3366248499?&body=I%20just%20paid%20for%20the%20Nutrition%20Class%20-%20My%20Name%20is%20____";
+        }, 1200);
+
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
