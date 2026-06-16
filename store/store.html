@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academy Store | Panamerican Taekwondo Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Home Button -->
+    <a href="../index.html" class="home-btn">
+        <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z" />
+        </svg>
+        Home
+    </a>
+
+    <!-- Cart Toggle -->
+    <button class="cart-btn" onclick="openCart()">
+        <i class="fas fa-shopping-bag"></i>
+        Cart
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- Cart Drawer -->
+    <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="cart-close" onclick="closeCart()" aria-label="Close cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty">
+                <i class="fas fa-shopping-bag"></i>
+                Your cart is empty
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span class="cart-total-label">Total</span>
+                <span class="cart-total-amount" id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">
+                <i class="fas fa-envelope"></i> Send Order by Email
+            </button>
+            <p class="cart-note">Orders are confirmed via email. We'll get back to you within 24 hours.</p>
+        </div>
+    </aside>
+
+    <!-- Hero -->
+    <section class="hero">
+        <p class="hero-eyebrow">Panamerican Taekwondo Academy</p>
+        <h1>Academy <span>Store</span></h1>
+        <p class="hero-sub">Official PTA gear — representing the academy on and off the mat.</p>
+        <div class="hero-rule"></div>
+    </section>
+
+    <!-- Products -->
+    <main class="content">
+        <p class="section-label">Official Merchandise</p>
+        <h2 class="section-title">Shop All Items</h2>
+
+        <div class="products-grid">
+
+            <!-- Official Dobok -->
+            <div class="product-card">
+                <div class="product-img">
+                    <i class="fas fa-tshirt"></i>
+                    <span class="product-badge badge-popular">Popular</span>
+                </div>
+                <div class="product-info">
+                    <h3>Official Dobok</h3>
+                    <p class="product-desc">Regulation Taekwondo uniform with embroidered PTA logo. Lightweight,
+                        breathable fabric approved for competition and daily training.</p>
+                    <p class="product-price">$65.00</p>
+                    <div class="size-row">
+                        <span class="size-label">Size</span>
+                        <div class="size-options" id="sizes-dobok">
+                            <button class="size-btn" onclick="selectSize(this,'dobok')">XS</button>
+                            <button class="size-btn" onclick="selectSize(this,'dobok')">S</button>
+                            <button class="size-btn" onclick="selectSize(this,'dobok')">M</button>
+                            <button class="size-btn" onclick="selectSize(this,'dobok')">L</button>
+                            <button class="size-btn" onclick="selectSize(this,'dobok')">XL</button>
+                            <button class="size-btn" onclick="selectSize(this,'dobok')">XXL</button>
+                        </div>
+                    </div>
+                    <button class="add-btn"
+                        onclick="addToCart('dobok', document.querySelector('#sizes-dobok .selected').textContent)">
+                        <i class="fas fa-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Academy Hoodie -->
+            <div class="product-card">
+                <div class="product-img">
+                    <i class="fas fa-vest"></i>
+                    <span class="product-badge badge-new">New</span>
+                </div>
+                <div class="product-info">
+                    <h3>Academy Hoodie</h3>
+                    <p class="product-desc">Premium pullover hoodie featuring the Panamerican Taekwondo Academy crest.
+                        Heavyweight fleece — perfect for cool training mornings.</p>
+                    <p class="product-price">$35.00</p>
+                    <div class="size-row">
+                        <span class="size-label">Size</span>
+                        <div class="size-options" id="sizes-hoodie">
+                            <button class="size-btn" onclick="selectSize(this,'hoodie')">S</button>
+                            <button class="size-btn" onclick="selectSize(this,'hoodie')">M</button>
+                            <button class="size-btn" onclick="selectSize(this,'hoodie')">L</button>
+                            <button class="size-btn" onclick="selectSize(this,'hoodie')">XL</button>
+                            <button class="size-btn" onclick="selectSize(this,'hoodie')">XXL</button>
+                        </div>
+                    </div>
+                    <button class="add-btn"
+                        onclick="addToCart('hoodie', document.querySelector('#sizes-hoodie .selected').textContent)">
+                        <i class="fas fa-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Academy T-Shirt -->
+            <div class="product-card">
+                <div class="product-img">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Academy T-Shirt</h3>
+                    <p class="product-desc">Soft cotton tee with the PTA logo on the front and academy motto on the
+                        back. Show your academy pride every day.</p>
+                    <p class="product-price">$25.00</p>
+                    <div class="size-row">
+                        <span class="size-label">Size</span>
+                        <div class="size-options" id="sizes-tshirt">
+                            <button class="size-btn" onclick="selectSize(this,'tshirt')">S</button>
+                            <button class="size-btn" onclick="selectSize(this,'tshirt')">M</button>
+                            <button class="size-btn" onclick="selectSize(this,'tshirt')">L</button>
+                            <button class="size-btn" onclick="selectSize(this,'tshirt')">XL</button>
+                            <button class="size-btn" onclick="selectSize(this,'tshirt')">XXL</button>
+                        </div>
+                    </div>
+                    <button class="add-btn"
+                        onclick="addToCart('tshirt', document.querySelector('#sizes-tshirt .selected').textContent)">
+                        <i class="fas fa-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Panamerican Taekwondo Academy &bull; 3712 Reynolda Rd, Winston-Salem, NC
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
