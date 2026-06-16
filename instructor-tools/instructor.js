@@ -79,9 +79,9 @@ document.getElementById('changePasswordForm').addEventListener('submit', async (
 
 // Sample data (In production, this would come from a database)
 let students = [
-    { id: 1, name: 'Emma Johnson', age: 8, belt: 'yellow', class: 'kids-beginner', attendance: 85 },
-    { id: 2, name: 'Liam Smith', age: 10, belt: 'green', class: 'kids-intermediate', attendance: 92 },
-    { id: 3, name: 'Olivia Brown', age: 12, belt: 'blue', class: 'kids-advanced', attendance: 88 },
+    { id: 1, name: 'Andrew A.', age: 8, belt: 'white', class: 'kids-beginner', attendance: 85 },
+    { id: 2, name: 'Denny R.', age: 10, belt: 'green', class: 'kids-intermediate', attendance: 92 },
+    { id: 3, name: 'Luca M.', age: 12, belt: 'blue', class: 'kids-advanced', attendance: 88 },
     { id: 4, name: 'Noah Davis', age: 9, belt: 'yellow', class: 'kids-beginner', attendance: 78 },
     { id: 5, name: 'Sophia Wilson', age: 25, belt: 'red', class: 'adult-intermediate', attendance: 95 },
     { id: 6, name: 'James Taylor', age: 32, belt: 'blue', class: 'adult-advanced', attendance: 82 }
