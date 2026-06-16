@@ -5,8 +5,8 @@ if (localStorage.getItem('auth_token')) {
 
 // Static instructor credentials (replace with backend auth when available)
 const INSTRUCTORS = [
-    { email: 'carlos@panamericantkd.com', password: 'PTA@instructor1' },
-    { email: 'admin@panamericantkd.com', password: 'PTA@admin2026' }
+    { email: 'cp105@panamericantkd.com', password: 'PTA@instructor1' },
+    { email: 'cp320@panamericantkd.com', password: 'pan22s7r4705' }
 ];
 
 const loginForm = document.getElementById('loginForm');
