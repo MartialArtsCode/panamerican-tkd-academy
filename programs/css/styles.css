@@ -1,0 +1,90 @@
+/* ─────────────────────────────────────────────────────────────
+   styles.css  —  Custom styles for Summer Camp 2026 page
+   Tailwind handles utility classes; this file covers only
+   component-specific styles that Tailwind cannot express.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero-bg {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
+    background-size: cover;
+    background-position: center;
+}
+
+/* ── Success message (hidden until submission) ────────────────── */
+#successMessage { display: none; }
+
+/* ── Week selector cards ─────────────────────────────────────── */
+.week-card input[type="checkbox"] { display: none; }
+
+.week-card label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    background: #f8fafc;
+    user-select: none;
+}
+
+.week-card label:hover {
+    border-color: #ef4444;
+    background: #fff5f5;
+    color: #1e293b;
+}
+
+.week-card input[type="checkbox"]:checked + label {
+    border-color: #dc2626;
+    background: #dc2626;
+    color: white;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+
+.week-card input[type="checkbox"]:checked + label .check-icon {
+    opacity: 1;
+}
+
+/* ── Checkmark icon inside week card ─────────────────────────── */
+.check-icon {
+    opacity: 0;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+}
+
+/* ── Total price pop animation ───────────────────────────────── */
+@keyframes pricePop {
+    0%   { transform: scale(1);    }
+    50%  { transform: scale(1.08); }
+    100% { transform: scale(1);    }
+}
+
+.price-pop { animation: pricePop 0.25s ease; }
+
+/* ── Payment button states ───────────────────────────────────── */
+.pay-btn { transition: all 0.2s ease; }
+
+.pay-btn.selected {
+    outline: 3px solid #22c55e;
+    outline-offset: 2px;
+}
+
+/* ── Early bird badge ────────────────────────────────────────── */
+.eb-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    border-radius: 99px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    margin-left: 4px;
+}
