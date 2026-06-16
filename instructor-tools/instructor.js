@@ -77,15 +77,14 @@ document.getElementById('changePasswordForm').addEventListener('submit', async (
     }
 });
 
-// Sample data (In production, this would come from a database)
-let students = [
-    { id: 1, name: 'Andrew A.', age: 8, belt: 'white', class: 'kids-beginner', attendance: 85 },
-    { id: 2, name: 'Denny R.', age: 10, belt: 'green', class: 'kids-intermediate', attendance: 92 },
-    { id: 3, name: 'Luca M.', age: 12, belt: 'blue', class: 'kids-advanced', attendance: 88 },
-    { id: 4, name: 'Noah Davis', age: 9, belt: 'yellow', class: 'kids-beginner', attendance: 78 },
-    { id: 5, name: 'Sophia Wilson', age: 25, belt: 'red', class: 'adult-intermediate', attendance: 95 },
-    { id: 6, name: 'James Taylor', age: 32, belt: 'blue', class: 'adult-advanced', attendance: 82 }
-];
+// Initialize students from storage
+let students = studentStorage.getAllStudents();
+
+// Helper function to save students to storage
+function saveStudentsToStorage() {
+    students = studentStorage.getAllStudents();
+    studentStorage.saveStudents();
+}
 
 // Update dashboard stats
 function updateDashboard() {
@@ -93,8 +92,10 @@ function updateDashboard() {
     document.getElementById('classesThisWeek').textContent = '12';
     document.getElementById('upcomingTests').textContent = '3';
 
-    const avgAttendance = students.reduce((sum, s) => sum + s.attendance, 0) / students.length;
-    document.getElementById('attendanceRate').textContent = Math.round(avgAttendance) + '%';
+    const avgAttendance = students.length > 0 
+        ? Math.round(students.reduce((sum, s) => sum + s.attendance, 0) / students.length)
+        : 0;
+    document.getElementById('attendanceRate').textContent = avgAttendance + '%';
 }
 
 // Tab navigation
@@ -162,7 +163,14 @@ function loadAttendance() {
 
 function saveAttendance() {
     const checkboxes = document.querySelectorAll('.attendance-checkbox:checked');
-    alert(`Attendance saved for ${checkboxes.length} students`);
+    
+    // You can enhance this to actually track attendance by date
+    // For now, it confirms the save
+    const date = document.getElementById('attendanceDate').value;
+    alert(`Attendance saved for ${checkboxes.length} students on ${date}`);
+    
+    // Clear attendance after saving
+    clearAttendance();
 }
 
 function clearAttendance() {
@@ -226,16 +234,22 @@ function showAddStudent() {
 document.getElementById('addStudentForm').addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const newStudent = {
-        id: students.length + 1,
+    // Use studentStorage to add the student
+    const newStudent = studentStorage.addStudent({
         name: document.getElementById('studentName').value,
         age: parseInt(document.getElementById('studentAge').value),
         belt: document.getElementById('studentBelt').value,
         class: document.getElementById('studentClass').value,
         attendance: 0
-    };
+    });
 
-    students.push(newStudent);
+    // Update local students array
+    students = studentStorage.getAllStudents();
+    
+    // Clear form
+    document.getElementById('addStudentForm').reset();
+    
+    // Close modal and refresh UI
     closeModal('studentModal');
     loadStudents();
     updateDashboard();
@@ -275,7 +289,10 @@ function loadEligibleStudents() {
 }
 
 function approveForTest(studentId) {
-    alert(`Student approved for belt testing!`);
+    const student = studentStorage.getStudentById(studentId);
+    if (student) {
+        alert(`${student.name} approved for belt testing!`);
+    }
 }
 
 function showTestTab(tabName) {
