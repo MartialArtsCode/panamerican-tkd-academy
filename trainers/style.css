@@ -1,0 +1,350 @@
+/* ── Design Tokens ───────────────────────────────── */
+:root {
+    --blue: #23409a;
+    --blue-deep: #16275f;
+    --red: #f31c24;
+    --white: #ffffff;
+    --ink: #0e0e14;
+    --card-bg: #13161f;
+    --border: rgba(255, 255, 255, 0.07);
+    --gold: #c9a84c;
+    --gold-lt: #f0cc6a;
+}
+
+/* ── Reset ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ── Base ────────────────────────────────────────── */
+body {
+    background: var(--ink);
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ── Home Button ─────────────────────────────────── */
+.home-btn {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--red);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: 0 0 0 3px rgba(243, 28, 36, 0.3), 0 4px 18px rgba(0, 0, 0, 0.6);
+    transition: background .2s, transform .15s;
+}
+
+.home-btn:hover {
+    background: #c0001a;
+    transform: translateY(-1px);
+}
+
+/* ── Hero ────────────────────────────────────────── */
+.hero {
+    position: relative;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 60px;
+    background:
+        linear-gradient(180deg, rgba(14, 14, 20, 0) 0%, var(--ink) 100%),
+        linear-gradient(135deg, rgba(22, 39, 95, 0.92) 0%, rgba(243, 28, 36, 0.55) 100%);
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('../icon.png') center / 260px no-repeat;
+    opacity: 0.04;
+    pointer-events: none;
+}
+
+.hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+}
+
+.hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 7vw, 80px);
+    letter-spacing: 4px;
+    line-height: 1;
+    color: var(--white);
+}
+
+.hero h1 span {
+    color: var(--red);
+}
+
+.hero-sub {
+    margin-top: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 1px;
+    max-width: 500px;
+}
+
+.hero-rule {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    border-radius: 2px;
+    margin: 20px auto 0;
+}
+
+/* ── Content Wrapper ─────────────────────────────── */
+.content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+}
+
+/* ── Section Label ───────────────────────────────── */
+.section-label {
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 40px;
+}
+
+/* ── Trainers Grid ───────────────────────────────── */
+.trainers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+    margin-bottom: 72px;
+}
+
+/* ── Trainer Card ────────────────────────────────── */
+.trainer-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.28s cubic-bezier(.34, 1.56, .64, 1),
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.trainer-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(.34, 1.56, .64, 1),
+        box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.trainer-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--red);
+    box-shadow: 0 20px 48px rgba(243, 28, 36, 0.22), 0 0 0 1px rgba(243, 28, 36, 0.15);
+}
+
+/* ── Trainer Photo ───────────────────────────────── */
+.trainer-photo {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background:
+        linear-gradient(135deg, rgba(22, 39, 95, 0.7) 0%, rgba(243, 28, 36, 0.35) 100%),
+        var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.trainer-photo i {
+    font-size: 80px;
+    color: rgba(255, 255, 255, 0.08);
+}
+
+.trainer-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ── Belt Badge ──────────────────────────────────── */
+.belt-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.belt-badge.black {
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--gold);
+}
+
+/* ── Trainer Info ────────────────────────────────── */
+.trainer-info {
+    padding: 24px;
+}
+
+.trainer-role {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.trainer-info h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1.5px;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 4px;
+}
+
+.trainer-rank {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+}
+
+.trainer-bio {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.65;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+}
+
+/* ── Specialties Tags ────────────────────────────── */
+.trainer-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.tag {
+    padding: 4px 10px;
+    background: rgba(35, 64, 154, 0.25);
+    border: 1px solid rgba(35, 64, 154, 0.4);
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── CTA Banner ──────────────────────────────────── */
+.cta-banner {
+    text-align: center;
+    padding: 56px 24px;
+    background: linear-gradient(135deg, rgba(22, 39, 95, 0.5) 0%, rgba(243, 28, 36, 0.25) 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.cta-banner h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 46px);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.cta-banner p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 480px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+}
+
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background: var(--red);
+    color: var(--white);
+    border-radius: 8px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background .2s, transform .15s;
+}
+
+.cta-btn:hover {
+    background: #c0001a;
+    transform: translateY(-2px);
+}
+
+/* ── Footer ──────────────────────────────────────── */
+footer {
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.25);
+    border-top: 1px solid var(--border);
+    letter-spacing: 1px;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 640px) {
+    .trainers-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 70px 20px 48px;
+    }
+}
