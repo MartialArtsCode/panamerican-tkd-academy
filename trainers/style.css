@@ -199,9 +199,9 @@ body {
 }
 
 .trainer-photo img {
-    width: 50%;
-    height: 50%;
-    object-fit: center;      /* fills frame cleanly */
+    width: 90%;
+    height: 90%;
+    object-fit: cover;      /* fills frame cleanly */
     object-position: center;
     display: block;
     border-radius: 0;       /* avoid inner gaps/cropping artifacts */
