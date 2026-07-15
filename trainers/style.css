@@ -180,15 +180,15 @@ body {
 
 /* ── Trainer Photo ───────────────────────────────── */
 .trainer-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     width: 100%;
     aspect-ratio: 4 / 3;
     background:
         linear-gradient(135deg, rgba(22, 39, 95, 0.7) 0%, rgba(243, 28, 36, 0.35) 100%),
         var(--card-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
 }
 
@@ -202,6 +202,7 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+    margin: 0 auto;
 }
 
 /* ── Belt Badge ──────────────────────────────────── */
