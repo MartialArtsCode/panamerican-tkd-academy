@@ -198,11 +198,12 @@ body {
 }
 
 .trainer-photo img {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
     object-fit: cover;
     display: block;
     margin: 0 auto;
+    border-radius: 12px
 }
 
 /* ── Belt Badge ──────────────────────────────────── */
