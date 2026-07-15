@@ -192,20 +192,20 @@ body {
     overflow: hidden;
 }
 
+/* hide placeholder icon when image exists */
 .trainer-photo i {
     font-size: 80px;
     color: rgba(255, 255, 255, 0.08);
 }
 
 .trainer-photo img {
-    width: auto;
-    height: auto;
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* fills frame cleanly */
+    object-position: center;
     display: block;
-    margin: 0 auto;
-    border-radius: 12px
+    border-radius: 0;       /* avoid inner gaps/cropping artifacts */
 }
-
 /* ── Belt Badge ──────────────────────────────────── */
 .belt-badge {
     position: absolute;
