@@ -334,15 +334,15 @@ body {
   cursor: pointer;
   backdrop-filter: blur(4px);
 }
-
+/*------------------------------------------HERO------------------------------*/
 .hero {
   min-height: calc(100vh - 80px);
   width: 100%;
   background:
-    linear-gradient(120deg, rgba(22, 39, 95, 0.72) 0%, rgba(35, 64, 154, 0.58) 42%, rgba(243, 28, 36, 0.28) 80%),
+    linear-gradient(120deg, rgba(22, 39, 95, 0.72) 0%, rgba(35, 64, 154, 0.58) 42%, rgba(243, 28, 36, 0.28) 100%),
     url('./full.png') center center / cover no-repeat;
-  display: block;
-  align-items: top-right;
+  display: center;
+  align-items: right;
   justify-content: center;
   text-align: center;
   color: var(--pta-white);
