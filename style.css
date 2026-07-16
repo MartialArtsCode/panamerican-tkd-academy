@@ -283,14 +283,14 @@ body {
 .nav-menu a {
   color: var(--pta-white);
   text-decoration: none;
-  font-weight: 350;
+  font-weight: 400;
   letter-spacing: 0.04em;
   transition: color 0.3s ease, opacity 0.3s ease;
 }
 
 .nav-menu a:hover {
   color: var(--pta-white);
-  opacity: 0.82;
+  opacity: 1.00;
 }
 
 .nav-menu a[href$=".html"] {
