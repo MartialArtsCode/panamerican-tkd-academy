@@ -336,18 +336,18 @@ body {
 }
 /*------------------------------------------HERO------------------------------*/
 .hero {
-  min-height: calc(100vh - 80px);
-  width: 80%;
+  min-height: 100vh; /*Full screen*/
+  width: 100%;
   background:
     linear-gradient(120deg, rgba(22, 39, 95, 0.72) 0%, rgba(35, 64, 154, 0.58) 42%, rgba(243, 28, 36, 0.28) 100%),
     url('./full.png') center center / cover no-repeat;
-  display: center;
-  align-items: right;
-  justify-content: center;
+  display: flex;
+  align-items: center;  /*Vertical*/
+  justify-content: center;  /*Horizontal*/
   text-align: center;
   color: var(--pta-white);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
   overflow: hidden;
 }
 
