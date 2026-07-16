@@ -336,7 +336,7 @@ body {
 }
 
 .hero {
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   width: 100%;
   background:
     linear-gradient(120deg, rgba(22, 39, 95, 0.72) 0%, rgba(35, 64, 154, 0.58) 42%, rgba(243, 28, 36, 0.28) 100%),
@@ -643,7 +643,7 @@ footer {
   }
 
   .hero {
-    min-height: 100svh;
+    min-height: calc(100svh - 64px);
     background-position: center;
   }
 
