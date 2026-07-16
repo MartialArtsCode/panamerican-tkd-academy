@@ -341,8 +341,8 @@ body {
   min-height: 100vh;
   background: url('./full.png') center center / contain no-repeat;
   display: flex;
-  align-items: center;  /*Vertical*/
-  justify-content: center;  /*Horizontal*/
+  align-items: top;  /*Vertical*/
+  justify-content: right;  /*Horizontal*/
   text-align: center;
   color: var(--pta-white);
   border-bottom-left-radius: 2px;
