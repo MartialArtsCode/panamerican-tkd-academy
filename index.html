@@ -1,77 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Panamerican Taekwondo Academy | Winston-Salem, NC</title>
-	<link rel="stylesheet" href="style.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Traditional Taekwondo Federation North Carolina, USA</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-red: #c91818;
+            --primary-red-hover: #a31212;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #b59328;
+            --bg-dark: #0d0e12;
+            --bg-card: #16181e;
+            --bg-card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f0f2f5;
+            --text-muted: #9ba1b0;
+            --shadow-glow: 0 0 25px rgba(201, 24, 24, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-red);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(201, 24, 24, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-red-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-gold {
+            background-color: var(--accent-gold);
+            color: #0d0e12;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            margin-left: 12px;
+        }
+
+        .btn-gold:hover {
+            background-color: var(--accent-gold-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Header / Hero */
+        header {
+            background: linear-gradient(180deg, rgba(13,14,18,0.7) 0%, var(--bg-dark) 100%), 
+                        radial-gradient(circle at top center, rgba(201, 24, 24, 0.15) 0%, transparent 70%);
+            padding: 80px 24px 60px;
+            text-align: center;
+            border-bottom: 1px solid var(--bg-card-border);
+        }
+
+        header img {
+            max-width: 160px;
+            height: auto;
+            border-radius: 50%;
+            border: 3px solid var(--accent-gold);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            margin-bottom: 24px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            max-width: 750px;
+            margin: 0 auto 32px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--bg-card-border);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Principles Grid */
+        .principles-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .principles-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 32px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .commitments-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .commitments-list li {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 16px 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-red);
+            transition: transform 0.2s ease;
+        }
+
+        .commitments-list li:hover {
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .commitments-list li strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .commitments-list li i {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            padding: 32px 24px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .feature-card h3 {
+            color: var(--text-main);
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Academies Grid */
+        .academies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .academy-card {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 12px;
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .academy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-red), var(--accent-gold));
+        }
+
+        .academy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .academy-card h3 {
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .academy-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Join / Contact Box */
+        .join-box {
+            background: linear-gradient(135deg, rgba(22,24,30,1) 0%, rgba(30,15,20,1) 100%);
+            border: 1px solid var(--primary-red);
+            border-radius: 16px;
+            padding: 48px 32px;
+            text-align: center;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .join-box h2 {
+            font-size: 2.2rem;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .join-box p {
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            font-size: 1.1rem;
+        }
+
+        .contact-info {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--bg-card-border);
+            color: var(--text-muted);
+        }
+
+        .contact-info strong {
+            color: var(--accent-gold);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 24px;
+            text-align: center;
+            background: #08090b;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer p + p {
+            margin-top: 8px;
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8rem; }
+            .hero-buttons { flex-direction: column; }
+            .btn-gold { margin-left: 0; }
+        }
+    </style>
 </head>
-
 <body>
-	<header>
-		<!-- Navbar -->
-		<nav class="navbar">
-			<div class="logo">
-				<a href="join-now/join_now.html" class="join-square" title="Join Now">
-					<img src="icon.png" alt="Join Now">
-					<span>JOIN NOW!</span>
-				</a>
-				<span>Panamerican<br>Taekwondo<br>Academy</span>
-			</div>
-			<!-- Hamburger Button -->
-			<button class="hamburger" id="hamburger" aria-label="Toggle menu">
-				<span></span>
-				<span></span>
-				<span></span>
-			</button>
-			<!-- Navigation Menu -->
-			<ul class="nav-menu" id="navMenu">
-				<li><a href="schedule/schedule.html">Schedule</a></li>
-				<li><a href="events/events.html">Events</a></li>
-				<li><a href="trainers/trainers.html">Trainers</a></li>
-				<li><a href="store/store.html">Store</a></li>
-				<li><a href="contact/contact.html">Contact</a></li>
-			</ul>
-		</nav>
-	</header>
-	<!-- Hero Section -->
-	<section id="home" class="section active">
-		<div class="hero">
-			<div class="hero-content">
-				<h1>Master The Art</h1>
-				<p>Building Discipline, Respect & Excellence Since 2010</p>
-				<div class="hero-buttons">
-					<button class="btn-primary" onclick="window.location.href='schedule/schedule.html'">View
-						Schedule</button>
-					<button class="btn-secondary" onclick="window.location.href='contact/contact.html'">Contact
-						Us</button>
-				</div>
-			</div>
-		</div>
-		<!--div class="parallax-highlights">
-			<a class="parallax-card events-highlight" href="https://martialartscode.github.io/summerCamp26/">
-				<span class="parallax-label">Events</span>
-				<h2>Summer Camp 2026</h2>
-				<p>Open the registration page for camp dates, pricing, and payment options.</p>
-				<span class="parallax-link">View event page</span>
-			</a>
-			<a class="parallax-card store-highlight" href="store/store.html">
-				<span class="parallax-label">Store</span>
-				<h2>Official Apparel</h2>
-				<p>Browse academy hoodie concepts and team design details from the main store page.</p>
-				<span class="parallax-link">Open apparel page</span>
-			</a>
-		</div-->
-	</section>
-	<footer>
-		<p>&copy; 2026 Panamerican Taekwondo Academy • Winston-Salem, North Carolina</p>
-		<p style="margin-top:8px;font-size:12px;opacity:0.5;">
-			<!--a href="login/login.html" style="color:inherit;text-decoration:none;">Staff Login</a-->
-		</p>
-	</footer>
-	<script src="script.js"></script>
-</body>
 
+    <header>
+        <img alt="GTTF Logo" src="assets/Logo.jpeg">
+        <h1>Global Traditional Taekwondo Federation North Carolina, USA</h1>
+        <p>Connecting nations, athletes, and communities worldwide through the shared values of discipline, respect, and excellence.</p>
+        
+        <div class="hero-buttons">
+            <a href="#join" class="btn btn-primary">Join Global Traditional Taekwondo NC</a>
+            <!-- Link Affiliation to GTTF Button -->
+            <a href="https://martialartscode.github.io/GlobalTraditionalTaekwondoFederation/" class="btn btn-gold" target="_blank" rel="noopener">Affiliate with GTTF</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <section>
+            <div class="section-header">
+                <h2>Honor &amp; Tradition</h2>
+            </div>
+            
+            <p class="principles-intro">
+                "As part of its educational philosophy, the Global Traditional Taekwondo Federation (GTTF) encourages students to uphold a set of "Do" Principles known as 10 Taekwondo commitments (Do-hun). These commitments are recited by students regularly and serve as a moral and behavioral guide both inside and outside the training hall (dojang). They are:"
+            </p>
+            
+            <div class="principles-wrapper">
+                <ul class="commitments-list">
+                    <li> 1. <strong> I will be loyal to my country.</strong><i>Patriotic and resolute</i></li>
+                    <li> 2. <strong> I will honor my parents.</strong><i>Respectful and grateful</i></li>
+                    <li> 3. <strong> I will love my family and cooperate with them.</strong><i>Warm and caring</i></li>
+                    <li> 4. <strong> I will be faithful to my friends.</strong><i>Loyal and trustworthy</i></li>
+                    <li> 5. <strong> I will respect my elders and care for my juniors.</strong><i>Wise and nurturing</i></li>
+                    <li> 6. <strong> I will establish positive relationships with my teachers.</strong><i>Humble and eager to learn</i></li>
+                    <li> 7. <strong> I will treat all living things with care.</strong><i>Compassionate and gentle</i></li>
+                    <li> 8. <strong> I will never seek advantage of those who are weaker.</strong><i>Strong and protective</i></li>
+                    <li> 9. <strong> I will only use Taekwondo to benefit myself and others.</strong><i>Determined and righteous</i></li>
+                    <li>10. <strong> I will always finish what I start.</strong><i>Persistent and disciplined</i></li>
+                </ul>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Traditional Forms</h3>
+                    <p>Upholding original patterns passed down through generations.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Martial Spirit</h3>
+                    <p>Instilling humility, steadfast resolve, and an unshakeable spirit.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Heritage</h3>
+                    <p>Connecting NC practitioners to a global legacy.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2>Associated Academies</h2>
+                <p>Official North Carolina Member Dojangs</p>
+            </div>
+            
+            <div class="academies-grid">
+                <div class="academy-card">
+                    <h3>Black Belt World</h3>
+                    <p>Grand Master Jun Lee</p>
+                    <p>Knightdale, NC</p>
+                </div>
+
+                <div class="academy-card">
+                    <h3>Black Belt USA</h3>
+                    <p>Grand Master Richard Vincent</p>
+                    <p>Sanford, NC</p>
+                </div>
+                  
+                <div class="academy-card">
+                    <h3>Panamerican Taekwondo Academy</h3>
+                    <p>Master Carlos A. Padilla</p>
+                    <p>Winston-Salem, NC</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="join">
+            <div class="join-box">
+                <h2>Join GTTF</h2>
+                <p>Connect with an official GTTF academy in North Carolina.</p>
+                
+                <div class="hero-buttons">
+                    <a href="academies.html" class="btn btn-primary">Join Global Traditional Taekwondo NC</a>
+                    <!-- Secondary Affiliation CTA -->
+                    <a href="https://martialartscode.github.io/GlobalTraditionalTaekwondoFederation/" class="btn btn-gold" target="_blank" rel="noopener">Affiliate Your School with GTTF</a>
+                </div>
+                
+                <div class="contact-info">
+                    <p><strong>Contact Us:</strong></p>
+                    <p>Email: contact@gttf-nc.org</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Global Traditional Taekwondo Federation • North Carolina</p>
+        <p>Courtesy • Integrity • Perseverance • Self-Control • Indomitable Spirit</p>
+    </footer>
+
+</body>
 </html>
