@@ -6,106 +6,6 @@
 	<title>Panamerican Taekwondo Academy | Winston-Salem, NC</title>
 	<link rel="stylesheet" href="style.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-	<style>
-		/* Mobile Burger & Navigation Styles */
-		.navbar {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 12px 24px;
-			position: relative;
-			background-color: #111;
-			z-index: 1000;
-		}
-
-		.burger-btn {
-			display: none;
-			background: transparent;
-			border: none;
-			color: #fff;
-			font-size: 24px;
-			cursor: pointer;
-			padding: 5px;
-		}
-
-		.gttf-btn {
-			background: linear-gradient(135deg, #d4af37, #b59328);
-			color: #0d0e12 !important;
-			font-weight: bold;
-			padding: 10px 20px;
-			border-radius: 4px;
-			text-decoration: none;
-			display: inline-flex;
-			align-items: center;
-			gap: 8px;
-			transition: all 0.3s ease;
-		}
-
-		.gttf-btn:hover {
-			background: linear-gradient(135deg, #f3e5ab, #d4af37);
-			transform: translateY(-2px);
-			box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
-		}
-
-		/* GTTF Highlight Card Styling */
-		.gttf-highlight {
-			border: 1px solid #d4af37 !important;
-			background: linear-gradient(135deg, rgba(22, 24, 30, 0.9) 0%, rgba(30, 20, 10, 0.9) 100%) !important;
-		}
-
-		.gttf-highlight:hover {
-			box-shadow: 0 0 20px rgba(212, 175, 55, 0.3) !important;
-		}
-
-		@media (max-width: 768px) {
-			.burger-btn {
-			display: block !important;
-		}
-
-		.nav-container {
-			display: none;
-			position: absolute;
-			top: 100%;
-			left: 0;
-			width: 100%;
-			background-color: #16181e !important;
-			border-bottom: 2px solid #c91818;
-			box-shadow: 0 8px 16px rgba(0,0,0,0.7);
-			z-index: 9999 !important; /* Ensures dropdown stays above hero image/content */
-		}
-
-		.nav-container.active {
-			display: block !important; /* Force dropdown display when active */
-		}
-
-		.nav-menu {
-			display: flex !important;
-			flex-direction: column !important;
-			padding: 15px 0 !important;
-			margin: 0 !important;
-			list-style: none !important;
-			width: 100%;
-		}
-
-		.nav-menu li {
-			text-align: center;
-			margin: 8px 0;
-			width: 100%;
-		}
-
-		.nav-menu li a {
-			display: block !important;
-			padding: 12px 20px;
-			font-size: 1.1rem;
-			color: #ffffff !important; /* Guarantees mobile text color visibility */
-			text-decoration: none;
-		}
-
-		.nav-menu li a:hover {
-			background-color: rgba(255, 255, 255, 0.1);
-		}
-		}
-	</style>
 </head>
 <body>
 <header>
@@ -179,7 +79,6 @@
 		<ul>
 			<li><strong>5:00 PM</strong> - Demo Team</li>
 			<li><strong>6:00 PM</strong> - Sparring Training</li>
-			<li></li>
 		</ul>
 		</div>
 	</div>
@@ -198,7 +97,7 @@
 			<h3>June, 2026</h3>
 			<h4>Summer Camp Program</h4>
 			<p>Unleash Their Warrior Within</p>
-			<button class="link" onClick="window.location.href='https://martialartscode.github.io/summerCamp26/'">Join Today!</button>
+			<button class="btn-primary" onClick="window.location.href='https://martialartscode.github.io/summerCamp26/'">Join Today!</button>
 		</div>
 	</div>
 </section>
@@ -231,20 +130,20 @@
 		<div class="store-item">
 			<h3>Official Dobok</h3>
 			<p>$65.00</p>
-			<button onclick="addToCart('Official Dobok')">Add to Cart</button>
+			<button class="btn-primary" onclick="addToCart('Official Dobok')">Add to Cart</button>
 		</div>
 		<div class="store-item">
 			<h3>Academy Hoodies</h3>
 			<p>$35.00</p>
-			<button onclick="addToCart('Training Gloves')">Add to Cart</button>
+			<button class="btn-primary" onclick="addToCart('Training Gloves')">Add to Cart</button>
 		</div>
 		<div class="store-item">
 			<h3>Academy T-Shirt</h3>
 			<p>$25.00</p>
-			<button onclick="addToCart('Academy T-Shirt')">Add to Cart</button>
+			<button class="btn-primary" onclick="addToCart('Academy T-Shirt')">Add to Cart</button>
 		</div>
 	</div>
-	<p id="cart-status" style="margin-top: 20px; font-weight: bold;"></p>
+	<p id="cart-status"></p>
 </section>
 
 <!-- Contact Section -->
@@ -280,7 +179,6 @@
 				}
 			});
 
-			// Auto-close menu when clicking links on mobile
 			var links = navContainer.querySelectorAll('a');
 			links.forEach(function (link) {
 				link.addEventListener('click', function () {
